@@ -15,10 +15,17 @@ import {
 } from 'react-native';
 import { StackNavigator } from 'react-navigation'
 import HomeScreen from './src/Components/Home'
+import CameraScreen from './src/Components/Camera'
 
 const scavengerHuntRouter = StackNavigator({
   Home: {
-    screen: HomeScreen
+    screen: HomeScreen,
+    navigationOptions: {
+      title: 'Welcome to Scavenger Hunt!'
+    }
+  },
+  Camera: {
+    screen: CameraScreen
   }
 })
 

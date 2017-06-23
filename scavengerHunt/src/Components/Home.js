@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, View } from 'react-native'
+import { AppRegistry, StyleSheet, Text, View, Button, Image } from 'react-native'
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#F7CAC9',
   },
   welcome: {
     fontSize: 20,
@@ -30,10 +30,11 @@ export default class HomeScreen extends Component {
   render() {
     console.log('rendering')
     return (
-      <View >
-        <Text >
-          Welcome to React Native!
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          Welcome to Scavenger Hunt!
         </Text>
+        <Button onPress={() => {this.props.navigation.navigate('Camera')}} title="Play!" />
       </View>
     );
   }
