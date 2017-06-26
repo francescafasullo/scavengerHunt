@@ -36,6 +36,10 @@
 		2DCD954D1E0B4F2C00145EB5 /* scavengerHuntTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* scavengerHuntTests.m */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		A9D25BBD1F01A08600BDCF2F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9D25BBC1F01A08600BDCF2F /* GoogleService-Info.plist */; };
+		A9D25BBE1F01A08600BDCF2F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9D25BBC1F01A08600BDCF2F /* GoogleService-Info.plist */; };
+		A9D25BBF1F01A08600BDCF2F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9D25BBC1F01A08600BDCF2F /* GoogleService-Info.plist */; };
+		A9D25BC01F01A08600BDCF2F /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A9D25BBC1F01A08600BDCF2F /* GoogleService-Info.plist */; };
 		C0FF3971AD314C988248CC07 /* libRCTCamera.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1ED4556C0CC244AAB3BE3EDA /* libRCTCamera.a */; };
 /* End PBXBuildFile section */
 
@@ -265,6 +269,7 @@
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "../node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "../node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		A9D25BBC1F01A08600BDCF2F /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -483,6 +488,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				A9D25BBC1F01A08600BDCF2F /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* scavengerHunt */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* scavengerHuntTests */,
@@ -869,6 +875,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9D25BBE1F01A08600BDCF2F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -878,6 +885,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
+				A9D25BBD1F01A08600BDCF2F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -886,6 +894,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */,
+				A9D25BBF1F01A08600BDCF2F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -893,6 +902,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9D25BC01F01A08600BDCF2F /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1065,6 +1075,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.scavengerHunt;
 				PRODUCT_NAME = scavengerHunt;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1087,6 +1098,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.scavengerHunt;
 				PRODUCT_NAME = scavengerHunt;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
