@@ -53,6 +53,31 @@ export default class CameraScreen extends Component {
   constructor(props) {
     super(props)
     this.takePicture = this.takePicture.bind(this)
+    this.getDistanceFromLatLonInKm = this.getDistanceFromLatLonInKm.bind(this)
+    this.deg2rad = this.deg2rad.bind(this)
+    this.state = {
+      latitude: null,
+      longitude: null,
+      error: null
+    }
+  }
+
+  componentDidMount() {
+    this.watchId = navigator.geolocation.watchPosition(
+      (position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null,
+        })
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: true, timeout: 2000, maximumAge: 1000, distanceFilter: 10 }
+    )
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchId)
   }
 
   takePicture() {
@@ -61,20 +86,30 @@ export default class CameraScreen extends Component {
       .catch(err => console.trace(err))
   }
 
+  getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
+    var radius = 6371; // Radius of the earth in km
+    var dLat = this.deg2rad(lat2 - lat1)  // deg2rad below
+    var dLon = this.deg2rad(lon2 - lon1)
+    var a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2)
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
+    var d = radius * c; // Distance in km
+    return d;
+}
+
+  deg2rad(deg) {
+    return deg * (Math.PI / 180)
+}
+
   render() {
     console.log('in camera play!!!!!!!!!!!!!!!!!!!!!!!')
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+        <Text style={styles.welcome}>Latitude: {this.state.latitude}</Text>
+        <Text style={styles.welcome}>Longitude: {this.state.longitude}</Text>
+        {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
         <Camera
           ref={(cam) => {
             this.camera = cam
@@ -82,13 +117,15 @@ export default class CameraScreen extends Component {
           style={styles.preview}
           aspect={Camera.constants.Aspect.fill} >
           <View style={styles.arDisplay}>
-            <Image
-              style={styles.overlay}
-              source={require('../../public/pusheenSunglasses.png')}
-              resizeMode='contain'
-            />
+            {
+              <Image
+                style={styles.overlay}
+                source={require('../../public/pusheenSunglasses.png')}
+                resizeMode="contain"
+              />
+            }
           </View>
-          <Text style={styles.capture} onPress={this.takePicture}>[CAPTURE]</Text>
+          <Text style={styles.capture} onPress={this.takePicture}>CAPTURE</Text>
         </Camera>
       </View>
     );
