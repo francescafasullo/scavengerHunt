@@ -32,7 +32,7 @@ export default class HomeScreen extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
-          Welcome to Scavenger Hunt****!
+          Welcome to Scavenger Hunt!
         </Text>
         <Button onPress={() => {this.props.navigation.navigate('Camera')}} title="Play!" />
       </View>

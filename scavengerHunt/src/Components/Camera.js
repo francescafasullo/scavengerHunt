@@ -53,12 +53,14 @@ export default class CameraScreen extends Component {
   constructor(props) {
     super(props)
     this.takePicture = this.takePicture.bind(this)
-    this.getDistanceFromLatLonInKm = this.getDistanceFromLatLonInKm.bind(this)
-    this.deg2rad = this.deg2rad.bind(this)
+    this.getDistance = this.getDistance.bind(this)
     this.state = {
       latitude: null,
       longitude: null,
-      error: null
+      error: null,
+      distance: null,
+      closestPlaceLat: null,
+      closestPlaceLong: null
     }
   }
 
@@ -69,7 +71,10 @@ export default class CameraScreen extends Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
           error: null,
+          closestPlaceLat: 40.7052066,
+          closestPlaceLong: -74.01032889999999
         })
+        this.getDistance(this.state.latitude, this.state.longitude, this.state.closestPlaceLat, this.state.closestPlaceLong)
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 2000, maximumAge: 1000, distanceFilter: 10 }
@@ -86,29 +91,26 @@ export default class CameraScreen extends Component {
       .catch(err => console.trace(err))
   }
 
-  getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-    var radius = 6371; // Radius of the earth in km
-    var dLat = this.deg2rad(lat2 - lat1)  // deg2rad below
-    var dLon = this.deg2rad(lon2 - lon1)
-    var a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(this.deg2rad(lat1)) * Math.cos(this.deg2rad(lat2)) *
-      Math.sin(dLon / 2) * Math.sin(dLon / 2)
+  getDistance(lat1, lon1, lat2, lon2) {
+    const deg2rad = function(deg) {
+      return deg * (Math.PI / 180)
+    }
+    var radius = 6371
+    var dlat = deg2rad(lat2 - lat1)
+    var dlon = deg2rad(lon2 - lon1)
+    var a = Math.sin(dlat / 2) * Math.sin(dlat / 2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dlon / 2) * Math.sin(dlon / 2)
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-    var d = radius * c; // Distance in km
-    return d;
-}
-
-  deg2rad(deg) {
-    return deg * (Math.PI / 180)
-}
+    var d = radius * c
+    this.setState({distance: d})
+    return d
+  }
 
   render() {
-    console.log('in camera play!!!!!!!!!!!!!!!!!!!!!!!')
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Latitude: {this.state.latitude}</Text>
         <Text style={styles.welcome}>Longitude: {this.state.longitude}</Text>
+        <Text style={styles.welcome}>Distance to Open Market: {this.state.distance}</Text>
         {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
         <Camera
           ref={(cam) => {
@@ -117,10 +119,14 @@ export default class CameraScreen extends Component {
           style={styles.preview}
           aspect={Camera.constants.Aspect.fill} >
           <View style={styles.arDisplay}>
-            {
+            { this.state.distance < 0.1 ?
               <Image
                 style={styles.overlay}
                 source={require('../../public/pusheenSunglasses.png')}
+                resizeMode="contain"
+              /> : <Image
+                style={styles.overlay}
+                source={require('../../public/pusheen.png')}
                 resizeMode="contain"
               />
             }
