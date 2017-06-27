@@ -1,0 +1,10 @@
+{
+  "users": {
+	    "1": {
+	      "name": "Jasmine",
+	      "email": "jas@gmail.com",
+	      "score": 100,
+	      "profilePic": "../public/images/cat_profile.jpg"
+	    }
+	}
+}

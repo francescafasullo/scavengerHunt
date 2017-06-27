@@ -16,7 +16,9 @@ import {
 import { StackNavigator } from 'react-navigation'
 import HomeScreen from './src/Components/Home'
 import CameraScreen from './src/Components/Camera'
+ import database from './database/firebase'
 
+ 
 const scavengerHuntRouter = StackNavigator({
   Home: {
     screen: HomeScreen,
@@ -28,5 +30,6 @@ const scavengerHuntRouter = StackNavigator({
     screen: CameraScreen
   }
 })
+
 
 AppRegistry.registerComponent('scavengerHunt', () => scavengerHuntRouter);
