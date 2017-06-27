@@ -36,7 +36,7 @@ function addScavengerItemToMap(){
 
 }
 
-function writeScavengerHuntItem(itemId,name,address,latitude,longitude,gategory){
+function writeScavengerHuntItem(itemId, name, address, latitude, longitude, category){
 	database.ref('scavenger_hunt_items/' + itemId).set({
 		name: name,
 		address: address,
@@ -74,7 +74,7 @@ function assosiateScavengerItemToMap(mapId, scavengerItemId){
 
 //seeding scavenger hunt items
 writeScavengerHuntItem(1,'Open Market', '15 William St, New York, NY 10005, USA', 40.7052066, -74.0103288999999);
-writeScavengerHuntItem(2, 'La Pen Quotidien', '85 Broad St, New York, NY 10005, USA', 40.7039915, -74.0110917);
+writeScavengerHuntItem(2, 'La Pain Quotidien', '85 Broad St, New York, NY 10005, USA', 40.7039915, -74.0110917);
 writeScavengerHuntItem(3, 'dig inn', '80 Broad St, New York, NY 10004, USA', 40.7043408, -74.0118572);
 writeScavengerHuntItem(4, 'Cipriani Club 55', '55 Wall St, New York, NY 10005, USA', 40.7060794, -74.0093213);
 writeScavengerHuntItem(5, 'Haru Sushi', '1 Wall St, New York, NY 10005', 40.7071269, -74.0118077999999);
