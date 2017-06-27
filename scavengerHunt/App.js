@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
-console.log('in App.js***********************')
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -18,6 +10,7 @@ import { Icon } from 'react-native-elements'
 import HomeScreen from './src/Components/Home'
 import CameraScreen from './src/Components/Camera'
 import SignInSignUpScreen from './src/Components/SignInSignUp'
+import PlayMap from './src/Components/PlayMap'
 
 const fireBase = require('./database/firebase');
 
@@ -31,7 +24,7 @@ const scavengerHuntRouter = StackNavigator({
   Home: {
     screen: HomeScreen,
     navigationOptions: {
-      title: 'Welcome to Scavenger Hunt!'
+      title: 'Home'
     }
   },
   Camera: {
@@ -52,6 +45,9 @@ const scavengerHuntRouter = StackNavigator({
   },
   SignInSignUp: {
     screen: SignInSignUpScreen
+  },
+  PlayMap: {
+    screen: PlayMap
   }
 
 

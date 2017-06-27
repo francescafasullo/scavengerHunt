@@ -21,8 +21,6 @@ const styles = StyleSheet.create({
   },
 });
 
-console.log('page loaded')
-
 export default class HomeScreen extends Component {
   constructor(props) {
     super(props)
@@ -38,7 +36,6 @@ export default class HomeScreen extends Component {
   }
 
   render() {
-    console.log('rendering')
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
@@ -52,6 +49,7 @@ export default class HomeScreen extends Component {
         <Button onPress={() => { this.props.navigation.navigate('Explore') }}
           title="Explore"
            />
+        <Button onPress={() => {this.props.navigation.navigate('PlayMap')}} title="Check out your map!" />
       </View>
 
     );
