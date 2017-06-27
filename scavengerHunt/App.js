@@ -16,7 +16,7 @@ import {
 import { StackNavigator } from 'react-navigation'
 import HomeScreen from './src/Components/Home'
 import CameraScreen from './src/Components/Camera'
- import database from './database/firebase'
+const fireBase = require('./database/firebase');
 
  
 const scavengerHuntRouter = StackNavigator({
