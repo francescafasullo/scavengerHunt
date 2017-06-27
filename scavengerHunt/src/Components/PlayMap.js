@@ -50,7 +50,8 @@ export default class PlayMap extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Find 'em all!</Text>
-        <MapView style={styles.map}
+        <MapView
+          style={styles.map}
           initialRegion={{
             latitude: 40.7050758,
             longitude: -74.00916039999998,
@@ -58,7 +59,7 @@ export default class PlayMap extends Component {
             longitudeDelta: 0.04
           }}
         >
-          {markers.map(marker => {
+          {/*markers.map(marker => {
             return (
               <MapView.marker
                 coordinate={marker.latlng}
@@ -66,7 +67,7 @@ export default class PlayMap extends Component {
                 description={marker.description}
               />
             )
-          })}
+          })*/}
         </MapView>
         <Button onPress={() => {this.props.navigation.navigate('Camera')}} title="Play!" />
       </View>
