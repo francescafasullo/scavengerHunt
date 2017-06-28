@@ -16,7 +16,10 @@ import {
 import { StackNavigator } from 'react-navigation'
 import HomeScreen from './src/Components/Home'
 import CameraScreen from './src/Components/Camera'
- import database from './database/firebase'
+import database from './database/firebase'
+import SignUpScreen from './src/Components/SignUp'
+import LoginScreen from './src/Components/Login'
+import MyAccountScreen from './src/Components/MyAccount'
 
  
 const scavengerHuntRouter = StackNavigator({
@@ -28,6 +31,15 @@ const scavengerHuntRouter = StackNavigator({
   },
   Camera: {
     screen: CameraScreen
+  }, 
+  SignUp: {
+    screen: SignUpScreen
+  },
+  Login: {
+    screen: LoginScreen
+  },
+  MyAccount: {
+    screen: MyAccountScreen
   }
 })
 
