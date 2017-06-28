@@ -1,5 +1,8 @@
 
+
+
 const firebase = require('firebase')
+
 
 var config = {
     apiKey: "AIzaSyDgSoVrvjyZTFsT3Udks1x0KkGZGrYjThQ",
@@ -32,9 +35,6 @@ function writeScavengerHuntMap(mapId, name, creatorId, description, date){
 
 }
 
-function addScavengerItemToMap(){
-
-}
 
 function writeScavengerHuntItem(itemId, name, address, latitude, longitude, category){
 	database.ref('scavenger_hunt_items/' + itemId).set({
@@ -64,15 +64,17 @@ function addCategoryToScavengerHuntItem(itemId, categoryName){
 
 //assosiating a scavenger hunt item to a map, both the item and the map should have reference to each other
 function assosiateScavengerItemToMap(mapId, scavengerItemId){
-	let update = {};
+	// let update = {
+	// 	['/scavenger_hunt_map/'+mapId+'/items/'+scavengerItemId]: true
+	// };
 	update['/scavenger_hunt_map/'+mapId+'/items/'+scavengerItemId] = true;
 	update['/scavenger_hunt_items/'+scavengerItemId+'/maps/'+mapId] = true;
 	return database.ref().update(update);
 
 
 }
-
-//seeding scavenger hunt items
+if(module === require.main){
+	//seeding scavenger hunt items
 writeScavengerHuntItem(1,'Open Market', '15 William St, New York, NY 10005, USA', 40.7052066, -74.0103288999999);
 writeScavengerHuntItem(2, 'La Pain Quotidien', '85 Broad St, New York, NY 10005, USA', 40.7039915, -74.0110917);
 writeScavengerHuntItem(3, 'dig inn', '80 Broad St, New York, NY 10004, USA', 40.7043408, -74.0118572);
@@ -125,17 +127,21 @@ assosiateScavengerItemToMap(4,2);
 assosiateScavengerItemToMap(4,7);
 assosiateScavengerItemToMap(4,6);
 
-
-
 database.ref('/users/1').once('value').then(data => {
   console.log('reading user from firebase',data.val())
 })
 
+} 
 
 
-
-
-
-
-export default database
+module.exports = {
+	database: database,
+	writeUserData: writeUserData,
+	writeScavengerHuntMap: writeScavengerHuntMap,
+	writeScavengerHuntItem: writeScavengerHuntItem,
+	writeCategory: writeCategory,
+	addCategoryToScavengerHuntItem: addCategoryToScavengerHuntItem,
+	assosiateScavengerItemToMap: assosiateScavengerItemToMap
+}
+//export default database
 
