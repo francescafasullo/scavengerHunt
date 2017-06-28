@@ -17,7 +17,13 @@ import { StackNavigator, TabNavigator } from 'react-navigation'
 import { Icon } from 'react-native-elements'
 import HomeScreen from './src/Components/Home'
 import CameraScreen from './src/Components/Camera'
- import database from './database/firebase'
+
+const fireBase = require('./database/firebase');
+
+import SignUpScreen from './src/Components/SignUp'
+import LoginScreen from './src/Components/Login'
+import MyAccountScreen from './src/Components/MyAccount'
+
 
  
 const scavengerHuntRouter = StackNavigator({
@@ -32,6 +38,16 @@ const scavengerHuntRouter = StackNavigator({
     navigationOptions: {
       title: 'Play'
     }
+  },
+  SignUp: {
+    screen: SignUpScreen
+  },
+  Login: {
+    screen: LoginScreen
+  },
+  MyAccount: {
+    screen: MyAccountScreen
+
   }
 })
 
@@ -66,17 +82,3 @@ AppRegistry.registerComponent('scavengerHunt', () => Tabs);
 
 
 
-/*
-Play: {
-    screen: CameraScreen,
-    navigationOptions: {
-      tabBar:{
-        label: 'Play',
-        icon: ({ color }) => <Icon class="material-icons" name="play" size={35} color={color}/>
-      }  
-        
-    }
-    <i class="material-icons">play_circle_filled</i>
-
-  }
-*/

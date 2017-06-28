@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "seed": "node database/firebase.js"
   },
   "dependencies": {
     "firebase": "^4.1.3",
@@ -19,6 +20,7 @@
   "devDependencies": {
     "babel-jest": "20.0.3",
     "babel-preset-react-native": "1.9.1",
+    "eslint-plugin-react": "^7.1.0",
     "jest": "20.0.0",
     "react-test-renderer": "16.0.0-alpha.6"
   },
