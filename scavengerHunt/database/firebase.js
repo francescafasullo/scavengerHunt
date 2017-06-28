@@ -1,5 +1,5 @@
 
-import * as firebase from 'firebase';
+const firebase = require('firebase')
 
 var config = {
     apiKey: "AIzaSyDgSoVrvjyZTFsT3Udks1x0KkGZGrYjThQ",
@@ -11,7 +11,7 @@ var config = {
   };
   firebase.initializeApp(config);
 
-//   // Get a reference to the database service
+  // Get a reference to the database service
  var database = firebase.database();
 
  function writeUserData(userId, name, email,score,profile_picURL) {
