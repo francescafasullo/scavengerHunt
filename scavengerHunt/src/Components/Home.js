@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, View, Button, Image } from 'react-native'
+import { Navigator, AppRegistry, StyleSheet, Text, View, Button, Image } from 'react-native'
+import firebase from 'firebase'
 
 const styles = StyleSheet.create({
   container: {
@@ -25,6 +26,15 @@ console.log('page loaded')
 export default class HomeScreen extends Component {
   constructor(props) {
     super(props)
+    this.logout = this.logout.bind(this)
+  }
+
+  logout = ()=> {
+    firebase.auth().signOut().then(function() {
+  // Sign-out successful.
+}).catch(function(error) {
+  // An error happened.
+});
   }
 
   render() {
@@ -34,8 +44,14 @@ export default class HomeScreen extends Component {
         <Text style={styles.welcome}>
           Welcome to Scavenger Hunt!
         </Text>
-        <Button onPress={() => {this.props.navigation.navigate('Camera')}} title="Play!" />
+        <Button onPress={() => { this.props.navigation.navigate('Camera') }} title="Play!" />
+        <Button title="Explore"/>
+        <Button onPress={() => { this.props.navigation.navigate('SignUp') }} title="Sign Up" />
+        <Button onPress={() => {this.props.navigation.navigate('Login')}}
+        title="Login"/>
+        <Button onPress={this.logout} title="Logout" />
       </View>
+
     );
   }
 }
