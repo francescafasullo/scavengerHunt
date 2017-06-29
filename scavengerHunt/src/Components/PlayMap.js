@@ -49,6 +49,7 @@ export default class PlayMap extends Component {
     console.log('rendering map')
     return (
       <View style={styles.container}>
+      {console.log(this.props)}
         <Text style={styles.welcome}>Find 'em all!</Text>
         <MapView
           style={styles.map}
@@ -59,6 +60,11 @@ export default class PlayMap extends Component {
             longitudeDelta: 0.04
           }}
         >
+          <MapView.Marker
+            coordinate={{longitude: -74.00916039999998,latitude: 40.7050758}}
+            title={'title'}
+            description={"description"}
+            />
           {/*markers.map(marker => {
             return (
               <MapView.marker

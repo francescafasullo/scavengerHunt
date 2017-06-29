@@ -92,6 +92,7 @@ writeScavengerHuntItem(5, 'Haru Sushi', '1 Wall St, New York, NY 10005', 40.7071
 writeScavengerHuntItem(6, 'Museum of American Finance', '48 Wall St, New York, NY 10005', 40.7065557, -74.0090503);
 writeScavengerHuntItem(7, 'Federal Hall', '26 Wall St, New York, NY 10005, USA', 40.707258, -74.0103563999999);
 writeScavengerHuntItem(8, 'Keya Gallery', '14 Wall Stt, New York, NY 10005', 40.7076346, -74.0107747)
+writeScavengerHuntItem(8, 'Grace Hopper', '5 Hanover Square, New York, NY 10005', 40.705079,  -74.009161)
 
 //seeding categories
 writeCategory('Restaurant', 'A place to dine');
