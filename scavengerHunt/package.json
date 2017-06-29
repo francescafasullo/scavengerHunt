@@ -4,20 +4,28 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "seed": "node database/firebase.js"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
     "firebase": "^4.1.3",
     "geofire": "^4.1.2",
+    "material-icons": "^0.1.0",
     "react": "16.0.0-alpha.6",
     "react-native": "0.44.0",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
-    "react-navigation": "1.0.0-beta.9"
+    "react-native-elements": "^0.13.0",
+    "react-native-vector-icons": "^4.2.0",
+    "react-navigation": "1.0.0-beta.9",
+    "redux": "^3.7.1",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "babel-jest": "20.0.3",
     "babel-preset-react-native": "1.9.1",
+    "eslint-plugin-react": "^7.1.0",
     "jest": "20.0.0",
     "react-test-renderer": "16.0.0-alpha.6"
   },

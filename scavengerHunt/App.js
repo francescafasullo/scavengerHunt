@@ -13,10 +13,17 @@ import {
   Text,
   View
 } from 'react-native';
-import { StackNavigator } from 'react-navigation'
+import { StackNavigator, TabNavigator } from 'react-navigation'
+import { Icon } from 'react-native-elements'
 import HomeScreen from './src/Components/Home'
 import CameraScreen from './src/Components/Camera'
- import database from './database/firebase'
+
+const fireBase = require('./database/firebase');
+
+import SignUpScreen from './src/Components/SignUp'
+import LoginScreen from './src/Components/Login'
+import MyAccountScreen from './src/Components/MyAccount'
+
 
  
 const scavengerHuntRouter = StackNavigator({
@@ -27,9 +34,51 @@ const scavengerHuntRouter = StackNavigator({
     }
   },
   Camera: {
-    screen: CameraScreen
+    screen: CameraScreen,
+    navigationOptions: {
+      title: 'Play'
+    }
+  },
+  SignUp: {
+    screen: SignUpScreen
+  },
+  Login: {
+    screen: LoginScreen
+  },
+  MyAccount: {
+    screen: MyAccountScreen
+
   }
 })
 
+ const Tabs = TabNavigator({
+  Home: {
+    screen: scavengerHuntRouter,
+    navigationOptions: {
+      tabBarLabel: 'Home',
+      tabBarIcon: ({tintColor}) =>  <Icon name="home" size={26} color={tintColor} />
+      
+    }
 
-AppRegistry.registerComponent('scavengerHunt', () => scavengerHuntRouter);
+  },
+  Play: {
+    screen: CameraScreen,
+    navigationOptions: {
+      tabBarLabel: 'Play',
+      tabBarIcon: ({ tintColor }) => <Icon name="play-circle-filled" size={26} color={tintColor} />
+      
+    }
+
+  }
+},{
+  tabBarOptions: {
+    activeTintColor: '#696969',
+    inactiveTintColor: '#C0C0C0'
+  }
+})
+
+//AppRegistry.registerComponent('scavengerHunt', () => scavengerHuntRouter);
+AppRegistry.registerComponent('scavengerHunt', () => Tabs);
+
+
+

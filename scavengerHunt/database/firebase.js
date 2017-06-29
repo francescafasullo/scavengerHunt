@@ -1,4 +1,3 @@
-
 const firebase = require('firebase')
 const GeoFire = require('geofire')
 
@@ -21,7 +20,26 @@ firebase.initializeApp(config)
  // Creates a GeoFire index
 var geoFire = new GeoFire(firebaseRef)
 
- function writeUserData(userId, name, email, score, profile_picURL) {
+function writeUserData(userId, name, email, score, profile_picURL) {
+
+
+const firebase = require('firebase')
+
+
+var config = {
+    apiKey: "AIzaSyDgSoVrvjyZTFsT3Udks1x0KkGZGrYjThQ",
+    authDomain: "scavngo-da953.firebaseapp.com",
+    databaseURL: "https://scavngo-da953.firebaseio.com",
+    projectId: "scavngo-da953",
+    storageBucket: "",
+    messagingSenderId: "80431684805"
+  };
+  firebase.initializeApp(config);
+
+  // Get a reference to the database service
+ var database = firebase.database();
+
+ function writeUserData(userId, name, email,score,profile_picURL) {
   database.ref('users/' + userId).set({
     username: name,
     email: email,
@@ -39,9 +57,6 @@ function writeScavengerHuntMap(mapId, name, creatorId, description, date){
 
 }
 
-function addScavengerItemToMap(){
-
-}
 
 function writeScavengerHuntItem(itemId, name, address, latitude, longitude){
 	database.ref('scavenger_hunt_items/' + itemId).set({
@@ -86,6 +101,22 @@ writeScavengerHuntItem(4, 'Cipriani Club 55', '55 Wall St, New York, NY 10005, U
 writeScavengerHuntItem(5, 'Haru Sushi', '1 Wall St, New York, NY 10005', 40.7071269, -74.0118077999999)
 writeScavengerHuntItem(6, 'Museum of American Finance', '48 Wall St, New York, NY 10005', 40.7065557, -74.0090503)
 writeScavengerHuntItem(7, 'Federal Hall', '26 Wall St, New York, NY 10005, USA', 40.707258, -74.0103563999999)
+
+	update['/scavenger_hunt_map/'+mapId+'/items/'+scavengerItemId] = true;
+	update['/scavenger_hunt_items/'+scavengerItemId+'/maps/'+mapId] = true;
+	return database.ref().update(update);
+
+
+}
+if(module === require.main){
+	//seeding scavenger hunt items
+writeScavengerHuntItem(1,'Open Market', '15 William St, New York, NY 10005, USA', 40.7052066, -74.0103288999999);
+writeScavengerHuntItem(2, 'La Pain Quotidien', '85 Broad St, New York, NY 10005, USA', 40.7039915, -74.0110917);
+writeScavengerHuntItem(3, 'dig inn', '80 Broad St, New York, NY 10004, USA', 40.7043408, -74.0118572);
+writeScavengerHuntItem(4, 'Cipriani Club 55', '55 Wall St, New York, NY 10005, USA', 40.7060794, -74.0093213);
+writeScavengerHuntItem(5, 'Haru Sushi', '1 Wall St, New York, NY 10005', 40.7071269, -74.0118077999999);
+writeScavengerHuntItem(6, 'Museum of American Finance', '48 Wall St, New York, NY 10005', 40.7065557, -74.0090503);
+writeScavengerHuntItem(7, 'Federal Hall', '26 Wall St, New York, NY 10005, USA', 40.707258, -74.0103563999999);
 writeScavengerHuntItem(8, 'Keya Gallery', '14 Wall Stt, New York, NY 10005', 40.7076346, -74.0107747)
 
 //  Seeds scavenger hunt list items in geoFire
@@ -147,10 +178,19 @@ assosiateScavengerItemToMap(4, 2)
 assosiateScavengerItemToMap(4, 7)
 assosiateScavengerItemToMap(4, 6)
 
-
 database.ref('/users/1').once('value').then(data => {
   console.log('reading user from firebase', data.val())
-})
+  })
+}
 
-module.exports = database
-module.exports.geoFire = geoFire
+
+module.exports = {
+	database: database,
+	writeUserData: writeUserData,
+	writeScavengerHuntMap: writeScavengerHuntMap,
+	writeScavengerHuntItem: writeScavengerHuntItem,
+	writeCategory: writeCategory,
+	addCategoryToScavengerHuntItem: addCategoryToScavengerHuntItem,
+	assosiateScavengerItemToMap: assosiateScavengerItemToMap,
+  geoFire: geoFire
+}
