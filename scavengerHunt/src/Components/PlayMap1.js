@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { AppRegistry, StyleSheet, Text, View, Button, Image } from 'react-native'
-import MapView, { Marker } from 'react-native-maps'
+import MapView from 'react-native-maps'
 
 const styles = StyleSheet.create({
   welcome: {
@@ -43,9 +43,6 @@ const markers = [openMarket, fullstack, chargingBull]
 export default class PlayMap extends Component {
   constructor(props) {
     super(props)
-    this.state = {
-      markers: []
-    }
   }
 
   render() {
@@ -64,13 +61,11 @@ export default class PlayMap extends Component {
           }}
         >
           <MapView.Marker
-            style={styles.pins}
             coordinate={{ longitude: -74.00916039999998, latitude: 40.7050758 }}
             title={'title'}
             description={"description"}
           />
           <MapView.Marker
-            style={styles.pins}
             coordinate={{ longitude: openMarket.latlng[1], latitude: openMarket.latlng[0] }}
             title={openMarket.title}
             description={openMarket.description}
