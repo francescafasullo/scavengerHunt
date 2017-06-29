@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import { AppRegistry, StyleSheet, Text, View, Dimensions, Image } from 'react-native'
 import Camera from 'react-native-camera'
 import { geoFire } from '../../database/firebase.js'
+import firebase from 'firebase'
 
 const styles = StyleSheet.create({
   container: {
@@ -75,11 +76,17 @@ export default class CameraScreen extends Component {
           closestPlaceLat: 40.7052066,
           closestPlaceLong: -74.01032889999999
         })
+        const {latitude, longitude} = position.coords
+        console.log('did receive position update:', latitude, longitude)
+        console.log('keys', this.state.keys)
         if (!this.geoQuery) {
-          this.geoQuery = geoFire.query({
+          const gq = this.geoQuery = geoFire.query({
             center: [position.coords.latitude, position.coords.longitude],
-            radius: 0.09
+            radius: 3
           })
+          console.log('geoquery:%o center:%o radius:%o',
+                      gq, gq.center(), gq.radius())
+          console.log('current user:', firebase.auth().currentUser)
           this.geoQuery.on('key_entered', (key, location, distance) => {
             const keys = Object.assign({}, this.state.keys, {[key]: true})
             this.setState({keys}, console.log)
@@ -94,13 +101,13 @@ export default class CameraScreen extends Component {
         } else {
           this.geoQuery.updateCriteria({
             center: [position.coords.latitude, position.coords.longitude],
-            radius: 0.09
+            radius: 0.3
           })
         }
         this.getDistance(this.state.latitude, this.state.longitude, this.state.closestPlaceLat, this.state.closestPlaceLong)
       },
       (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 2000, maximumAge: 1000, distanceFilter: 10 }
+      { enableHighAccuracy: true, timeout: 1000, maximumAge: 1000, distanceFilter: 10 }
     )
   }
 
