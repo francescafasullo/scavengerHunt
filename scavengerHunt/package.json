@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "bluebird": "^3.5.0",
+    "expo": "^18.0.6",
     "firebase": "^4.1.3",
     "geofire": "^4.1.2",
     "material-icons": "^0.1.0",
@@ -16,6 +17,7 @@
     "react-native": "0.44.0",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-elements": "^0.13.0",
+    "react-native-heading": "^1.1.1",
     "react-native-vector-icons": "^4.2.0",
     "react-navigation": "1.0.0-beta.9",
     "redux": "^3.7.1",

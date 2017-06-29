@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Navigator, AppRegistry, StyleSheet, Text, View, Button, Image } from 'react-native'
 import firebase from 'firebase'
+// const ReactNativeHeading = require('react-native-heading')
 
 const styles = StyleSheet.create({
   container: {

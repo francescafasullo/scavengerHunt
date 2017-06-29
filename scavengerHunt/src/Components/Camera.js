@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
-import { AppRegistry, StyleSheet, Text, View, Dimensions, Image } from 'react-native'
+import { AppRegistry, StyleSheet, Text, View, Dimensions, Image, DeviceEventEmitter } from 'react-native'
 import Camera from 'react-native-camera'
-import { geoFire } from '../../database/firebase.js'
 import firebase from 'firebase'
+const geoFire = require('../../database/firebase.js').geoFire
 
 const styles = StyleSheet.create({
   container: {
@@ -37,11 +37,10 @@ const styles = StyleSheet.create({
     margin: 40
   },
   overlay: {
-    justifyContent: 'center',
-    top: 100,
-    left: 100,
-    width: 200,
-    height: 100
+    top: 0,
+    left: 0,
+    width: 400,
+    height: 350
   },
   arDisplay: {
     position: 'absolute',
@@ -55,6 +54,7 @@ export default class CameraScreen extends Component {
   constructor(props) {
     super(props)
     this.getDistance = this.getDistance.bind(this)
+    this.getDirection = this.getDirection.bind(this)
     this.state = {
       latitude: null,
       longitude: null,
@@ -62,7 +62,9 @@ export default class CameraScreen extends Component {
       distance: null,
       closestPlaceLat: null,
       closestPlaceLong: null,
-      keys: {}
+      keys: {},
+      headingIsSupported: null,
+      heading: null
     }
   }
 
@@ -76,32 +78,24 @@ export default class CameraScreen extends Component {
           closestPlaceLat: 40.7052066,
           closestPlaceLong: -74.01032889999999
         })
-        const {latitude, longitude} = position.coords
-        console.log('did receive position update:', latitude, longitude)
-        console.log('keys', this.state.keys)
         if (!this.geoQuery) {
           const gq = this.geoQuery = geoFire.query({
             center: [position.coords.latitude, position.coords.longitude],
-            radius: 3
+            radius: 0.1
           })
-          console.log('geoquery:%o center:%o radius:%o',
-                      gq, gq.center(), gq.radius())
-          console.log('current user:', firebase.auth().currentUser)
           this.geoQuery.on('key_entered', (key, location, distance) => {
-            const keys = Object.assign({}, this.state.keys, {[key]: true})
+            const keys = Object.assign({}, this.state.keys, {[key]: location})
             this.setState({keys}, console.log)
-            console.log('entering', this.state.keys)
           })
           this.geoQuery.on('key_exited', (key, location, distance) => {
             const keys = Object.assign({}, this.state.keys)
             delete keys[key]
             this.setState({keys}, console.log)
-            console.log('exiting', this.state.keys)
           })
         } else {
           this.geoQuery.updateCriteria({
             center: [position.coords.latitude, position.coords.longitude],
-            radius: 0.3
+            radius: 0.1
           })
         }
         this.getDistance(this.state.latitude, this.state.longitude, this.state.closestPlaceLat, this.state.closestPlaceLong)
@@ -125,16 +119,21 @@ export default class CameraScreen extends Component {
     var a = Math.sin(dlat / 2) * Math.sin(dlat / 2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dlon / 2) * Math.sin(dlon / 2)
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
     var d = radius * c
-    this.setState({distance: d})
     return d
+  }
+
+  getDirection(lat1, lon1, lat2, lon2) {
+    Number.prototype.toRad = function() {
+      return this * Math.PI / 180
+    }
+    var a = Math.sin(lon2.toRad() - lon1.toRad()) * Math.cos(lat2.toRad())
+    var b = Math.cos(lat1.toRad()) * Math.sin(lat2.toRad()) - Math.sin(lat1.toRad()) * Math.cos(lat2.toRad()) * Math.cos(lon2.toRad() - lon1.toRad())
+    return Math.atan2(a, b) * 180 / Math.PI
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Latitude: {this.state.latitude}</Text>
-        <Text style={styles.welcome}>Longitude: {this.state.longitude}</Text>
-        <Text style={styles.welcome}>Distance to Open Market: {this.state.distance}</Text>
         {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
         <Text style={styles.welcome}>{this.string}</Text>
         <Camera
@@ -143,19 +142,27 @@ export default class CameraScreen extends Component {
           }}
           style={styles.preview}
           aspect={Camera.constants.Aspect.fill} >
-          <View style={styles.arDisplay}>
-            { this.state.distance < 0.1 ?
-              <Image
-                style={styles.overlay}
-                source={require('../../public/pusheenSunglasses.png')}
-                resizeMode="contain"
-              /> : <Image
-                style={styles.overlay}
-                source={require('../../public/pusheen.png')}
-                resizeMode="contain"
-              />
-            }
-          </View>
+            { this.state.keys ? Object.keys(this.state.keys).map(key => {
+              const lat1 = this.state.latitude
+              const lon1 = this.state.longitude
+              const lat2 = this.state.keys[key][0]
+              const lon2 = this.state.keys[key][1]
+              const direction = this.getDirection(lat1, lon1, lat2, lon2)
+              const distance = this.getDistance(lat1, lon1, lat2, lon2)
+              return (
+              <View
+                key={key}
+                style={styles.arDisplay}>
+                <Image
+                  style={styles.overlay}
+                  source={require('../../public/pusheenSunglasses.png')}
+                  resizeMode="contain"
+                />
+                <Text style={styles.capture}>{direction}</Text>
+              </View>
+              )
+            })
+            : null }
         </Camera>
       </View>
     );

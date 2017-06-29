@@ -22,9 +22,7 @@ var geoFire = new GeoFire(firebaseRef)
 
 function writeUserData(userId, name, email, score, profile_picURL) {
 
-
 const firebase = require('firebase')
-
 
 var config = {
     apiKey: "AIzaSyDgSoVrvjyZTFsT3Udks1x0KkGZGrYjThQ",
@@ -108,6 +106,7 @@ writeScavengerHuntItem(7, 'Federal Hall', '26 Wall St, New York, NY 10005, USA',
 
 
 }
+
 if(module === require.main){
 	//seeding scavenger hunt items
 writeScavengerHuntItem(1,'Open Market', '15 William St, New York, NY 10005, USA', 40.7052066, -74.0103288999999);
@@ -187,10 +186,5 @@ database.ref('/users/1').once('value').then(data => {
 module.exports = {
 	database: database,
 	writeUserData: writeUserData,
-	writeScavengerHuntMap: writeScavengerHuntMap,
-	writeScavengerHuntItem: writeScavengerHuntItem,
-	writeCategory: writeCategory,
-	addCategoryToScavengerHuntItem: addCategoryToScavengerHuntItem,
-	assosiateScavengerItemToMap: assosiateScavengerItemToMap,
   geoFire: geoFire
 }
