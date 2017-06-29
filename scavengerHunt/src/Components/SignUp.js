@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { AppRegistry, StyleSheet, Text, View, Dimensions, Image, TextInput, TouchableHighlight, Button } from 'react-native'
 import firebase from 'firebase'
+import store from '../../store'
+import {signUp} from '../reducers/authReducer'
 
 
 const styles = StyleSheet.create({
@@ -11,23 +13,24 @@ export default class SignUp extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			firstName: '',
-			lastName: '',
-			email: '',
-			password: ''
+			userName: "",
+			email: "",
+			password: ""
 		}
-		//this.updateFirstName = this.updateFirstName.bind(this)
-		this.updateLastName = this.updateLastName.bind(this)
+		//this.state = store.getState();
+		// this.state.username = "";
+		// this.state.email = "";
+		// this.state.password = "";
+		
+		this.updateUserName = this.updateUserName.bind(this)
 		this.updateEmail = this.updateEmail.bind(this)
 		this.updatePassword = this.updatePassword.bind(this)
 	}
 
-	// updateFirstName = (text) => {
-	//     this.setSate({firstName: text})
-	// }
+	
 
-	updateLastName = (text) => {
-		this.setState({ lastName: text })
+	updateUserName = (text) => {
+		this.setState({ userName: text })
 	}
 
 	updateEmail = (text) => {
@@ -38,28 +41,28 @@ export default class SignUp extends Component {
 		this.setState({ password: text })
 	}
 
-	login = (email, password) => {
-		firebase.auth().createUserWithEmailAndPassword(email, password).catch(function (error) {
-			// Handle Errors here.
-			var errorCode = error.code;
-			var errorMessage = error.message;
-			// ...
-		});
+	signUpAndNavigate = (userName, email, password) => {
+		store.dispatch(signUp(userName, email, password));
 		this.props.navigation.navigate('MyAccount')
 	}
+
+	componentDidMount () {
+      this.unsubscribe = store.subscribe(() => {
+        this.setState(store.getState());
+      });
+    }
+
+    componentWillUnmount () {
+      this.unsubscribe();
+    }
 
 render() {
 	return (
 		<View>
 			<TextInput
 				style={{ height: 40 }}
-				placeholder="First Name"
-				onChangeText={this.updateFirstName}
-			/>
-			<TextInput
-				style={{ height: 40 }}
-				placeholder="Last Name"
-				onChangeText={this.updateLastName}
+				placeholder="User Name"
+				onChangeText={this.updateUserName}
 			/>
 			<TextInput
 				style={{ height: 40 }}
@@ -72,7 +75,7 @@ render() {
 				onChangeText={this.updatePassword}
 			/>
 			<Button
-				onPress={() => this.login(this.state.email, this.state.password)}
+				onPress={() => this.signUpAndNavigate(this.state.userName,this.state.email, this.state.password)}
 				title="Sign Up" />
 		</View>
 	)
