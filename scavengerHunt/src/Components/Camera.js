@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { AppRegistry, StyleSheet, Text, View, Dimensions, Image } from 'react-native'
 import Camera from 'react-native-camera'
+import { geoFire } from '../../database/firebase.js'
 
 const styles = StyleSheet.create({
   container: {
@@ -52,15 +53,16 @@ const styles = StyleSheet.create({
 export default class CameraScreen extends Component {
   constructor(props) {
     super(props)
-    this.takePicture = this.takePicture.bind(this)
     this.getDistance = this.getDistance.bind(this)
+    this.getDirection = this.getDirection.bind(this)
     this.state = {
       latitude: null,
       longitude: null,
       error: null,
       distance: null,
       closestPlaceLat: null,
-      closestPlaceLong: null
+      closestPlaceLong: null,
+      keys: {}
     }
   }
 
@@ -74,21 +76,37 @@ export default class CameraScreen extends Component {
           closestPlaceLat: 40.7052066,
           closestPlaceLong: -74.01032889999999
         })
-        this.getDistance(this.state.latitude, this.state.longitude, this.state.closestPlaceLat, this.state.closestPlaceLong)
+        if (!this.geoQuery) {
+          console.log('makinga geoQuery boiiii')
+          this.geoQuery = geoFire.query({
+            center: [position.coords.latitude, position.coords.longitude],
+            radius: 0.09
+          })
+        } else {
+          this.geoQuery.on('key_entered', (key, location, distance) => {
+            const keys = Object.assign({}, this.state.keys, {[key]: true})
+            this.setState({keys}, console.log)
+            console.log('entering', this.state.keys)
+          })
+          this.geoQuery.on('key_exited', (key, location, distance) => {
+            const keys = Object.assign({}, this.state.keys)
+            delete keys[key]
+            this.setState({keys}, console.log)
+            console.log('exiting', this.state.keys)
+          })
+          this.geoQuery.updateCriteria({
+            center: [position.coords.latitude, position.coords.longitude],
+            radius: 0.09
+          })
+        }
       },
       (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 2000, maximumAge: 1000, distanceFilter: 10 }
+      { enableHighAccuracy: true, timeout: 1000, maximumAge: 1000, distanceFilter: 10 }
     )
   }
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchId)
-  }
-
-  takePicture() {
-    this.camera.capture()
-      .then(data => console.log(data))
-      .catch(err => console.trace(err))
   }
 
   getDistance(lat1, lon1, lat2, lon2) {
@@ -105,13 +123,23 @@ export default class CameraScreen extends Component {
     return d
   }
 
+  getDirection(lat1, lon1, lat2, lon2) {
+  Number.prototype.toRad = function() {
+      return this * Math.PI / 180
+    }
+      var a = Math.sin(lon2.toRad() - lon1.toRad()) * Math.cos(lat2.toRad());
+      var b = Math.cos(lat1.toRad()) * Math.sin(lat2.toRad()) -
+            Math.sin(lat1.toRad()) * Math.cos(lat2.toRad()) * Math.cos(lon2.toRad() - lon1.toRad());
+      return Math.atan2(a, b) * 180 / Math.PI;
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Latitude: {this.state.latitude}</Text>
         <Text style={styles.welcome}>Longitude: {this.state.longitude}</Text>
-        <Text style={styles.welcome}>Distance to Open Market: {this.state.distance}</Text>
         {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
+        <Text style={styles.welcome}>{this.string}</Text>
         <Camera
           ref={(cam) => {
             this.camera = cam
@@ -119,19 +147,26 @@ export default class CameraScreen extends Component {
           style={styles.preview}
           aspect={Camera.constants.Aspect.fill} >
           <View style={styles.arDisplay}>
-            { this.state.distance < 0.1 ?
-              <Image
-                style={styles.overlay}
-                source={require('../../public/pusheenSunglasses.png')}
-                resizeMode="contain"
-              /> : <Image
-                style={styles.overlay}
-                source={require('../../public/pusheen.png')}
-                resizeMode="contain"
-              />
+            { this.state.keys ? Object.keys(this.state.keys).map(key => {
+              const lat1 = this.state.latitude
+              const lon1 = this.state.longitude
+              const lat2 = key.l[0]
+              const lon2 = key.l[1]
+              const direction = this.getDirection(lat1, lon1, lat2, lon2)
+              const distance = this.getDistance(lat1, lon1, lat2, lon2)
+              return (
+                <View>
+                  <Text>{direction}</Text>
+                  <Image
+                    style={styles.overlay}
+                    source={require('../../public/pusheenSunglasses.png')}
+                    resizeMode='contain'
+                    />
+                </View>
+                )
+              }) : null
             }
           </View>
-          <Text style={styles.capture} onPress={this.takePicture}>CAPTURE</Text>
         </Camera>
       </View>
     );
