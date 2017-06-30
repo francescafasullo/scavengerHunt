@@ -63,14 +63,23 @@ function addCategoryToScavengerHuntItem(itemId, categoryName){
 }
 
 //assosiating a scavenger hunt item to a map, both the item and the map should have reference to each other
-function assosiateScavengerItemToMap(mapId, scavengerItemId){
+function associateScavengerItemToMap(mapId, scavengerItemId){
 	// let update = {
 	// 	['/scavenger_hunt_map/'+mapId+'/items/'+scavengerItemId]: true
 	// };
+	let update={};
 	update['/scavenger_hunt_map/'+mapId+'/items/'+scavengerItemId] = true;
 	update['/scavenger_hunt_items/'+scavengerItemId+'/maps/'+mapId] = true;
 	return database.ref().update(update);
 
+
+}
+
+function associateUserToMap(userId,mapId){
+	let update={};
+	update['/users/'+userId+'/maps/'+mapId] = true;
+	update['/scavenger_hunt_map/'+mapId+'/usres/'+userId] = true;
+	return database.ref().update(update);
 
 }
 if(module === require.main){
@@ -115,17 +124,29 @@ addCategoryToScavengerHuntItem(6, 'Museum');
 addCategoryToScavengerHuntItem(7, 'Museum');
 addCategoryToScavengerHuntItem(8, 'Gallery');
 
-//assosiating maps and items
-assosiateScavengerItemToMap(1,1);
-assosiateScavengerItemToMap(1,2);
-assosiateScavengerItemToMap(1,6);
-assosiateScavengerItemToMap(2,3);
-assosiateScavengerItemToMap(2,8);
-assosiateScavengerItemToMap(3,3);
-assosiateScavengerItemToMap(3,1);
-assosiateScavengerItemToMap(4,2);
-assosiateScavengerItemToMap(4,7);
-assosiateScavengerItemToMap(4,6);
+//associating maps and items
+associateScavengerItemToMap(1,1);
+associateScavengerItemToMap(1,2);
+associateScavengerItemToMap(1,6);
+associateScavengerItemToMap(2,3);
+associateScavengerItemToMap(2,8);
+associateScavengerItemToMap(3,3);
+associateScavengerItemToMap(3,1);
+associateScavengerItemToMap(4,2);
+associateScavengerItemToMap(4,7);
+associateScavengerItemToMap(4,6);
+
+//associating users amd maps
+associateUserToMap(1,1);
+associateUserToMap(1,4);
+associateUserToMap(1,2);
+associateUserToMap(2,3);
+associateUserToMap(2,4);
+associateUserToMap(3,4);
+associateUserToMap(3,1);
+associateUserToMap(3,2);
+
+
 
 database.ref('/users/1').once('value').then(data => {
   console.log('reading user from firebase',data.val())
@@ -141,7 +162,8 @@ module.exports = {
 	writeScavengerHuntItem: writeScavengerHuntItem,
 	writeCategory: writeCategory,
 	addCategoryToScavengerHuntItem: addCategoryToScavengerHuntItem,
-	assosiateScavengerItemToMap: assosiateScavengerItemToMap
+	associateScavengerItemToMap: associateScavengerItemToMap,
+	associateUserToMap: associateUserToMap
 }
 //export default database
 

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { AppRegistry, StyleSheet, Text, View, Button, Image, TextInput } from 'react-native'
 import firebase from 'firebase'
+import store from '../../store'
+import {login} from '../reducers/authReducer'
 
 const styles = StyleSheet.create({})
 
@@ -11,18 +13,36 @@ export default class Login extends Component {
             email: "",
             password: ""
         }
-        this.login = this.login.bind(this)
+        
+        this.loginAndNavigate = this.loginAndNavigate.bind(this)
+        this.updateEmail = this.updateEmail.bind(this)
+        this.updatePassword = this.updatePassword.bind(this)
     }
 
-    login = (email, password) => {
-        firebase.auth().signInWithEmailAndPassword(email, password).catch(function (error) {
-            // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
-            // ...
-        });
+    loginAndNavigate = (email, password) => {
+        store.dispatch(login(email, password));
         this.props.navigation.navigate('MyAccount')
     }
+
+    updateEmail = (text) => {
+        this.setState({email: text});
+    }
+
+    updatePassword = (text) => {
+        this.setState({password: text});
+    }
+
+    componentDidMount () {
+      this.unsubscribe = store.subscribe(() => {
+        this.setState(store.getState());
+      });
+    }
+
+    componentWillUnmount () {
+      this.unsubscribe();
+    }
+
+
 
     render() {
         return (
@@ -38,7 +58,7 @@ export default class Login extends Component {
                     onChangeText={this.updatePassword}
                 />
                 <Button
-                    onPress={() => this.login(this.state.email, this.state.password)}
+                    onPress={() => this.loginAndNavigate(this.state.email, this.state.password)}
                     title="Login"
                 />
             </View>
