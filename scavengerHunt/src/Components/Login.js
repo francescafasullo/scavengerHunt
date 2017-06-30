@@ -13,9 +13,7 @@ export default class Login extends Component {
             email: "",
             password: ""
         }
-        //this.state = store.getState();
-        // this.state.email="";
-        // this.state.password = "";
+        
         this.loginAndNavigate = this.loginAndNavigate.bind(this)
         this.updateEmail = this.updateEmail.bind(this)
         this.updatePassword = this.updatePassword.bind(this)

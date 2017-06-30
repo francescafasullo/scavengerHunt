@@ -17,10 +17,7 @@ export default class SignUp extends Component {
 			email: "",
 			password: ""
 		}
-		//this.state = store.getState();
-		// this.state.username = "";
-		// this.state.email = "";
-		// this.state.password = "";
+		
 		
 		this.updateUserName = this.updateUserName.bind(this)
 		this.updateEmail = this.updateEmail.bind(this)
