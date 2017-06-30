@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, View, Button, Image } from 'react-native'
+import { StyleSheet, Text, View, Button, Image } from 'react-native'
 import MapView from 'react-native-maps'
 
 const styles = StyleSheet.create({
@@ -40,7 +40,7 @@ const chargingBull = {
 
 const markers = [openMarket, fullstack, chargingBull]
 
-export default class PlayMap extends Component {
+export default class PlayMap1 extends Component {
   constructor(props) {
     super(props)
   }
@@ -54,8 +54,8 @@ export default class PlayMap extends Component {
         <MapView
           style={styles.map}
           initialRegion={{
-            latitude: 40.7050758,
-            longitude: -74.00916039999998,
+            latitude: 40.759025,
+            longitude: -73.985185,
             latitudeDelta: 0.04,
             longitudeDelta: 0.04
           }}
@@ -85,3 +85,4 @@ export default class PlayMap extends Component {
     )
   }
 }
+

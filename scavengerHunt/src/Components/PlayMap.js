@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, View, Button, Image } from 'react-native'
+import { StyleSheet, Text, View, Button, Image } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 
 const styles = StyleSheet.create({

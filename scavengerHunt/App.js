@@ -11,12 +11,17 @@ import HomeScreen from './src/Components/Home'
 import CameraScreen from './src/Components/Camera'
 import SignInSignUpScreen from './src/Components/SignInSignUp'
 import PlayMap from './src/Components/PlayMap'
+import PlayMap1 from './src/Components/PlayMap1'
+import Play from './src/Components/Play'
+import database from './database/firebase'
+
 
 const fireBase = require('./database/firebase');
 
 import SignUpScreen from './src/Components/SignUp'
 import LoginScreen from './src/Components/Login'
 import MyAccountScreen from './src/Components/MyAccount'
+import UserSH from './src/Components/UserSH'
 
 
  
@@ -33,6 +38,15 @@ const scavengerHuntRouter = StackNavigator({
       title: 'Play'
     }
   },
+  Play: {
+    screen: Play
+  },
+  PlayMap: {
+    screen: PlayMap,
+  },
+  PlayMap1: {
+    screen: PlayMap1
+  },
   SignUp: {
     screen: SignUpScreen
   },
@@ -46,8 +60,8 @@ const scavengerHuntRouter = StackNavigator({
   SignInSignUp: {
     screen: SignInSignUpScreen
   },
-  PlayMap: {
-    screen: PlayMap
+  UserSH: {
+    screen: UserSH
   }
 
 
