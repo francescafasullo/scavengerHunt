@@ -17,6 +17,7 @@ import { StackNavigator, TabNavigator } from 'react-navigation'
 import { Icon } from 'react-native-elements'
 import HomeScreen from './src/Components/Home'
 import CameraScreen from './src/Components/Camera'
+import SignInSignUpScreen from './src/Components/SignInSignUp'
 
 const fireBase = require('./database/firebase');
 
@@ -48,7 +49,12 @@ const scavengerHuntRouter = StackNavigator({
   MyAccount: {
     screen: MyAccountScreen
 
+  },
+  SignInSignUp: {
+    screen: SignInSignUpScreen
   }
+
+
 })
 
  const Tabs = TabNavigator({
@@ -69,11 +75,21 @@ const scavengerHuntRouter = StackNavigator({
       
     }
 
+  },
+  Account: {
+    screen: MyAccountScreen,
+    navigationOptions: {
+      tabBarLabel: 'Account',
+      tabBarIcon: ({ tintColor }) => <Icon name="account-circle" size={26} color={tintColor} />
+      
+    }
+
   }
 },{
   tabBarOptions: {
-    activeTintColor: '#696969',
-    inactiveTintColor: '#C0C0C0'
+    activeTintColor: '#800000',
+    //inactiveTintColor: '#C0C0C0'
+    inactiveTintColor: '#696969'
   }
 })
 
