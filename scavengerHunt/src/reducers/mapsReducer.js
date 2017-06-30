@@ -1,25 +1,28 @@
 import store from '../../store'
 const fireBaseFunctions = require('../../database/firebase');
 import {writeUserData} from '../../database/firebase'
+import {database} from '../../database/firebase'
 import firebase from 'firebase'
 
 /* ------------------ actions ------------------------ */
 const ADD_MAP = 'ADD_MAP'
 
 /* ------------------ action creators ---------------- */
-export const setLoggedUser = (userId) => ({ type: SET_LOGGED_USER, userId})
+export const addMap = (map) => ({ type: ADD_MAP, map})
 
 /* ------------------ reducer ------------------------ */
-const initialAuthState = {
-	userId: undefined
+const initialMapsState = {
+	maps:[],
+	selectedMap: {}
 }
 
-const authReducer = (state = initialAuthState, action) => {
+const mapsReducer = (state = initialMapsState, action) => {
+	const newState = Object.assign({}, state)	
 	switch (action.type) {
-		case SET_LOGGED_USER:
-			return Object.assign({},state, {userId: action.userId});
+		case ADD_MAP:
+			newState.maps.push(action.map)
 		default:
-			return initialAuthState;
+			return initialMapsState;
 
 	}
 
@@ -29,26 +32,13 @@ const authReducer = (state = initialAuthState, action) => {
 
 /* ------------------ dispatchers ------------------- */
 
-export const signUp = (username, email, password) => dispatch => 
-	firebase.auth().createUserWithEmailAndPassword(email, password)
-            .then(res => 
-                writeUserData(res.uid, username, email, 500, "url"));
-
-
-
-export const login = (email,password) => dispatch => 
-	firebase.auth().signInWithEmailAndPassword(email, password);
-
-
-export const logout = () => dispatch => 
-	firebase.auth().signOut();
+export const newMap = (mapId, city, places) => dispatch => 
+	database.ref('scavenger_hunt_map/' + mapId).set({
+		city: city,
+		places: places
+	})
 	
-
-
-  
-
-
-export default authReducer
+export default mapsReducer
 
 
 

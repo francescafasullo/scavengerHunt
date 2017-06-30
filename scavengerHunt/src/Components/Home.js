@@ -41,15 +41,10 @@ export default class HomeScreen extends Component {
         <Text style={styles.welcome}>
           Welcome to Scavenger Hunt!
         </Text>
-<<<<<<< HEAD
-        <Button onPress={() => { this.props.navigation.navigate('Camera') }} title="Play!" />
-=======
 
         <Button onPress={() => {this.props.navigation.navigate('UserSH')}} title="Check out your map!" />
-
         <Button onPress={() => { this.props.navigation.navigate('PlayMap') }} title="Play!" />
         <Button title="Explore"/>
->>>>>>> on press markers
         <Button onPress={() => { this.props.navigation.navigate('SignUp') }} title="Sign Up" />
         <Button onPress={() => { this.props.navigation.navigate('Login') }}
           title="Login" />

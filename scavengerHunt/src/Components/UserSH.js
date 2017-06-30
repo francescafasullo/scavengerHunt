@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { AppRegistry, StyleSheet, Text, View, Button, Image, Picker, TouchableOpacity } from 'react-native'
 import MapView,  {Marker} from 'react-native-maps'
+import store from '../../store'
+import {newMap} from '../reducers/mapsReducer'
 
 const styles = StyleSheet.create({
     welcome: {
@@ -28,10 +30,7 @@ export default class UserSH extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            maps: {
-							city: {}, 
-							places: []
-						},
+						city: {}, 
             cities: [
 							{ 
 								name: 'nyc',
@@ -77,12 +76,11 @@ export default class UserSH extends Component {
 
 		saveSH = () => {
 			let city =	this.state.cities.filter(city => {
-				console.log(city.name, this.state.selectedCity)
 				 return city.name === this.state.selectedCity
 			})
 			const places = this.state.places
-			this.setState({maps: { city: city, places: this.state.places}} )
-			console.log(this.state.maps)
+			const mapId = city[0].name
+			store.dispatch(newMap(mapId, city, places))
 		}
 
 
