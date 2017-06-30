@@ -125,7 +125,6 @@ export default class CameraScreen extends Component {
     var a = Math.sin(dlat / 2) * Math.sin(dlat / 2) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.sin(dlon / 2) * Math.sin(dlon / 2)
     var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
     var d = radius * c
-    this.setState({distance: d})
     return d
   }
 
