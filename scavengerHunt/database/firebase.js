@@ -73,7 +73,7 @@ function associateScavengerItemToMap(mapId, scavengerItemId){
 	return database.ref().update(update);
 
 
-// }
+}
 
 function associateUserToMap(userId,mapId){
 	let update={};
@@ -165,5 +165,5 @@ module.exports = {
 	associateScavengerItemToMap: associateScavengerItemToMap,
 	associateUserToMap: associateUserToMap
 }
-//export default database
 
+//export default database
