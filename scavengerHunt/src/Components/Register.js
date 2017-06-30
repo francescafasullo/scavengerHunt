@@ -12,5 +12,3 @@ export default class Register extends Component {
         )
     }
 }
-
-AppRegistry.registerComponent('scavengerHunt', () => RegisterScreen)

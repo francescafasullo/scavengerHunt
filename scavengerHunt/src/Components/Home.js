@@ -56,5 +56,3 @@ export default class HomeScreen extends Component {
     );
   }
 }
-
-AppRegistry.registerComponent('scavengerHunt', () => HomeScreen);

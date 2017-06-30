@@ -38,5 +38,3 @@ export default class MyAccount extends Component {
       )
   }
 }
-
-AppRegistry.registerComponent('scavengerHunt', () => MyAccountScreen);

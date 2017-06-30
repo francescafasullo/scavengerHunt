@@ -12,5 +12,3 @@ export default class NewSH extends Component {
         )
     }
 }
-
-AppRegistry.registerComponent('scavengerHunt', () => NewSHScreen)

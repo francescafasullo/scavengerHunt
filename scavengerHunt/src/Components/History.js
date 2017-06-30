@@ -13,6 +13,3 @@ export default class History extends Component {
         )
     }
 }
-
-AppRegistry.registerComponent('scavengerHunt', () => HistoryScreen);
-

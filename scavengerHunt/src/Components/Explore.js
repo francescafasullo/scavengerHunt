@@ -12,5 +12,3 @@ export default class Explore extends Component {
         )
     }
 }
-
-AppRegistry.registerComponent('scavengerHunt', () => ExploreScreen)

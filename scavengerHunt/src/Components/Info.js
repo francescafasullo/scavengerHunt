@@ -12,5 +12,3 @@ export default class Info extends Component {
         )
     }
 }
-
-AppRegistry.registerComponent('scavengerHunt', () => InfoScreen)

@@ -12,5 +12,3 @@ export default class Settings extends Component {
         )
     }
 }
-
-AppRegistry.registerComponent('scavengerHunt', () => SettingsScreen)

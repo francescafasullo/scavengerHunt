@@ -16,4 +16,4 @@ export default class TokenCollected extends Component {
             </View>
         )
     }
-} 
+}
