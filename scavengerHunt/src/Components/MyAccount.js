@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { AppRegistry, StyleSheet, Text, View, Button, Image } from 'react-native'
 import store from '../../store'
 import {logout} from '../reducers/authReducer'
+import {fetchUserMaps} from '../reducers/myAccountReducer'
 
 
 const styles = StyleSheet.create({
@@ -30,6 +31,7 @@ export default class MyAccount extends Component {
       this.unsubscribe = store.subscribe(() => {
         this.setState(store.getState());
       });
+      
     }
 
   componentWillUnmount () {
@@ -43,9 +45,9 @@ export default class MyAccount extends Component {
 
 
   render() {
-    console.log("in my account state", this.state);
+    //console.log("in my account state", this.state);
     const userId = (this.state ? this.state.auth.userId : null)//{auth: {userId}} = this.state || {}
-     console.log("in my account userId", userId);
+     //console.log("in my account userId", userId);
 
      
       return (
