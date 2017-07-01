@@ -47,7 +47,7 @@ export default class MyAccount extends Component {
   render() {
     //console.log("in my account state", this.state);
     const userId = (this.state ? this.state.auth.userId : null)//{auth: {userId}} = this.state || {}
-     //console.log("in my account userId", userId);
+     console.log("in my account userId", userId);
 
      
       return (
@@ -58,7 +58,7 @@ export default class MyAccount extends Component {
            
 						<Text style={styles.points}>
             
-						You have points!
+						user name: `${this.state.myAccount.userPersonalInfo.username}`
 						</Text>
             <Button onPress={() => {this.logoutAndNavigate()}} title="Logout"/>
         
@@ -86,22 +86,10 @@ export default class MyAccount extends Component {
 }
 
 // = this.state.authReducer.userId;
-AppRegistry.registerComponent('scavengerHunt', () => MyAccountScreen);
+//AppRegistry.registerComponent('scavengerHunt', () => MyAccountScreen);
 
 
-/*
-return (
-          <View style={styles.container}>
-          {userId ? 
-            <Text style={styles.points}>
-            <Button onPress={logoutAndNavigate} title="Logout" />
-            You have points!
-            </Text>
-            :
-            this.props.navigation.navigate('SignInSignUp')}
-          </View>
-      )
-*/
+
 
 
 

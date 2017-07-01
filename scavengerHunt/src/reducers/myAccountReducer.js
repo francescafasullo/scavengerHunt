@@ -40,21 +40,32 @@ const myAccountReducer = (state = initialAuthState, action) => {
 
 export const fetchUserMaps = (userId) => dispatch => {
 	console.log('in fetchUserMaps', userId);
-	let res = readUserMaps(userId);
-	res.then(data => {
-		console.log('data for uid', userId, '::', data)
-		dispatch(setUserMaps(data));
-	})
+	if(!userId)
+		dispatch(setUserMaps([]));
+	else {
+		let res = readUserMaps(userId);
+		res.then(data => {
+			console.log('data for uid', userId, '::', data)
+			dispatch(setUserMaps(data));
+		})
+
+	}
+	
 	
 }
 
 export const fetchUserPersonalInfo = (userId) => dispatch =>{
 	console.log('in fetch user info', userId);
-	let res = readUserInfo(userId);
-	res.then(data => {
-		console.log('data of user', userId, '::', data);
-		dispatch(setUserPersonalInfo(data));
-	})
+	if(!userId)
+		dispatch(setUserPersonalInfo({}));
+	else {
+		let res = readUserInfo(userId);
+		res.then(data => {
+			console.log('data of user', userId, '::', data);
+			dispatch(setUserPersonalInfo(data));
+		})
+	}
+	
 } 
 
 export default myAccountReducer;
