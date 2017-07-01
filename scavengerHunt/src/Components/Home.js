@@ -42,21 +42,16 @@ export default class HomeScreen extends Component {
           Welcome to Scavenger Hunt!
         </Text>
 
-        <Button onPress={() => {this.props.navigation.navigate('UserSH')}} title="Check out your map!" />
-        <Button onPress={() => { this.props.navigation.navigate('PlayMap') }} title="Play!" />
+        <Button onPress={() => { this.props.navigation.navigate('Play') }} title="Play!" />
         <Button title="Explore"/>
         <Button onPress={() => { this.props.navigation.navigate('SignUp') }} title="Sign Up" />
         <Button onPress={() => { this.props.navigation.navigate('Login') }}
           title="Login" />
         <Button onPress={this.logout} title="Logout" />
-        <Button onPress={() => { this.props.navigation.navigate('Explore') }}
-          title="Explore"
-           />
-        <Button onPress={() => {this.props.navigation.navigate('PlayMap')}} title="Check out your map!" />
       </View>
 
     );
   }
 }
 
-AppRegistry.registerComponent('scavengerHunt', () => HomeScreen);
+

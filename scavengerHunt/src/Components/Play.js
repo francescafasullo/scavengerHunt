@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { AppRegistry, StyleSheet, Text, View, Button, Image, Picker } from 'react-native'
 import MapView from 'react-native-maps'
+import {getMaps} from '../reducers/mapsReducer'
+import store from '../../store'
 
 const styles = StyleSheet.create({
 	welcome: {
@@ -23,19 +25,17 @@ const styles = StyleSheet.create({
 export default class Play extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			selectedMap: {
-				latitude: "",
-				longitude: "",
-				latitudeDelta: "",
-				longitudeDelta: ""
-			}
-		}
+		this.state = store.getState()
+	}
+
+	componentDidMount = () => {
+		store.dispatch(getMaps())
 	}
 
 	render() {
 		return (
 			<View >
+			{console.log(this.state)}
 				<Text >
 					Select a scavenger hunt!
             </Text>

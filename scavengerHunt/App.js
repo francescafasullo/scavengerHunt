@@ -21,10 +21,14 @@ const fireBase = require('./database/firebase');
 import SignUpScreen from './src/Components/SignUp'
 import LoginScreen from './src/Components/Login'
 import MyAccountScreen from './src/Components/MyAccount'
-import UserSH from './src/Components/UserSH'
+import NewSH from './src/Components/NewSH'
+import NYCMap from './src/Components/NYCMap'
+import SFMap from './src/Components/SFMap'
+import LAMap from './src/Components/LAMap'
+import AustinMap from './src/Components/AustinMap'
+import SavedConf from './src/Components/SavedConf'
 
 
- 
 const scavengerHuntRouter = StackNavigator({
   Home: {
     screen: HomeScreen,
@@ -60,20 +64,33 @@ const scavengerHuntRouter = StackNavigator({
   SignInSignUp: {
     screen: SignInSignUpScreen
   },
-  UserSH: {
-    screen: UserSH
+  NewSH: {
+    screen: NewSH
+  },
+  NYCMap: {
+    screen: NYCMap
+  },
+  SFMap: {
+    screen: SFMap
+  },
+  LAMap: {
+    screen: LAMap
+  },
+  AustinMap: {
+    screen: AustinMap
+  }, 
+  SavedConf: {
+    screen: SavedConf
   }
-
-
 })
 
- const Tabs = TabNavigator({
+const Tabs = TabNavigator({
   Home: {
     screen: scavengerHuntRouter,
     navigationOptions: {
       tabBarLabel: 'Home',
-      tabBarIcon: ({tintColor}) =>  <Icon name="home" size={26} color={tintColor} />
-      
+      tabBarIcon: ({ tintColor }) => <Icon name="home" size={26} color={tintColor} />
+
     }
 
   },
@@ -82,7 +99,7 @@ const scavengerHuntRouter = StackNavigator({
     navigationOptions: {
       tabBarLabel: 'Play',
       tabBarIcon: ({ tintColor }) => <Icon name="play-circle-filled" size={26} color={tintColor} />
-      
+
     }
 
   },
@@ -91,17 +108,17 @@ const scavengerHuntRouter = StackNavigator({
     navigationOptions: {
       tabBarLabel: 'Account',
       tabBarIcon: ({ tintColor }) => <Icon name="account-circle" size={26} color={tintColor} />
-      
+
     }
 
   }
-},{
-  tabBarOptions: {
-    activeTintColor: '#800000',
-    //inactiveTintColor: '#C0C0C0'
-    inactiveTintColor: '#696969'
-  }
-})
+}, {
+    tabBarOptions: {
+      activeTintColor: '#800000',
+      //inactiveTintColor: '#C0C0C0'
+      inactiveTintColor: '#696969'
+    }
+  })
 
 //AppRegistry.registerComponent('scavengerHunt', () => scavengerHuntRouter);
 AppRegistry.registerComponent('scavengerHunt', () => Tabs);
