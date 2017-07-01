@@ -36,10 +36,13 @@ const myAccountReducer = (state = initialAuthState, action) => {
 export const fetchUserMaps = (userId) => dispatch => {
 	console.log('in fetchUserMaps', userId);
 	let res = readUserMaps(userId);
-	//res.then(data => {console.log('data for uid', userId, '::', data)})
+	res.then(data => {
+		console.log('data for uid', userId, '::', data)
+		dispatch(setUserMaps(data));
+	})
 	//.catch(console.error)
 
-	console.log('in fetchUserMaps maps', res);
+	//console.log('in fetchUserMaps maps', res);
 	
 	//let res = null;
 	//dispatch(setUserMaps(res));

@@ -136,7 +136,7 @@ function readUserMaps(userId) {
 	let mapKeys;
 	let mapItemsKeys;
 	let userMaps;
-	database.ref('/users/' + userId).once('value')
+	return database.ref('/users/' + userId).once('value')
 	.then(data => {
 		if(!data.val().maps)
 			return null
