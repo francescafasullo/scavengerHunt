@@ -261,16 +261,16 @@ addCategoryToScavengerHuntItem(7, 'Museum');
 addCategoryToScavengerHuntItem(8, 'Gallery');
 
 //associating maps and items
-associateScavengerItemToMap(-KnuufYTTVciOt7MDAUz,1);
-associateScavengerItemToMap(-KnuufYTTVciOt7MDAUz,2);
-associateScavengerItemToMap(-KnuufYTTVciOt7MDAUz,6);
-associateScavengerItemToMap(-KnuufYUMuNrU__tFe03,3);
-associateScavengerItemToMap(-KnuufYUMuNrU__tFe03,8);
-associateScavengerItemToMap(-KnuufYUMuNrU__tFe04,3);
-associateScavengerItemToMap(-KnuufYUMuNrU__tFe04,1);
-associateScavengerItemToMap(-KnuufYVNHKGpS4yo6qw,2);
-associateScavengerItemToMap(-KnuufYVNHKGpS4yo6qw,7);
-associateScavengerItemToMap(-KnuufYVNHKGpS4yo6qw,6);
+associateScavengerItemToMap('KnuufYTTVciOt7MDAUz',1);
+associateScavengerItemToMap('KnuufYTTVciOt7MDAUz',2);
+associateScavengerItemToMap('KnuufYTTVciOt7MDAUz',6);
+associateScavengerItemToMap('KnuufYUMuNrU__tFe03',3);
+associateScavengerItemToMap('KnuufYUMuNrU__tFe03',8);
+associateScavengerItemToMap('KnuufYUMuNrU__tFe04',3);
+associateScavengerItemToMap('KnuufYUMuNrU__tFe04',1);
+associateScavengerItemToMap('KnuufYVNHKGpS4yo6qw',2);
+associateScavengerItemToMap('KnuufYVNHKGpS4yo6qw',7);
+associateScavengerItemToMap('KnuufYVNHKGpS4yo6qw',6);
 
 //associating users amd maps
 associateUserToMap(1,1);
