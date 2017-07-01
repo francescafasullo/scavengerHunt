@@ -320,8 +320,7 @@ export default class PlayModeMap extends Component {
               location={this.state.keys[key].location}
             />
           )
-        })
-
+        }) : null
         }
         </MapView>
       </View>
