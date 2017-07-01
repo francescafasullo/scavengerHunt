@@ -94,7 +94,8 @@ const scavengerHuntRouter = StackNavigator({
 })
 
 //AppRegistry.registerComponent('scavengerHunt', () => scavengerHuntRouter);
-AppRegistry.registerComponent('scavengerHunt', () => Tabs);
+//AppRegistry.registerComponent('scavengerHunt', () => Tabs);
+export default Tabs;
 
 
 

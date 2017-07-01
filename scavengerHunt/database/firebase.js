@@ -82,6 +82,121 @@ function associateUserToMap(userId,mapId){
 	return database.ref().update(update);
 
 }
+
+//help functions to re-construct data retrieved from db
+//takes an array of maps keys and maps them to an array of map objects 
+//that eact one would have the map info
+function readMapsInfo(maps){
+
+	let res = maps.map((item) => {
+		return database.ref('/scavenger_hunt_map/' + Number(item)).once('value')
+			
+	});
+	return Promise.all(res).then (values => {
+		
+		let mapInfoArr = values.map(item => {
+			return item.val();
+		})
+		//console.log('in promise all',mapInfoArr);
+		return mapInfoArr;
+		
+	})
+	.catch((error)=>{console.log(error)})
+	
+
+}
+
+function readMapsItemsInfo(items){
+	// let tmp = database.ref('/scavenger_hunt_items/'+Number(items[0])).once('value');
+	// console.log('in read iems',tmp);
+	// return items.map(item => {
+	// 	database.ref('/scavenger_hunt_items/'+Number(item)).once('value')
+	// 	.then(data => {
+	// 		return data.val();
+	// 	})
+	// })
+	let res = items.map((item) => {
+		return database.ref('/scavenger_hunt_items/' + Number(item)).once('value')
+			
+	});
+	return Promise.all(res).then (values => {
+		
+		let itemInfoArr = values.map(item => {
+			return item.val();
+		})
+		console.log('in promise items all',itemInfoArr);
+		return itemInfoArr;
+		
+	})
+	.catch((error)=>{console.log(error)})
+
+}
+//readingdata function
+function readUserMaps(userId) {
+	let mapKeys;
+	let mapItemsKeys;
+	let userMaps;
+	return database.ref('/users/' + userId).once('value')
+	.then(data => {
+		if(!data.val().maps)
+			return null
+		mapKeys = Object.keys(data.val().maps);
+		
+		return readMapsInfo(mapKeys);
+  		
+	})
+	.then(data => {
+		if(!data)
+			return null
+		userMaps = data;
+		
+		return userMaps.map(item => {
+			mapItemsKeys = Object.keys(item.items);
+			return readMapsItemsInfo(mapItemsKeys)
+			
+		})
+	})
+	.then(data => {
+		if(!data)
+			return null;
+		return Promise.all(data);
+		 
+	})
+	.then(res => {
+		// res = [ [] ]
+		if(!res)
+			return null;
+
+		let i=0;
+		userMaps = userMaps.map(map => {
+			map.items = res[i];
+			i++;
+			return map;
+		})
+		//console.log('got Items',userMaps)
+		return userMaps
+	});
+	
+		
+	
+}
+
+function readUserInfo(userId) {
+	let user= {};
+	return database.ref('/users/' + userId).once('value')
+	.then(data => {
+		user.username = data.val().username;
+		user.email = data.val().email;
+		user.score = data.val().score;
+		user.profile_pic = data.val().profile_pic
+		return user;
+	})
+
+}
+
+	
+
+
 if(module === require.main){
 	//seeding scavenger hunt items
 writeScavengerHuntItem(1,'Open Market', '15 William St, New York, NY 10005, USA', 40.7052066, -74.0103288999999);
@@ -145,6 +260,12 @@ associateUserToMap(2,4);
 associateUserToMap(3,4);
 associateUserToMap(3,1);
 associateUserToMap(3,2);
+associateUserToMap('xDvwt4l8ZZg6X7SieEahz1bFtgb2',1);
+associateUserToMap('xDvwt4l8ZZg6X7SieEahz1bFtgb2',2);
+
+
+
+
 
 
 
@@ -163,7 +284,9 @@ module.exports = {
 	writeCategory: writeCategory,
 	addCategoryToScavengerHuntItem: addCategoryToScavengerHuntItem,
 	associateScavengerItemToMap: associateScavengerItemToMap,
-	associateUserToMap: associateUserToMap
+	associateUserToMap: associateUserToMap,
+	readUserMaps: readUserMaps,
+	readUserInfo: readUserInfo
 }
 
 //export default database
