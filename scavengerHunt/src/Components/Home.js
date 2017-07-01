@@ -44,7 +44,7 @@ export default class HomeScreen extends Component {
         <Text style={styles.welcome}>
           Welcome to Scavenger Hunt!
         </Text>
-        <Button onPress={() => { this.props.navigation.navigate('Camera') }} title="Play!" />
+        <Button onPress={() => { this.props.navigation.navigate('PlayModeMap') }} title="Play!" />
         <Button title="Explore"/>
         <Button onPress={() => { this.props.navigation.navigate('SignUp') }} title="Sign Up" />
         <Button onPress={() => {this.props.navigation.navigate('Login')}}
@@ -55,5 +55,3 @@ export default class HomeScreen extends Component {
     );
   }
 }
-
-AppRegistry.registerComponent('scavengerHunt', () => HomeScreen);

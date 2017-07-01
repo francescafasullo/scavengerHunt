@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
-console.log('in App.js***********************')
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -24,9 +16,9 @@ const fireBase = require('./database/firebase');
 import SignUpScreen from './src/Components/SignUp'
 import LoginScreen from './src/Components/Login'
 import MyAccountScreen from './src/Components/MyAccount'
+import PlayModeMap from './src/Components/PlayModeMap'
 
 
- 
 const scavengerHuntRouter = StackNavigator({
   Home: {
     screen: HomeScreen,
@@ -52,9 +44,10 @@ const scavengerHuntRouter = StackNavigator({
   },
   SignInSignUp: {
     screen: SignInSignUpScreen
+  },
+  PlayModeMap: {
+    screen: PlayModeMap
   }
-
-
 })
 
  const Tabs = TabNavigator({
@@ -63,7 +56,7 @@ const scavengerHuntRouter = StackNavigator({
     navigationOptions: {
       tabBarLabel: 'Home',
       tabBarIcon: ({tintColor}) =>  <Icon name="home" size={26} color={tintColor} />
-      
+
     }
 
   },
@@ -72,7 +65,7 @@ const scavengerHuntRouter = StackNavigator({
     navigationOptions: {
       tabBarLabel: 'Play',
       tabBarIcon: ({ tintColor }) => <Icon name="play-circle-filled" size={26} color={tintColor} />
-      
+
     }
 
   },
@@ -81,20 +74,15 @@ const scavengerHuntRouter = StackNavigator({
     navigationOptions: {
       tabBarLabel: 'Account',
       tabBarIcon: ({ tintColor }) => <Icon name="account-circle" size={26} color={tintColor} />
-      
+
     }
 
   }
 },{
   tabBarOptions: {
     activeTintColor: '#800000',
-    //inactiveTintColor: '#C0C0C0'
     inactiveTintColor: '#696969'
   }
 })
 
-//AppRegistry.registerComponent('scavengerHunt', () => scavengerHuntRouter);
 AppRegistry.registerComponent('scavengerHunt', () => Tabs);
-
-
-
