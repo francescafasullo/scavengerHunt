@@ -1,8 +1,4 @@
-
-
-
 const firebase = require('firebase')
-
 
 var config = {
     apiKey: "AIzaSyDgSoVrvjyZTFsT3Udks1x0KkGZGrYjThQ",
@@ -12,10 +8,16 @@ var config = {
     storageBucket: "",
     messagingSenderId: "80431684805"
   };
-  firebase.initializeApp(config);
 
-  // Get a reference to the database service
- var database = firebase.database();
+//  Initializes the Firebase SDK
+firebase.initializeApp(config)
+
+// Creates a reference to the Firebase database service where we will store information
+ var database = firebase.database()
+ var firebaseRef = database.ref()
+
+ // Creates a GeoFire index
+var geoFire = new GeoFire(firebaseRef)
 
  function writeUserData(userId, name, email,score,profile_picURL) {
   database.ref('users/' + userId).set({
@@ -42,7 +44,7 @@ function writeScavengerHuntItem(itemId, name, address, latitude, longitude, cate
 		address: address,
 		latitude: latitude,
 		longitude: longitude
-		
+
 	})
 
 }
@@ -92,6 +94,24 @@ writeScavengerHuntItem(5, 'Haru Sushi', '1 Wall St, New York, NY 10005', 40.7071
 writeScavengerHuntItem(6, 'Museum of American Finance', '48 Wall St, New York, NY 10005', 40.7065557, -74.0090503);
 writeScavengerHuntItem(7, 'Federal Hall', '26 Wall St, New York, NY 10005, USA', 40.707258, -74.0103563999999);
 writeScavengerHuntItem(8, 'Keya Gallery', '14 Wall Stt, New York, NY 10005', 40.7076346, -74.0107747)
+writeScavengerHuntItem(9, 'CityFresh Market', '2212 3rd Avenue, New York, NY 10035', 40.8010717, -73.93807850000002)
+
+//  Seeds scavenger hunt list items in geoFire
+geoFire.set({
+  '1': [40.7052066, -74.0103288999999],
+  '2': [40.7039915, -74.0110917],
+  '3': [40.7043408, -74.0118572],
+  '4': [40.7060794, -74.0093213],
+  '5': [40.7071269, -74.0118077999999],
+  '6': [40.7065557, -74.0090503],
+  '7': [40.707258, -74.0103563999999],
+  '8': [40.7076346, -74.0107747],
+  '9': [40.8010717, -73.93807850000002]
+}).then(function() {
+  console.log('Provided keys have been added to GeoFire!')
+}, function(error) {
+  console.log('Error: ' + error)
+})
 
 //seeding categories
 writeCategory('Restaurant', 'A place to dine');
@@ -152,7 +172,7 @@ database.ref('/users/1').once('value').then(data => {
   console.log('reading user from firebase',data.val())
 })
 
-} 
+}
 
 
 module.exports = {
@@ -163,7 +183,8 @@ module.exports = {
 	writeCategory: writeCategory,
 	addCategoryToScavengerHuntItem: addCategoryToScavengerHuntItem,
 	associateScavengerItemToMap: associateScavengerItemToMap,
-	associateUserToMap: associateUserToMap
+	associateUserToMap: associateUserToMap,
+  geoFire: geoFire
 }
 //export default database
 
