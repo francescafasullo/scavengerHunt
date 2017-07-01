@@ -1,8 +1,5 @@
-
-
-
 const firebase = require('firebase')
-
+const GeoFire = require('geofire')
 
 var config = {
     apiKey: "AIzaSyDgSoVrvjyZTFsT3Udks1x0KkGZGrYjThQ",
@@ -12,10 +9,16 @@ var config = {
     storageBucket: "",
     messagingSenderId: "80431684805"
   };
-  firebase.initializeApp(config);
 
-  // Get a reference to the database service
- var database = firebase.database();
+//  Initializes the Firebase SDK
+firebase.initializeApp(config)
+
+// Creates a reference to the Firebase database service where we will store information
+ var database = firebase.database()
+ var firebaseRef = database.ref('geoFire/')
+
+ // Creates a GeoFire index
+var geoFire = new GeoFire(firebaseRef)
 
  function writeUserData(userId, name, email,score,profile_picURL) {
   database.ref('users/' + userId).set({
@@ -42,7 +45,7 @@ function writeScavengerHuntItem(name, address, latitude, longitude){
 		address: address,
 		latitude: latitude,
 		longitude: longitude
-		
+
 	})
 
 }
@@ -87,7 +90,9 @@ function associateUserToMap(userId,mapId){
 function readMapsInfo(maps){
 
 	let res = maps.map((item) => {
-		return database.ref('/scavenger_hunt_map/' + Number(item)).once('value')
+
+		return database.ref('/scavenger_hunt_map/' + item).once('value')
+
 			
 	});
 	return Promise.all(res).then (values => {
@@ -107,7 +112,8 @@ function readMapsInfo(maps){
 function readMapsItemsInfo(items){
 	
 	let res = items.map((item) => {
-		return database.ref('/scavenger_hunt_items/' + Number(item)).once('value')
+		return database.ref('/scavenger_hunt_items/' + item).once('value')
+
 			
 	});
 	return Promise.all(res).then (values => {
@@ -190,6 +196,7 @@ function readUserInfo(userId) {
 
 if(module === require.main){
 	//seeding scavenger hunt items
+<<<<<<< HEAD
 // writeScavengerHuntItem(1,'Open Market', '15 William St, New York, NY 10005, USA', 40.7052066, -74.0103288999999);
 // writeScavengerHuntItem(2, 'La Pain Quotidien', '85 Broad St, New York, NY 10005, USA', 40.7039915, -74.0110917);
 // writeScavengerHuntItem(3, 'dig inn', '80 Broad St, New York, NY 10004, USA', 40.7043408, -74.0118572);
@@ -257,7 +264,6 @@ associateScavengerItemToMap('Knyw3XAPBwbDHJ8qJvi','Knz-XrlJEhAAMd1Ghma');
 associateScavengerItemToMap('Knyw3XAPBwbDHJ8qJvi','Knz-XrlJEhAAMd1Ghmb');
 
 
-
 //associating users amd maps
 // associateUserToMap('xDvwt4l8ZZg6X7SieEahz1bFtgb2','Knyw3X9HcH7K7EWL2Sb');
 // associateUserToMap('xDvwt4l8ZZg6X7SieEahz1bFtgb2','Knyw3XAPBwbDHJ8qJvi');
@@ -272,7 +278,7 @@ database.ref('/users/1').once('value').then(data => {
   console.log('reading user from firebase',data.val())
 })
 
-} 
+}
 
 
 module.exports = {
@@ -284,8 +290,8 @@ module.exports = {
 	addCategoryToScavengerHuntItem: addCategoryToScavengerHuntItem,
 	associateScavengerItemToMap: associateScavengerItemToMap,
 	associateUserToMap: associateUserToMap,
-	readUserMaps: readUserMaps,
+  geoFire: geoFire,
+  readUserMaps: readUserMaps,
 	readUserInfo: readUserInfo
 }
 
-//export default database
