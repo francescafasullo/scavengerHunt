@@ -80,4 +80,5 @@ render() {
 
 }
 
-AppRegistry.registerComponent('scavengerHunt', () => SignInScreen)
+//AppRegistry.registerComponent('scavengerHunt', () => SignInScreen)
+

@@ -117,7 +117,8 @@ const Tabs = TabNavigator({
   })
 
 //AppRegistry.registerComponent('scavengerHunt', () => scavengerHuntRouter);
-AppRegistry.registerComponent('scavengerHunt', () => Tabs);
+//AppRegistry.registerComponent('scavengerHunt', () => Tabs);
+export default Tabs;
 
 
 

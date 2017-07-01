@@ -19,7 +19,7 @@ const authReducer = (state = initialAuthState, action) => {
 		case SET_LOGGED_USER:
 			return Object.assign({},state, {userId: action.userId});
 		default:
-			return initialAuthState;
+			return state;
 
 	}
 

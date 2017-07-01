@@ -66,4 +66,5 @@ export default class Login extends Component {
     }
 }
 
-AppRegistry.registerComponent('scavengerHunt', () => LoginScreen)
+//AppRegistry.registerComponent('scavengerHunt', () => LoginScreen)
+
