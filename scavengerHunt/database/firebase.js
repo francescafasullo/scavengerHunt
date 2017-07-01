@@ -38,8 +38,6 @@ function writeScavengerHuntMap(name, creatorId, description, date){
   })
 }
 
-<<<<<<< HEAD
-
 function writeScavengerHuntItem(name, address, latitude, longitude){
 	database.ref('scavenger_hunt_items/').push().set({
 		name: name,
@@ -48,17 +46,8 @@ function writeScavengerHuntItem(name, address, latitude, longitude){
 		longitude: longitude
 
 	})
-
-=======
-function writeScavengerHuntItem(itemId, name, address, latitude, longitude, category){
-  database.ref('scavenger_hunt_items/' + itemId).set({
-    name: name,
-    address: address,
-    latitude: latitude,
-    longitude: longitude
-  })
->>>>>>> master
 }
+
 
 function writeCategory(name, description){
   database.ref('location_categories/' + name).set({
@@ -75,19 +64,15 @@ function addCategoryToScavengerHuntItem(itemId, categoryName){
 
 // assosiating a scavenger hunt item to a map, both the item and the map should have reference to each other
 function associateScavengerItemToMap(mapId, scavengerItemId){
-<<<<<<< HEAD
+
 	
 	let update={};
 	update['/scavenger_hunt_map/'+mapId+'/items/'+scavengerItemId] = true;
 	update['/scavenger_hunt_items/'+scavengerItemId+'/maps/'+mapId] = true;
 	return database.ref().update(update);
-=======
-  let update={};
-  update['/scavenger_hunt_map/'+mapId+'/items/'+scavengerItemId] = true;
-  update['/scavenger_hunt_items/'+scavengerItemId+'/maps/'+mapId] = true;
-  return database.ref().update(update);
+
 }
->>>>>>> master
+
 
 function associateUserToMap(userId,mapId){
   let update={};
@@ -202,10 +187,7 @@ function readMapsInfo(maps){
 }
 
 function readMapsItemsInfo(items){
-<<<<<<< HEAD
-	
-=======
->>>>>>> master
+
 	let res = items.map((item) => {
 		return database.ref('/scavenger_hunt_items/' + item).once('value')			
 	});
@@ -300,11 +282,6 @@ writeScavengerHuntItem('X BAR | BISTRO','316 E 84th St, New York, NY 10028',40.7
 writeScavengerHuntItem('Italianissimo Ristorante','307 E 84th St, New York, NY 10028',40.776507,73.951963);
 writeScavengerHuntItem('Raj Gallery','315 E 84th St, New York, NY 10028',40.776387,-73.951688);
 
-
-
-
-
-
 // //seeding categories
 // writeCategory('Restaurant', 'A place to dine');
 // writeCategory('Cafe', 'A plcae to drink coffee and eat snacks');
@@ -357,18 +334,6 @@ associateScavengerItemToMap('Knyw3XAPBwbDHJ8qJvi','Knz-XrlJEhAAMd1Ghmb');
 // associateUserToMap('xDvwt4l8ZZg6X7SieEahz1bFtgb2','Knyw3X9HcH7K7EWL2Sb');
 // associateUserToMap('xDvwt4l8ZZg6X7SieEahz1bFtgb2','Knyw3XAPBwbDHJ8qJvi');
 
-
-
-
-
-
-
-database.ref('/users/1').once('value').then(data => {
-  console.log('reading user from firebase',data.val())
-})
-
-
-
   // Seeds scavenger hunt list items in geoFire
   geoFire.set({
     '1': [40.7052066, -74.0103288999999],
@@ -402,3 +367,11 @@ module.exports = {
   readUserMaps: readUserMaps,
   readUserInfo: readUserInfo
 }
+
+
+
+
+
+
+
+
