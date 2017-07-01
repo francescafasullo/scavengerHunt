@@ -16,13 +16,13 @@ export const setCurMap = (map) => ({type: SET_CUR_MAP, map});
 export const setUserPersonalInfo = (userInfo) => ({type: SET_USER_INFO, userInfo})
 
 /* ------------------ reducer ------------------------ */
-const initialAuthState = {
+const initialMyAccountState = {
 	maps: [],
 	map: {},
 	userPersonalInfo: {}
 }
 
-const myAccountReducer = (state = initialAuthState, action) => {
+const myAccountReducer = (state = initialMyAccountState, action) => {
 	switch(action.type) {
 		case SET_USER_MAPS:
 			return Object.assign({}, state, {maps: action.maps});
@@ -31,7 +31,7 @@ const myAccountReducer = (state = initialAuthState, action) => {
 		case SET_USER_INFO:
 			return Object.assign({},state, {userPersonalInfo: action.userInfo})
 		default: 
-			return initialAuthState;
+			return state;
 
 	}
 }

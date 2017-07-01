@@ -45,7 +45,7 @@ export default class MyAccount extends Component {
 
 
   render() {
-    //console.log("in my account state", this.state);
+    console.log("in my account state", this.state);
     const userId = (this.state ? this.state.auth.userId : null)//{auth: {userId}} = this.state || {}
      console.log("in my account userId", userId);
 
@@ -58,7 +58,9 @@ export default class MyAccount extends Component {
            
 						<Text style={styles.points}>
             
-						user name: `${this.state.myAccount.userPersonalInfo.username}`
+						user name: {this.state.myAccount.userPersonalInfo.username + '\n'}
+            email:     {this.state.myAccount.userPersonalInfo.email + '\n'}
+            score:    {this.state.myAccount.userPersonalInfo.score + '\n'} 
 						</Text>
             <Button onPress={() => {this.logoutAndNavigate()}} title="Logout"/>
         
