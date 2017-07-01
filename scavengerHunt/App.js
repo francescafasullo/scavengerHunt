@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- * @flow
- */
-
-console.log('in App.js***********************')
-
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -18,6 +10,10 @@ import { Icon } from 'react-native-elements'
 import HomeScreen from './src/Components/Home'
 import CameraScreen from './src/Components/Camera'
 import SignInSignUpScreen from './src/Components/SignInSignUp'
+import PlayMap from './src/Components/PlayMap'
+import Play from './src/Components/Play'
+import database from './database/firebase'
+
 
 const fireBase = require('./database/firebase');
 
@@ -25,14 +21,18 @@ import SignUpScreen from './src/Components/SignUp'
 import LoginScreen from './src/Components/Login'
 import MyAccountScreen from './src/Components/MyAccount'
 import PlayModeMap from './src/Components/PlayModeMap'
-
-
+import NewSH from './src/Components/NewSH'
+import NYCMap from './src/Components/NYCMap'
+import SFMap from './src/Components/SFMap'
+import LAMap from './src/Components/LAMap'
+import AustinMap from './src/Components/AustinMap'
+import SavedConf from './src/Components/SavedConf'
 
 const scavengerHuntRouter = StackNavigator({
   Home: {
     screen: HomeScreen,
     navigationOptions: {
-      title: 'Welcome to Scavenger Hunt!'
+      title: 'Home'
     }
   },
   Camera: {
@@ -40,6 +40,12 @@ const scavengerHuntRouter = StackNavigator({
     navigationOptions: {
       title: 'Play'
     }
+  },
+  Play: {
+    screen: Play
+  },
+  PlayMap: {
+    screen: PlayMap,
   },
   SignUp: {
     screen: SignUpScreen
@@ -56,12 +62,27 @@ const scavengerHuntRouter = StackNavigator({
   },
   PlayModeMap: {
     screen: PlayModeMap
+  NewSH: {
+    screen: NewSH
+  },
+  NYCMap: {
+    screen: NYCMap
+  },
+  SFMap: {
+    screen: SFMap
+  },
+  LAMap: {
+    screen: LAMap
+  },
+  AustinMap: {
+    screen: AustinMap
+  },
+  SavedConf: {
+    screen: SavedConf
   }
-
-
 })
 
- const Tabs = TabNavigator({
+const Tabs = TabNavigator({
   Home: {
     screen: scavengerHuntRouter,
     navigationOptions: {
@@ -89,16 +110,13 @@ const scavengerHuntRouter = StackNavigator({
     }
 
   }
-},{
-  tabBarOptions: {
-    activeTintColor: '#800000',
-    //inactiveTintColor: '#C0C0C0'
-    inactiveTintColor: '#696969'
-  }
-})
+}, {
+    tabBarOptions: {
+      activeTintColor: '#800000',
+      inactiveTintColor: '#696969'
+    }
+  })
 
-//AppRegistry.registerComponent('scavengerHunt', () => scavengerHuntRouter);
-//AppRegistry.registerComponent('scavengerHunt', () => Tabs);
 export default Tabs;
 
 

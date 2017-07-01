@@ -7,6 +7,7 @@ import com.mapbox.reactnativemapboxgl.ReactNativeMapboxGLPackage;
 import com.airbnb.android.react.maps.MapsPackage;
 import com.lwansbrough.RCTCamera.RCTCameraPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.airbnb.android.react.maps.MapsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
@@ -31,6 +32,7 @@ public class MainApplication extends Application implements ReactApplication {
             new MapsPackage(),
             new RCTCameraPackage(),
             new VectorIconsPackage()
+            new MapsPackage()
       );
     }
   };
