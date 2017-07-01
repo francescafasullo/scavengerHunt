@@ -89,7 +89,9 @@ function associateUserToMap(userId,mapId){
 function readMapsInfo(maps){
 
 	let res = maps.map((item) => {
-		return database.ref('/scavenger_hunt_map/' + Number(item)).once('value')
+
+		return database.ref('/scavenger_hunt_map/' + item).once('value')
+
 			
 	});
 	return Promise.all(res).then (values => {
@@ -116,7 +118,8 @@ function readMapsItemsInfo(items){
 	// 	})
 	// })
 	let res = items.map((item) => {
-		return database.ref('/scavenger_hunt_items/' + Number(item)).once('value')
+		return database.ref('/scavenger_hunt_items/' + item).once('value')
+
 			
 	});
 	return Promise.all(res).then (values => {
