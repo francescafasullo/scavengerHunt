@@ -29,12 +29,12 @@ export default class HomeScreen extends Component {
     this.logout = this.logout.bind(this)
   }
 
-  logout = ()=> {
-    firebase.auth().signOut().then(function() {
-  // Sign-out successful.
-}).catch(function(error) {
-  // An error happened.
-});
+  logout = () => {
+    firebase.auth().signOut().then(function () {
+      // Sign-out successful.
+    }).catch(function (error) {
+      // An error happened.
+    });
   }
 
   render() {
@@ -47,9 +47,12 @@ export default class HomeScreen extends Component {
         <Button onPress={() => { this.props.navigation.navigate('PlayModeMap') }} title="Play!" />
         <Button title="Explore"/>
         <Button onPress={() => { this.props.navigation.navigate('SignUp') }} title="Sign Up" />
-        <Button onPress={() => {this.props.navigation.navigate('Login')}}
-        title="Login"/>
+        <Button onPress={() => { this.props.navigation.navigate('Login') }}
+          title="Login" />
         <Button onPress={this.logout} title="Logout" />
+        <Button onPress={() => { this.props.navigation.navigate('Explore') }}
+          title="Explore"
+           />
       </View>
 
     );

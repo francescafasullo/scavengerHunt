@@ -4,6 +4,7 @@ import store from '../../store'
 import {logout} from '../reducers/authReducer'
 
 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -30,6 +31,7 @@ export default class MyAccount extends Component {
       this.unsubscribe = store.subscribe(() => {
         this.setState(store.getState());
       });
+      
     }
 
   componentWillUnmount () {
@@ -56,7 +58,9 @@ export default class MyAccount extends Component {
            
 						<Text style={styles.points}>
             
-						You have points!
+						user name: {this.state.myAccount.userPersonalInfo.username + '\n'}
+            email:     {this.state.myAccount.userPersonalInfo.email + '\n'}
+            score:    {this.state.myAccount.userPersonalInfo.score + '\n'} 
 						</Text>
             <Button onPress={() => {this.logoutAndNavigate()}} title="Logout"/>
         
@@ -84,22 +88,10 @@ export default class MyAccount extends Component {
 }
 
 // = this.state.authReducer.userId;
-AppRegistry.registerComponent('scavengerHunt', () => MyAccountScreen);
+//AppRegistry.registerComponent('scavengerHunt', () => MyAccountScreen);
 
 
-/*
-return (
-          <View style={styles.container}>
-          {userId ? 
-            <Text style={styles.points}>
-            <Button onPress={logoutAndNavigate} title="Logout" />
-            You have points!
-            </Text>
-            :
-            this.props.navigation.navigate('SignInSignUp')}
-          </View>
-      )
-*/
+
 
 
 

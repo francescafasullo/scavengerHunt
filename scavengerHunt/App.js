@@ -86,3 +86,4 @@ const scavengerHuntRouter = StackNavigator({
 })
 
 AppRegistry.registerComponent('scavengerHunt', () => Tabs);
+export default Tabs;

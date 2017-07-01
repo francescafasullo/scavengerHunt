@@ -15,7 +15,7 @@ firebase.initializeApp(config)
 
 // Creates a reference to the Firebase database service where we will store information
  var database = firebase.database()
- var firebaseRef = database.ref()
+ var firebaseRef = database.ref('geoFire/')
 
  // Creates a GeoFire index
 var geoFire = new GeoFire(firebaseRef)
@@ -28,8 +28,8 @@ var geoFire = new GeoFire(firebaseRef)
     profile_pic: profile_picURL
   });
 }
-function writeScavengerHuntMap(mapId, name, creatorId, description, date){
-	database.ref('scavenger_hunt_map/' + mapId).set({
+function writeScavengerHuntMap(name, creatorId, description, date){
+	database.ref('scavenger_hunt_map/').push().set({
 		mapname: name,
 		creator_id: creatorId,
 		description: description,
@@ -65,7 +65,7 @@ function addCategoryToScavengerHuntItem(itemId, categoryName){
 	return database.ref().update(update);
 }
 
-//assosiating a scavenger hunt item to a map, both the item and the map should have reference to each other
+// assosiating a scavenger hunt item to a map, both the item and the map should have reference to each other
 function associateScavengerItemToMap(mapId, scavengerItemId){
 	// let update = {
 	// 	['/scavenger_hunt_map/'+mapId+'/items/'+scavengerItemId]: true
@@ -85,6 +85,121 @@ function associateUserToMap(userId,mapId){
 	return database.ref().update(update);
 
 }
+
+//help functions to re-construct data retrieved from db
+//takes an array of maps keys and maps them to an array of map objects
+//that eact one would have the map info
+function readMapsInfo(maps){
+
+	let res = maps.map((item) => {
+		return database.ref('/scavenger_hunt_map/' + Number(item)).once('value')
+
+	});
+	return Promise.all(res).then (values => {
+
+		let mapInfoArr = values.map(item => {
+			return item.val();
+		})
+		//console.log('in promise all',mapInfoArr);
+		return mapInfoArr;
+
+	})
+	.catch((error)=>{console.log(error)})
+
+
+}
+
+function readMapsItemsInfo(items){
+	// let tmp = database.ref('/scavenger_hunt_items/'+Number(items[0])).once('value');
+	// console.log('in read iems',tmp);
+	// return items.map(item => {
+	// 	database.ref('/scavenger_hunt_items/'+Number(item)).once('value')
+	// 	.then(data => {
+	// 		return data.val();
+	// 	})
+	// })
+	let res = items.map((item) => {
+		return database.ref('/scavenger_hunt_items/' + Number(item)).once('value')
+
+	});
+	return Promise.all(res).then (values => {
+
+		let itemInfoArr = values.map(item => {
+			return item.val();
+		})
+		console.log('in promise items all',itemInfoArr);
+		return itemInfoArr;
+
+	})
+	.catch((error)=>{console.log(error)})
+
+}
+//readingdata function
+function readUserMaps(userId) {
+	let mapKeys;
+	let mapItemsKeys;
+	let userMaps;
+	return database.ref('/users/' + userId).once('value')
+	.then(data => {
+		if(!data.val().maps)
+			return null
+		mapKeys = Object.keys(data.val().maps);
+
+		return readMapsInfo(mapKeys);
+
+	})
+	.then(data => {
+		if(!data)
+			return null
+		userMaps = data;
+
+		return userMaps.map(item => {
+			mapItemsKeys = Object.keys(item.items);
+			return readMapsItemsInfo(mapItemsKeys)
+
+		})
+	})
+	.then(data => {
+		if(!data)
+			return null;
+		return Promise.all(data);
+
+	})
+	.then(res => {
+		// res = [ [] ]
+		if(!res)
+			return null;
+
+		let i=0;
+		userMaps = userMaps.map(map => {
+			map.items = res[i];
+			i++;
+			return map;
+		})
+		//console.log('got Items',userMaps)
+		return userMaps
+	});
+
+
+
+}
+
+function readUserInfo(userId) {
+	let user= {};
+	return database.ref('/users/' + userId).once('value')
+	.then(data => {
+		user.username = data.val().username;
+		user.email = data.val().email;
+		user.score = data.val().score;
+		user.profile_pic = data.val().profile_pic
+		return user;
+	})
+
+}
+
+
+
+
 if(module === require.main){
 	//seeding scavenger hunt items
 writeScavengerHuntItem(1,'Open Market', '15 William St, New York, NY 10005, USA', 40.7052066, -74.0103288999999);
@@ -127,10 +242,10 @@ writeUserData(2,"Emma","emma@yahoo.com",0,"https://i.imgur.com/akaLrwh.jpg");
 writeUserData(3,"John", "john@gmail.com",0,"http://i.imgur.com/xoH7gvu.jpg");
 
 //seeding scavenger hunt maps
-writeScavengerHuntMap(1,"NYC john map",3, "john's trip to nyc may 2017","05052017");
-writeScavengerHuntMap(2,"NYC wall street",3, "nice places to visit in wall street area","20062017");
-writeScavengerHuntMap(3,"wall street dining",2, "great eating spots in wall street area","04032017");
-writeScavengerHuntMap(4,"wall street tour",1, "a one day tour in wall street area NYC","10202016");
+writeScavengerHuntMap("NYC john map",3, "john's trip to nyc may 2017","05052017");
+writeScavengerHuntMap("NYC wall street",3, "nice places to visit in wall street area","20062017");
+writeScavengerHuntMap("wall street dining",2, "great eating spots in wall street area","04032017");
+writeScavengerHuntMap("wall street tour",1, "a one day tour in wall street area NYC","10202016");
 
 
 //adding categories to scavenger hunt items
@@ -146,16 +261,16 @@ addCategoryToScavengerHuntItem(7, 'Museum');
 addCategoryToScavengerHuntItem(8, 'Gallery');
 
 //associating maps and items
-associateScavengerItemToMap(1,1);
-associateScavengerItemToMap(1,2);
-associateScavengerItemToMap(1,6);
-associateScavengerItemToMap(2,3);
-associateScavengerItemToMap(2,8);
-associateScavengerItemToMap(3,3);
-associateScavengerItemToMap(3,1);
-associateScavengerItemToMap(4,2);
-associateScavengerItemToMap(4,7);
-associateScavengerItemToMap(4,6);
+associateScavengerItemToMap(-KnuufYTTVciOt7MDAUz,1);
+associateScavengerItemToMap(-KnuufYTTVciOt7MDAUz,2);
+associateScavengerItemToMap(-KnuufYTTVciOt7MDAUz,6);
+associateScavengerItemToMap(-KnuufYUMuNrU__tFe03,3);
+associateScavengerItemToMap(-KnuufYUMuNrU__tFe03,8);
+associateScavengerItemToMap(-KnuufYUMuNrU__tFe04,3);
+associateScavengerItemToMap(-KnuufYUMuNrU__tFe04,1);
+associateScavengerItemToMap(-KnuufYVNHKGpS4yo6qw,2);
+associateScavengerItemToMap(-KnuufYVNHKGpS4yo6qw,7);
+associateScavengerItemToMap(-KnuufYVNHKGpS4yo6qw,6);
 
 //associating users amd maps
 associateUserToMap(1,1);
@@ -166,6 +281,12 @@ associateUserToMap(2,4);
 associateUserToMap(3,4);
 associateUserToMap(3,1);
 associateUserToMap(3,2);
+associateUserToMap('xDvwt4l8ZZg6X7SieEahz1bFtgb2',1);
+associateUserToMap('xDvwt4l8ZZg6X7SieEahz1bFtgb2',2);
+
+
+
+
 
 database.ref('/users/1').once('value').then(data => {
   console.log('reading user from firebase',data.val())
@@ -183,5 +304,7 @@ module.exports = {
 	addCategoryToScavengerHuntItem: addCategoryToScavengerHuntItem,
 	associateScavengerItemToMap: associateScavengerItemToMap,
 	associateUserToMap: associateUserToMap,
-  geoFire: geoFire
+  geoFire: geoFire,
+	readUserMaps: readUserMaps,
+	readUserInfo: readUserInfo
 }
