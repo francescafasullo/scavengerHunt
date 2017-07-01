@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { AppRegistry, StyleSheet, Text, View, Button, Image } from 'react-native'
 import store from '../../store'
-import {logout} from '../reducers/authReducer'
+import { logout } from '../reducers/authReducer'
 
 
 
@@ -17,41 +17,40 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
   }
-  
+
 });
 
 export default class MyAccount extends Component {
   constructor(props) {
-      super(props)
-      this.state = store.getState();
-      this.logoutAndNavigate = this.logoutAndNavigate.bind(this)
+    super(props)
+    this.state = store.getState();
+    this.logoutAndNavigate = this.logoutAndNavigate.bind(this)
   }
 
-  componentDidMount () {
-      this.unsubscribe = store.subscribe(() => {
-        this.setState(store.getState());
-      });
-      
-    }
+  componentDidMount() {
+    this.unsubscribe = store.subscribe(() => {
+      this.setState(store.getState());
+    });
+  }
 
-  componentWillUnmount () {
-      this.unsubscribe();
-    }
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
 
-    logoutAndNavigate(){
-      store.dispatch(logout());
-      this.props.navigation.navigate('SignInSignUp');
-    }
+  logoutAndNavigate() {
+    store.dispatch(logout());
+    this.props.navigation.navigate('SignInSignUp');
+  }
 
 
   render() {
     console.log("in my account state", this.state);
     const userId = (this.state ? this.state.auth.userId : null)//{auth: {userId}} = this.state || {}
-     console.log("in my account userId", userId);
+    console.log("in my account userId", userId);
 
-     
-      return (
-        <View style={styles.container}>
+
+    return (
+      <View style={styles.container}>
         {userId ?
         <View>
           
@@ -62,27 +61,27 @@ export default class MyAccount extends Component {
             email:     {this.state.myAccount.userPersonalInfo.email + '\n'}
             score:    {this.state.myAccount.userPersonalInfo.score + '\n'} 
 						</Text>
-            <Button onPress={() => {this.logoutAndNavigate()}} title="Logout"/>
-        
-				  </View>
+            <Button onPress={() => { this.logoutAndNavigate() }} title="Logout" />
+            <Button onPress={() => { this.props.navigation.navigate('NewSH') }} title="Create a new Scavenger Hunt" />
+          </View>
 
           :
           <View>
-          <Text style={styles.points}>you are not logged in </Text>
-          <Button onPress={() => {this.props.navigation.navigate('SignInSignUp')}} title="Go To Login"/>
+            <Text style={styles.points}>you are not logged in </Text>
+            <Button onPress={() => { this.props.navigation.navigate('SignInSignUp') }} title="Go To Login" />
 
           </View>
-      }
+        }
       </View>
 
-      
-          
-          
-        
-      )
-    
-    
-      
+
+
+
+
+    )
+
+
+
 
   }
 }

@@ -21,8 +21,6 @@ const styles = StyleSheet.create({
   },
 });
 
-console.log('page loaded')
-
 export default class HomeScreen extends Component {
   constructor(props) {
     super(props)
@@ -38,24 +36,20 @@ export default class HomeScreen extends Component {
   }
 
   render() {
-    console.log('rendering')
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>
           Welcome to Scavenger Hunt!
         </Text>
-        <Button onPress={() => { this.props.navigation.navigate('Camera') }} title="Play!" />
+
+        <Button onPress={() => { this.props.navigation.navigate('Play') }} title="Play!" />
+        <Button title="Explore"/>
         <Button onPress={() => { this.props.navigation.navigate('SignUp') }} title="Sign Up" />
         <Button onPress={() => { this.props.navigation.navigate('Login') }}
           title="Login" />
         <Button onPress={this.logout} title="Logout" />
-        <Button onPress={() => { this.props.navigation.navigate('Explore') }}
-          title="Explore"
-           />
       </View>
 
     );
   }
 }
-
-//AppRegistry.registerComponent('scavengerHunt', () => HomeScreen);
