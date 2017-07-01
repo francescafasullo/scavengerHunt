@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, View, Button, Image } from 'react-native'
+import { AppRegistry, StyleSheet, Text, View, Button, Image, Picker } from 'react-native'
 import store from '../../store'
 import {logout} from '../reducers/authReducer'
 
@@ -62,6 +62,8 @@ export default class MyAccount extends Component {
             email:     {this.state.myAccount.userPersonalInfo.email + '\n'}
             score:    {this.state.myAccount.userPersonalInfo.score + '\n'} 
 						</Text>
+            <Picker selectedValue={this.state.myAccount.maps[0]}>
+            </Picker>
             <Button onPress={() => {this.logoutAndNavigate()}} title="Logout"/>
         
 				  </View>
