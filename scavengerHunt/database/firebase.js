@@ -87,7 +87,7 @@ function associateUserToMap(userId,mapId){
 }
 
 //help functions to re-construct data retrieved from db
-//takes an array of maps keys and maps them to an array of map objects 
+//takes an array of maps keys and maps them to an array of map objects
 //that eact one would have the map info
 function readMapsInfo(maps){
 
@@ -95,19 +95,19 @@ function readMapsInfo(maps){
 
 		return database.ref('/scavenger_hunt_map/' + item).once('value')
 
-			
+
 	});
 	return Promise.all(res).then (values => {
-		
+
 		let mapInfoArr = values.map(item => {
 			return item.val();
 		})
 		//console.log('in promise all',mapInfoArr);
 		return mapInfoArr;
-		
+
 	})
 	.catch((error)=>{console.log(error)})
-	
+
 
 }
 
@@ -123,16 +123,16 @@ function readMapsItemsInfo(items){
 	let res = items.map((item) => {
 		return database.ref('/scavenger_hunt_items/' + item).once('value')
 
-			
+
 	});
 	return Promise.all(res).then (values => {
-		
+
 		let itemInfoArr = values.map(item => {
 			return item.val();
 		})
 		console.log('in promise items all',itemInfoArr);
 		return itemInfoArr;
-		
+
 	})
 	.catch((error)=>{console.log(error)})
 
@@ -147,26 +147,26 @@ function readUserMaps(userId) {
 		if(!data.val().maps)
 			return null
 		mapKeys = Object.keys(data.val().maps);
-		
+
 		return readMapsInfo(mapKeys);
-  		
+
 	})
 	.then(data => {
 		if(!data)
 			return null
 		userMaps = data;
-		
+
 		return userMaps.map(item => {
 			mapItemsKeys = Object.keys(item.items);
 			return readMapsItemsInfo(mapItemsKeys)
-			
+
 		})
 	})
 	.then(data => {
 		if(!data)
 			return null;
 		return Promise.all(data);
-		 
+
 	})
 	.then(res => {
 		// res = [ [] ]
@@ -182,9 +182,9 @@ function readUserMaps(userId) {
 		//console.log('got Items',userMaps)
 		return userMaps
 	});
-	
-		
-	
+
+
+
 }
 
 function readUserInfo(userId) {
@@ -200,7 +200,7 @@ function readUserInfo(userId) {
 
 }
 
-	
+
 
 
 if(module === require.main){

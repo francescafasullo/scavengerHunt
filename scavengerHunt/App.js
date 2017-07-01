@@ -24,9 +24,10 @@ const fireBase = require('./database/firebase');
 import SignUpScreen from './src/Components/SignUp'
 import LoginScreen from './src/Components/Login'
 import MyAccountScreen from './src/Components/MyAccount'
+import PlayModeMap from './src/Components/PlayModeMap'
 
 
- 
+
 const scavengerHuntRouter = StackNavigator({
   Home: {
     screen: HomeScreen,
@@ -52,6 +53,9 @@ const scavengerHuntRouter = StackNavigator({
   },
   SignInSignUp: {
     screen: SignInSignUpScreen
+  },
+  PlayModeMap: {
+    screen: PlayModeMap
   }
 
 
@@ -63,7 +67,7 @@ const scavengerHuntRouter = StackNavigator({
     navigationOptions: {
       tabBarLabel: 'Home',
       tabBarIcon: ({tintColor}) =>  <Icon name="home" size={26} color={tintColor} />
-      
+
     }
 
   },
@@ -72,7 +76,7 @@ const scavengerHuntRouter = StackNavigator({
     navigationOptions: {
       tabBarLabel: 'Play',
       tabBarIcon: ({ tintColor }) => <Icon name="play-circle-filled" size={26} color={tintColor} />
-      
+
     }
 
   },
@@ -81,7 +85,7 @@ const scavengerHuntRouter = StackNavigator({
     navigationOptions: {
       tabBarLabel: 'Account',
       tabBarIcon: ({ tintColor }) => <Icon name="account-circle" size={26} color={tintColor} />
-      
+
     }
 
   }
