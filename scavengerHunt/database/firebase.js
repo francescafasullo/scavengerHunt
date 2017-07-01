@@ -1,4 +1,5 @@
 const firebase = require('firebase')
+const GeoFire = require('geofire')
 
 var config = {
     apiKey: "AIzaSyDgSoVrvjyZTFsT3Udks1x0KkGZGrYjThQ",
@@ -14,7 +15,7 @@ firebase.initializeApp(config)
 
 // Creates a reference to the Firebase database service where we will store information
  var database = firebase.database()
- var firebaseRef = database.ref()
+ var firebaseRef = database.ref('geoFire/')
 
  // Creates a GeoFire index
 var geoFire = new GeoFire(firebaseRef)
