@@ -173,19 +173,28 @@ function readUserMaps(userId) {
 			i++;
 			return map;
 		})
-		console.log('got Items',userMaps)
+		//console.log('got Items',userMaps)
 		return userMaps
 	});
-	// .catch(()=>{
-	// 		console.log('user does not have maps');
-	// 		return null;
-	// });
-	//return userMaps;
+	
 		
 	
 }
 
-//readUserMaps('xDvwt4l8ZZg6X7SieEahz1bFtgb2');
+function readUserInfo(userId) {
+	let user= {};
+	return database.ref('/users/' + userId).once('value')
+	.then(data => {
+		user.username = data.val().username;
+		user.email = data.val().email;
+		user.score = data.val().score;
+		user.profile_pic = data.val().profile_pic
+		return user;
+	})
+
+}
+
+	
 
 
 if(module === require.main){
@@ -276,7 +285,8 @@ module.exports = {
 	addCategoryToScavengerHuntItem: addCategoryToScavengerHuntItem,
 	associateScavengerItemToMap: associateScavengerItemToMap,
 	associateUserToMap: associateUserToMap,
-	readUserMaps: readUserMaps
+	readUserMaps: readUserMaps,
+	readUserInfo: readUserInfo
 }
 //export default database
 

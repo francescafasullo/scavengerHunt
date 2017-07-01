@@ -1,22 +1,25 @@
 import store from '../../store'
 const fireBaseFunctions = require('../../database/firebase');
 import firebase from 'firebase';
-import {readUserMaps} from '../../database/firebase'
+import {readUserMaps, readUserInfo} from '../../database/firebase'
 
 
 /* ------------------ actions ------------------------ */
 SET_USER_MAPS = 'SET_USER_MAPS'
 SET_CUR_MAP = 'SET_CUR_MAP'
+SET_USER_INFO = 'SET_USER_INFO'
 
 
 /* ------------------ action creators ---------------- */
 export const setUserMaps = (maps) => ({type: SET_USER_MAPS, maps });
 export const setCurMap = (map) => ({type: SET_CUR_MAP, map});
+export const setUserPersonalInfo = (userInfo) => ({type: SET_USER_INFO, userInfo})
 
 /* ------------------ reducer ------------------------ */
 const initialAuthState = {
 	maps: [],
-	map: {}
+	map: {},
+	userPersonalInfo: {}
 }
 
 const myAccountReducer = (state = initialAuthState, action) => {
@@ -25,6 +28,8 @@ const myAccountReducer = (state = initialAuthState, action) => {
 			return Object.assign({}, state, {maps: action.maps});
 		case SET_CUR_MAP:
 			return Object.assign({}, state, {map: action.map});
+		case SET_USER_INFO:
+			return Object.assign({},state, {userPersonalInfo: action.userInfo})
 		default: 
 			return initialAuthState;
 
@@ -40,12 +45,16 @@ export const fetchUserMaps = (userId) => dispatch => {
 		console.log('data for uid', userId, '::', data)
 		dispatch(setUserMaps(data));
 	})
-	//.catch(console.error)
-
-	//console.log('in fetchUserMaps maps', res);
 	
-	//let res = null;
-	//dispatch(setUserMaps(res));
 }
+
+export const fetchUserPersonalInfo = (userId) => dispatch =>{
+	console.log('in fetch user info', userId);
+	let res = readUserInfo(userId);
+	res.then(data => {
+		console.log('data of user', userId, '::', data);
+		dispatch(setUserPersonalInfo(data));
+	})
+} 
 
 export default myAccountReducer;

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { AppRegistry, StyleSheet, Text, View, Button, Image } from 'react-native'
 import store from '../../store'
 import {logout} from '../reducers/authReducer'
-import {fetchUserMaps} from '../reducers/myAccountReducer'
+
 
 
 const styles = StyleSheet.create({

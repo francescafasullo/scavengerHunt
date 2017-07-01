@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import firebase from 'firebase';
 import {setLoggedUser} from './src/reducers/authReducer'
-import {fetchUserMaps} from './src/reducers/myAccountReducer'
+import {fetchUserMaps,fetchUserPersonalInfo} from './src/reducers/myAccountReducer'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -19,6 +19,7 @@ firebase.auth().onAuthStateChanged(user => {
 		if(user){
 			console.log('in store user',user.uid);
 			store.dispatch(fetchUserMaps(user.uid));
+			store.dispatch(fetchUserPersonalInfo(user.uid));
 		}
 
 });
