@@ -49,7 +49,7 @@ export default class SignInSignUp extends Component {
 	}
 }
 
-AppRegistry.registerComponent('scavengerHunt', () => SignInSignUp);
+//AppRegistry.registerComponent('scavengerHunt', () => SignInSignUp);
 
 
 
