@@ -78,7 +78,7 @@ function associateScavengerItemToMap(mapId, scavengerItemId){
 function associateUserToMap(userId,mapId){
 	let update={};
 	update['/users/'+userId+'/maps/'+mapId] = true;
-	update['/scavenger_hunt_map/'+mapId+'/usres/'+userId] = true;
+	update['/scavenger_hunt_map/'+mapId+'/users/'+userId] = true;
 	return database.ref().update(update);
 
 }

@@ -3,15 +3,16 @@ const fireBaseFunctions = require('../../database/firebase');
 import { writeUserData } from '../../database/firebase'
 import { database } from '../../database/firebase'
 import { associateScavengerItemToMap } from '../../database/firebase'
+import {associateUserToMap} from '../../database/firebase'
 import firebase from 'firebase'
 
 /* ------------------ actions ------------------------ */
 const ADD_MAP = 'ADD_MAP'
-const FETCH_MAP = 'FETCH_MAP'
+
 
 /* ------------------ action creators ---------------- */
 export const addMap = (map) => ({ type: ADD_MAP, map })
-export const fetchMaps = (map) => ({ type: FETCH_MAPS, map })
+
 
 
 /* ------------------ reducer ------------------------ */
@@ -26,9 +27,6 @@ const mapsReducer = (state = initialMapsState, action) => {
 		case ADD_MAP:
 			newState.maps.push(action.map)
 			break;
-		case FETCH_MAPS:
-			newState.selectedMap = action.selectedMap
-			break;
 		default:
 			return initialMapsState;
 
@@ -41,7 +39,7 @@ const mapsReducer = (state = initialMapsState, action) => {
 
 /* ------------------ dispatchers ------------------- */
 
-export const newMap = (mapName, description, city, places) => dispatch => {
+export const newMap = (mapName, description, city, places,userId) => dispatch => {
 	var mapKey = database.ref('scavenger_hunt_map/').push().key
 	database.ref('scavenger_hunt_map/' + mapKey).set({
 		mapName: mapName,
@@ -58,22 +56,12 @@ export const newMap = (mapName, description, city, places) => dispatch => {
 			longitude: places[i].coordinate.longitude
 		})
 	}
+
+	associateUserToMap(userId, mapKey)
+
 	for (i = 0; i < itemKeys.length; i++) {
 		associateScavengerItemToMap(mapKey, itemKeys[i])
 	}
-	const map = {
-		mapName: mapName,
-		description: description,
-		city: city,
-		places: places
-	}
-	dispatch(addMap(map))
-}
-
-export const getMaps = () => dispatch => {
-	database.ref('/scavenger_hunt_map').once('value').then(data => {
-		console.log(data.val())
-	})
 }
 
 export default mapsReducer

@@ -29,19 +29,27 @@ const styles = StyleSheet.create({
 export default class NYC extends Component {
 	constructor(props) {
 		super(props)
-		this.state = {
-			city: {
+		this.state = store.getState();
+		this.state.city={
 				name: 'nyc',
 				latitude: 40.759025,
 				longitude: -73.985185,
 				latitudeDelta: 0.04,
-				longitudeDelta: 0.04
-			},
-			selectedCity: "",
-			places: [],
-			mapName: 'g',
-			description: 'g'
+				longitudeDelta: 0.04}
+			this.state.selectedCity= ""
+			this.state.places=[]
+			this.state.mapName=""
+			this.state.description=""
 		}
+
+  componentDidMount= () => {
+    this.unsubscribe = store.subscribe(() => {
+      this.setState(store.getState());
+    });
+  }
+
+  componentWillUnmount = () => {
+    this.unsubscribe();
 	}
 
 	updateDescription = (text) => {
@@ -63,11 +71,11 @@ export default class NYC extends Component {
 		})
 	}
 
-	saveSH = (mapName, description) => {
+	saveSH = (mapName, description, userId) => {
 		const city = this.state.city
 		const places = this.state.places
 		console.log("something", mapName, description, city, places)
-		store.dispatch(newMap(mapName, description, city, places))
+		store.dispatch(newMap(mapName, description, city, places, userId))
 	}
 
 	clear = () => {
@@ -75,6 +83,7 @@ export default class NYC extends Component {
 	}
 
 	render() {
+		const userId = (this.state ? this.state.auth.userId : null)
 		return (
 			<View style={styles.container}>
 				<Text>Enter new map name and description.</Text>
@@ -89,7 +98,7 @@ export default class NYC extends Component {
 					onChangeText={this.updateDescription}
 				/>
 				<Button onPress={() => {
-					this.saveSH(this.state.mapName, this.state.description)
+					this.saveSH(this.state.mapName, this.state.description, userId)
 					this.props.navigation.navigate('SavedConf')
 				}}
 					title="Save Scavenger Hunt" />
