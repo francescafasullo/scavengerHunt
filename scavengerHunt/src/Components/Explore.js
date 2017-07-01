@@ -8,7 +8,7 @@ export default class Explore extends Component {
 
     render() {
         return (
-            {/*filter by catgoery and show map with filtered items with option to click on camera and see labels on buildings*/}
+            {/*filter by category and show map with filtered items with option to click on camera and see labels on buildings*/}
         )
     }
 }

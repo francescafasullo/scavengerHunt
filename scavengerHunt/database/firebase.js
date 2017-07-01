@@ -25,8 +25,8 @@ var config = {
     profile_pic: profile_picURL
   });
 }
-function writeScavengerHuntMap(mapId, name, creatorId, description, date){
-	database.ref('scavenger_hunt_map/' + mapId).set({
+function writeScavengerHuntMap(name, creatorId, description, date){
+	database.ref('scavenger_hunt_map/').push().set({
 		mapname: name,
 		creator_id: creatorId,
 		description: description,
@@ -62,7 +62,7 @@ function addCategoryToScavengerHuntItem(itemId, categoryName){
 	return database.ref().update(update);
 }
 
-//assosiating a scavenger hunt item to a map, both the item and the map should have reference to each other
+// assosiating a scavenger hunt item to a map, both the item and the map should have reference to each other
 function associateScavengerItemToMap(mapId, scavengerItemId){
 	// let update = {
 	// 	['/scavenger_hunt_map/'+mapId+'/items/'+scavengerItemId]: true
@@ -221,10 +221,10 @@ writeUserData(2,"Emma","emma@yahoo.com",0,"https://i.imgur.com/akaLrwh.jpg");
 writeUserData(3,"John", "john@gmail.com",0,"http://i.imgur.com/xoH7gvu.jpg");
 
 //seeding scavenger hunt maps
-writeScavengerHuntMap(1,"NYC john map",3, "john's trip to nyc may 2017","05052017");
-writeScavengerHuntMap(2,"NYC wall street",3, "nice places to visit in wall street area","20062017");
-writeScavengerHuntMap(3,"wall street dining",2, "great eating spots in wall street area","04032017");
-writeScavengerHuntMap(4,"wall street tour",1, "a one day tour in wall street area NYC","10202016");
+writeScavengerHuntMap("NYC john map",3, "john's trip to nyc may 2017","05052017");
+writeScavengerHuntMap("NYC wall street",3, "nice places to visit in wall street area","20062017");
+writeScavengerHuntMap("wall street dining",2, "great eating spots in wall street area","04032017");
+writeScavengerHuntMap("wall street tour",1, "a one day tour in wall street area NYC","10202016");
 
 
 //adding categories to scavenger hunt items
@@ -240,16 +240,16 @@ addCategoryToScavengerHuntItem(7, 'Museum');
 addCategoryToScavengerHuntItem(8, 'Gallery');
 
 //associating maps and items
-associateScavengerItemToMap(1,1);
-associateScavengerItemToMap(1,2);
-associateScavengerItemToMap(1,6);
-associateScavengerItemToMap(2,3);
-associateScavengerItemToMap(2,8);
-associateScavengerItemToMap(3,3);
-associateScavengerItemToMap(3,1);
-associateScavengerItemToMap(4,2);
-associateScavengerItemToMap(4,7);
-associateScavengerItemToMap(4,6);
+associateScavengerItemToMap(-KnuufYTTVciOt7MDAUz,1);
+associateScavengerItemToMap(-KnuufYTTVciOt7MDAUz,2);
+associateScavengerItemToMap(-KnuufYTTVciOt7MDAUz,6);
+associateScavengerItemToMap(-KnuufYUMuNrU__tFe03,3);
+associateScavengerItemToMap(-KnuufYUMuNrU__tFe03,8);
+associateScavengerItemToMap(-KnuufYUMuNrU__tFe04,3);
+associateScavengerItemToMap(-KnuufYUMuNrU__tFe04,1);
+associateScavengerItemToMap(-KnuufYVNHKGpS4yo6qw,2);
+associateScavengerItemToMap(-KnuufYVNHKGpS4yo6qw,7);
+associateScavengerItemToMap(-KnuufYVNHKGpS4yo6qw,6);
 
 //associating users amd maps
 associateUserToMap(1,1);
@@ -288,5 +288,5 @@ module.exports = {
 	readUserMaps: readUserMaps,
 	readUserInfo: readUserInfo
 }
-//export default database
 
+//export default database
