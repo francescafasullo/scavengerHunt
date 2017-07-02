@@ -78,7 +78,7 @@
 		515CBE151F0820BA00D0E670 /* RCTConvert+GMSMapViewType.m in Sources */ = {isa = PBXBuildFile; fileRef = 515CBDF01F0820BA00D0E670 /* RCTConvert+GMSMapViewType.m */; };
 		515CBE161F0820BA00D0E670 /* RCTConvert+GMSMapViewType.m in Sources */ = {isa = PBXBuildFile; fileRef = 515CBDF01F0820BA00D0E670 /* RCTConvert+GMSMapViewType.m */; };
 		58BA5CF16E984C759A21D474 /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 05C37389CED04AFE999F061C /* MaterialIcons.ttf */; };
-		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
+		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; settings = {ATTRIBUTES = (Required, ); }; };
 		6D6BD576214B4561884C2AD9 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 239F6804C7594C47AE9661F7 /* Ionicons.ttf */; };
 		76215FEA9FB14EFF96D98086 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8D0C6466D5F34D43A9018E2D /* EvilIcons.ttf */; };
 		7EDD0F68B6634814AF9323A7 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 64092F7085084EB9823CA95D /* libRNVectorIcons.a */; };
