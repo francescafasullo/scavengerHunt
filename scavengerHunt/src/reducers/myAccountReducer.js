@@ -68,4 +68,9 @@ export const fetchUserPersonalInfo = (userId) => dispatch =>{
 	
 } 
 
+export const setUserSelectedMap = (map) => dispatch => {
+	dispatch(setCurMap(map));
+
+}
+
 export default myAccountReducer;
