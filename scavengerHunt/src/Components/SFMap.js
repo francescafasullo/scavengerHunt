@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, TextInput, View, Button, Image, Picker, TouchableOpacity } from 'react-native'
-import MapView, { Marker } from 'react-native-maps'
+import { AppRegistry, StyleSheet, Text, TextInput, View, Button, Image, Picker, TouchableOpacity, Dimensions } from 'react-native'
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import store from '../../store'
 import { newMap } from '../reducers/mapsReducer'
+
+const {height, width} = Dimensions.get('window')
 
 const styles = StyleSheet.create({
 	welcome: {
@@ -103,6 +105,7 @@ export default class NYC extends Component {
 				}} title="Save Scavenger Hunt" />
 				<Button onPress={this.clear} title="Clear all markers" />
 				<MapView
+					provider={PROVIDER_GOOGLE}
 					style={styles.map}
 					initialRegion={{
 						latitude: 37.827888,

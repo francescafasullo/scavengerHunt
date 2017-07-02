@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, TextInput, View, Button, Image, Picker, TouchableOpacity } from 'react-native'
-import MapView, { Marker } from 'react-native-maps'
+import { AppRegistry, StyleSheet, Text, TextInput, View, Button, Image, Picker, TouchableOpacity, Dimensions } from 'react-native'
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import store from '../../store'
 import { newMap } from '../reducers/mapsReducer'
+
+const {height, width} = Dimensions.get('window')
 
 const styles = StyleSheet.create({
 	welcome: {
@@ -30,26 +32,27 @@ export default class NYC extends Component {
 	constructor(props) {
 		super(props)
 		this.state = store.getState();
-		this.state.city={
-				name: 'nyc',
-				latitude: 40.759025,
-				longitude: -73.985185,
-				latitudeDelta: 0.04,
-				longitudeDelta: 0.04}
-			this.state.selectedCity= ""
-			this.state.places=[]
-			this.state.mapName=""
-			this.state.description=""
+		this.state.city = {
+			name: 'nyc',
+			latitude: 40.759025,
+			longitude: -73.985185,
+			latitudeDelta: 0.04,
+			longitudeDelta: 0.04
 		}
+		this.state.selectedCity = ""
+		this.state.places = []
+		this.state.mapName = ""
+		this.state.description = ""
+	}
 
-  componentDidMount= () => {
-    this.unsubscribe = store.subscribe(() => {
-      this.setState(store.getState());
-    });
-  }
+	componentDidMount = () => {
+		this.unsubscribe = store.subscribe(() => {
+			this.setState(store.getState());
+		});
+	}
 
-  componentWillUnmount = () => {
-    this.unsubscribe();
+	componentWillUnmount = () => {
+		this.unsubscribe();
 	}
 
 	updateDescription = (text) => {
@@ -103,6 +106,7 @@ export default class NYC extends Component {
 					title="Save Scavenger Hunt" />
 				<Button onPress={this.clear} title="Clear all markers" />
 				<MapView
+					provider={PROVIDER_GOOGLE}
 					onPress={this.addMarker}
 					style={styles.map}
 					initialRegion={{
