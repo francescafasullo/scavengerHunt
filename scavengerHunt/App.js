@@ -62,6 +62,7 @@ const scavengerHuntRouter = StackNavigator({
   },
   PlayModeMap: {
     screen: PlayModeMap
+  },
   NewSH: {
     screen: NewSH
   },

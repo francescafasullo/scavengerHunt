@@ -182,13 +182,7 @@ function readMapsInfo(maps){
 
 function readMapsItemsInfo(items){
 	let res = items.map((item) => {
-<<<<<<< HEAD
 		return database.ref('/scavenger_hunt_items/' + item).once('value')
-
-
-=======
-		return database.ref('/scavenger_hunt_items/' + item).once('value')
->>>>>>> master
 	});
 	return Promise.all(res).then (values => {
 
@@ -348,6 +342,7 @@ if(module === require.main){
   database.ref('/users/1').once('value').then(data => {
     console.log('reading user from firebase',data.val())
   })
+}
 
 module.exports = {
   database: database,

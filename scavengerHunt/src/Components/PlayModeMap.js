@@ -1,8 +1,13 @@
 import React, {Component} from 'react'
 import { AppRegistry, StyleSheet, Text, View, Dimensions, Button, Image } from 'react-native'
-import MapView, { Marker } from 'react-native-maps'
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 const geoFire = require('../../database/firebase.js').geoFire
 
+const mapStyle = {
+    transform: [
+        { rotateY: '180deg'},
+    ]
+  }
 
 const {height, width} = Dimensions.get('window')
 
@@ -89,14 +94,16 @@ export default class PlayModeMap extends Component {
     return (
       <View style={styles.container}>
         <MapView
+          provider={PROVIDER_GOOGLE}
+          customMapStyle={mapStyle}
           style={styles.map}
           initialRegion={{
             latitude: this.state.latitude || 40.7050758,
             longitude: this.state.longitude || -74.00916039999998,
-            latitudeDelta: 0.01,
-            longitudeDelta: 0.01
+            latitudeDelta: 0.005,
+            longitudeDelta: 0.005
           }}
-          showsBuildings={true}
+          showsBuildings
         >
         { Object.keys(this.state.keys).length > 0 ? Object.keys(this.state.keys).map((key) => {
           return (
