@@ -197,25 +197,25 @@ function readUserInfo(userId) {
 // 	});
 // 	return Promise.all(res).then (values => {
 
-<<<<<<< HEAD
+// <<<<<<< HEAD
+// // 		let mapInfoArr = values.map(item => {
+// // 			return item.val();
+// // 		})
+		
+// // 		return mapInfoArr;
+// =======
 // 		let mapInfoArr = values.map(item => {
 // 			return item.val();
 // 		})
-		
+
 // 		return mapInfoArr;
-=======
-		let mapInfoArr = values.map(item => {
-			return item.val();
-		})
+// >>>>>>> master
 
-		return mapInfoArr;
->>>>>>> master
-
-// 	})
+// // 	})
 // 	.catch((error)=>{console.log(error)})
 
 
-// }
+// }s
 
 function readMapsItemsInfo(items){
 
