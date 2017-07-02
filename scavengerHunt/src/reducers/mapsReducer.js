@@ -44,7 +44,7 @@ const mapsReducer = (state = initialMapsState, action) => {
 export const newMap = (mapName, description, city, places,userId) => dispatch => {
 	var mapKey = database.ref('scavenger_hunt_map/').push().key
 	var date = new Date()
-	writeUserScavengerHuntMap(mapKey, mapName, description, city, places, date)
+	writeUserScavengerHuntMap(mapKey, mapName, description, city, date)
 
 	var itemKeys = []
 	for (i = 0; i < places.length; i++) {

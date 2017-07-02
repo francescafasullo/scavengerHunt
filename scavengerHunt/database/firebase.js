@@ -178,7 +178,9 @@ function readUserMaps(userId) {
       if(!data)
 	return null
       userMaps = data;
+      console.log('usermaps',userMaps);
       return userMaps.map(item => {
+
       mapItemsKeys = Object.keys(item.items);
 	return readMapsItemsInfo(mapItemsKeys)
       })
@@ -251,7 +253,8 @@ if(module === require.main){
 
 	//seeding scavenger hunt items
 
-	//let userKey = createOneUser("jonny", "jj@gmail.com", "123456");
+	//let userKey = createOneUser("jonny", "jjo@gmail.com", "123456");
+	writeUserData("iIAz1Ht7TIO5vK0HPQQRaNjyYPv2", "jonny", "jjo@gmail.com",500,"url");
 	let userKey = "iIAz1Ht7TIO5vK0HPQQRaNjyYPv2";
 	let places = createItemsToDefaultMap();
 	newMap("NYC down town trip", "restaurants and museum downtown", "NYC", places,userKey);
