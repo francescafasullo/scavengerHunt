@@ -82,7 +82,7 @@ function associateUserToMap(userId,mapId){
 }
 
 // help functions to re-construct data retrieved from db
-// takes an array of maps keys and maps them to an array of map objects 
+// takes an array of maps keys and maps them to an array of map objects
 // that each one would have the map info
 function readMapsInfo(maps){
   let res = maps.map((item) => {
@@ -99,9 +99,9 @@ function readMapsInfo(maps){
 
 function readMapsItemsInfo(items){
   let res = items.map((item) => {
-    return database.ref('/scavenger_hunt_items/' + item).once('value')			
+    return database.ref('/scavenger_hunt_items/' + item).once('value')
   });
-  return Promise.all(res).then (values => {	
+  return Promise.all(res).then (values => {
     let itemInfoArr = values.map(item => {
       return item.val();
     })
@@ -120,12 +120,12 @@ function readUserMaps(userId) {
       if(!data.val().maps)
         return null
 	mapKeys = Object.keys(data.val().maps);
-	return readMapsInfo(mapKeys);	
+	return readMapsInfo(mapKeys);
     })
     .then(data => {
       if(!data)
 	return null
-      userMaps = data;	
+      userMaps = data;
       return userMaps.map(item => {
       mapItemsKeys = Object.keys(item.items);
 	return readMapsItemsInfo(mapItemsKeys)
@@ -134,7 +134,7 @@ function readUserMaps(userId) {
     .then(data => {
       if(!data)
         return null;
-      return Promise.all(data);	 
+      return Promise.all(data);
      })
     .then(res => {
       if(!res)
@@ -146,7 +146,7 @@ function readUserMaps(userId) {
 	return map;
       })
       return userMaps
-    });	
+    });
 }
 
 function readUserInfo(userId) {
@@ -162,7 +162,7 @@ function readUserInfo(userId) {
 }
 
 //help functions to re-construct data retrieved from db
-//takes an array of maps keys and maps them to an array of map objects 
+//takes an array of maps keys and maps them to an array of map objects
 //that eact one would have the map info
 function readMapsInfo(maps){
 
@@ -170,35 +170,35 @@ function readMapsInfo(maps){
 
 		return database.ref('/scavenger_hunt_map/' + item).once('value')
 
-			
+
 	});
 	return Promise.all(res).then (values => {
-		
+
 		let mapInfoArr = values.map(item => {
 			return item.val();
 		})
 		
 		return mapInfoArr;
-		
+
 	})
 	.catch((error)=>{console.log(error)})
-	
+
 
 }
 
 function readMapsItemsInfo(items){
 
 	let res = items.map((item) => {
-		return database.ref('/scavenger_hunt_items/' + item).once('value')			
+		return database.ref('/scavenger_hunt_items/' + item).once('value')
 	});
 	return Promise.all(res).then (values => {
-		
+
 		let itemInfoArr = values.map(item => {
 			return item.val();
 		})
 		console.log('in promise items all',itemInfoArr);
 		return itemInfoArr;
-		
+
 	})
 	.catch((error)=>{console.log(error)})
 
@@ -214,26 +214,26 @@ function readUserMaps(userId) {
 		if(!data.val().maps)
 			return null
 		mapKeys = Object.keys(data.val().maps);
-		
+
 		return readMapsInfo(mapKeys);
-  		
+
 	})
 	.then(data => {
 		if(!data)
 			return null
 		userMaps = data;
-		
+
 		return userMaps.map(item => {
 			mapItemsKeys = Object.keys(item.items);
 			return readMapsItemsInfo(mapItemsKeys)
-			
+
 		})
 	})
 	.then(data => {
 		if(!data)
 			return null;
 		return Promise.all(data);
-		 
+
 	})
 	.then(res => {
 		// res = [ [] ]
@@ -261,7 +261,6 @@ function readUserInfo(userId) {
 		user.profile_pic = data.val().profile_pic
 		return user;
 	})
-
 }
 
 if(module === require.main){
@@ -350,8 +349,69 @@ associateScavengerItemToMap('Knyw3XAPBwbDHJ8qJvi','Knz-XrlJEhAAMd1Ghmb');
     console.log('Error: ' + error)
   })
 
-  
+
+  // seeding categories
+  writeCategory('Restaurant', 'A place to dine');
+  writeCategory('Cafe', 'A plcae to drink coffee and eat snacks');
+  writeCategory('Bar', 'A place to go for drinks');
+  writeCategory('Museum', 'a building in which objects of historical, scientific, artistic, or cultural interest are stored and exhibited');
+  writeCategory('Gallery', 'a room or building for the display or sale of works of art');
+
+  // seeding users in the data base
+  writeUserData(1, "Stella", "stella@stella.stella",0,"https://i.imgur.com/O5wwwaG.jpg");
+  writeUserData(2,"Emma","emma@yahoo.com",0,"https://i.imgur.com/akaLrwh.jpg");
+  writeUserData(3,"John", "john@gmail.com",0,"http://i.imgur.com/xoH7gvu.jpg");
+
+  // seeding scavenger hunt maps
+  writeScavengerHuntMap("NYC john map",3, "john's trip to nyc may 2017","05052017");
+  writeScavengerHuntMap("NYC wall street",3, "nice places to visit in wall street area","20062017");
+  writeScavengerHuntMap("wall street dining",2, "great eating spots in wall street area","04032017");
+  writeScavengerHuntMap("wall street tour",1, "a one day tour in wall street area NYC","10202016");
+
+
+  // adding categories to scavenger hunt items
+  addCategoryToScavengerHuntItem(1,'Restaurant');
+  addCategoryToScavengerHuntItem(1,'Cafe');
+  addCategoryToScavengerHuntItem(2, 'Restaurant');
+  addCategoryToScavengerHuntItem(2,'Cafe');
+  addCategoryToScavengerHuntItem(3, 'Restaurant');
+  addCategoryToScavengerHuntItem(4, 'Restaurant');
+  addCategoryToScavengerHuntItem(5, 'Restaurant');
+  addCategoryToScavengerHuntItem(6, 'Museum');
+  addCategoryToScavengerHuntItem(7, 'Museum');
+  addCategoryToScavengerHuntItem(8, 'Gallery');
+
+  // associating maps and items
+  associateScavengerItemToMap('KnuufYTTVciOt7MDAUz',1);
+  associateScavengerItemToMap('KnuufYTTVciOt7MDAUz',2);
+  associateScavengerItemToMap('KnuufYTTVciOt7MDAUz',6);
+  associateScavengerItemToMap('KnuufYUMuNrU__tFe03',3);
+  associateScavengerItemToMap('KnuufYUMuNrU__tFe03',8);
+  associateScavengerItemToMap('KnuufYUMuNrU__tFe04',3);
+  associateScavengerItemToMap('KnuufYUMuNrU__tFe04',1);
+  associateScavengerItemToMap('KnuufYVNHKGpS4yo6qw',2);
+  associateScavengerItemToMap('KnuufYVNHKGpS4yo6qw',7);
+  associateScavengerItemToMap('KnuufYVNHKGpS4yo6qw',6);
+
+  // associating users amd maps
+  associateUserToMap(1,1);
+  associateUserToMap(1,4);
+  associateUserToMap(1,2);
+  associateUserToMap(2,3);
+  associateUserToMap(2,4);
+  associateUserToMap(3,4);
+  associateUserToMap(3,1);
+  associateUserToMap(3,2);
+  associateUserToMap('xDvwt4l8ZZg6X7SieEahz1bFtgb2',1);
+  associateUserToMap('xDvwt4l8ZZg6X7SieEahz1bFtgb2',2);
+
+  database.ref('/users/1').once('value').then(data => {
+    console.log('reading user from firebase',data.val())
+  })
 }
+  
+
+
 
 
 module.exports = {

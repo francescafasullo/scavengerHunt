@@ -20,13 +20,13 @@ const fireBase = require('./database/firebase');
 import SignUpScreen from './src/Components/SignUp'
 import LoginScreen from './src/Components/Login'
 import MyAccountScreen from './src/Components/MyAccount'
+import PlayModeMap from './src/Components/PlayModeMap'
 import NewSH from './src/Components/NewSH'
 import NYCMap from './src/Components/NYCMap'
 import SFMap from './src/Components/SFMap'
 import LAMap from './src/Components/LAMap'
 import AustinMap from './src/Components/AustinMap'
 import SavedConf from './src/Components/SavedConf'
-
 
 const scavengerHuntRouter = StackNavigator({
   Home: {
@@ -60,6 +60,9 @@ const scavengerHuntRouter = StackNavigator({
   SignInSignUp: {
     screen: SignInSignUpScreen
   },
+  PlayModeMap: {
+    screen: PlayModeMap
+  },
   NewSH: {
     screen: NewSH
   },
@@ -74,7 +77,7 @@ const scavengerHuntRouter = StackNavigator({
   },
   AustinMap: {
     screen: AustinMap
-  }, 
+  },
   SavedConf: {
     screen: SavedConf
   }
@@ -85,7 +88,7 @@ const Tabs = TabNavigator({
     screen: scavengerHuntRouter,
     navigationOptions: {
       tabBarLabel: 'Home',
-      tabBarIcon: ({ tintColor }) => <Icon name="home" size={26} color={tintColor} />
+      tabBarIcon: ({tintColor}) =>  <Icon name="home" size={26} color={tintColor} />
 
     }
 
@@ -111,13 +114,10 @@ const Tabs = TabNavigator({
 }, {
     tabBarOptions: {
       activeTintColor: '#800000',
-      //inactiveTintColor: '#C0C0C0'
       inactiveTintColor: '#696969'
     }
   })
 
-//AppRegistry.registerComponent('scavengerHunt', () => scavengerHuntRouter);
-//AppRegistry.registerComponent('scavengerHunt', () => Tabs);
 export default Tabs;
 
 
