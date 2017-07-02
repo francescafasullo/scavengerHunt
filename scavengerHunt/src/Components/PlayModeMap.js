@@ -132,11 +132,15 @@ export default class PlayModeMap extends Component {
   constructor(props) {
     super(props)
     this.updateKeys = this.updateKeys.bind(this)
+    this.onRegionChange = this.onRegionChange.bind(this)
     this.state = {
       latitutde: null,
       longitude: null,
       error: null,
-      keys: {}
+      keys: {},
+      mapRegion: null,
+      lastLat: null,
+      lastLong: null
     }
   }
 
@@ -148,6 +152,13 @@ export default class PlayModeMap extends Component {
           longitude: position.coords.longitude,
           error: null,
         })
+        let region = {
+          latitude:       position.coords.latitude,
+          longitude:      position.coords.longitude,
+          latitudeDelta:  0.00922,
+          longitudeDelta: 0.00421
+        }
+        this.onRegionChange(region, region.latitude, region.longitude);
         if (!this.geoQuery) {
           const gq = this.geoQuery = geoFire.query({
             center: [position.coords.latitude, position.coords.longitude],
@@ -182,9 +193,17 @@ export default class PlayModeMap extends Component {
 
   updateKeys(position) {
       if(Object.keys(this.state.keys).length !== 0) {
-        console.log('keys !!!!!!', this.state.keys)
         this.setState({keys: withDirectionAndDistance(this.state.keys, position.coords)}, console.log)
       }
+  }
+
+  onRegionChange(region, lastLat, lastLong) {
+    this.setState({
+      mapRegion: region,
+      // If there are no new values set the current ones
+      lastLat: lastLat || this.state.lastLat,
+      lastLong: lastLong || this.state.lastLong
+    });
   }
 
   render() {
@@ -194,16 +213,13 @@ export default class PlayModeMap extends Component {
           provider={PROVIDER_GOOGLE}
           customMapStyle={mapStyle}
           style={styles.map}
-          initialRegion={{
-            latitude: this.state.latitude || 40.7050758,
-            longitude: this.state.longitude || -74.00916039999998,
-            latitudeDelta: 0.005,
-            longitudeDelta: 0.005
-          }}
+          region={this.state.mapRegion}
+          showsUserLocation={true}
+          followUserLocation={true}
+          onRegionChange={this.onRegionChange}
           showsBuildings
         >
         { Object.keys(this.state.keys).length > 0 ? Object.keys(this.state.keys).map((key) => {
-          console.log('keys in render', this.state.keys[key].location)
           return (
               <MapView.Marker
                 coordinate={{latitude: this.state.keys[key].location[0], longitude: this.state.keys[key].location[1]}}
