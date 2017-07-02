@@ -74,7 +74,6 @@ export default class NYC extends Component {
 	saveSH = (mapName, description, userId) => {
 		const city = this.state.city
 		const places = this.state.places
-		console.log("something", mapName, description, city, places)
 		store.dispatch(newMap(mapName, description, city, places, userId))
 	}
 

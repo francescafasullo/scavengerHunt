@@ -38,6 +38,16 @@ function writeScavengerHuntMap(name, creatorId, description, date){
   })
 }
 
+function writeUserScavengerHuntMap(key, name, description, city, places, date){
+  database.ref('scavenger_hunt_map/' + key).set({
+    mapname: name,
+    description: description,
+		city: city, 
+		places: places,
+    date: date
+  })
+}
+
 function writeScavengerHuntItem(name, address, latitude, longitude){
 	database.ref('scavenger_hunt_items/').push().set({
 		name: name,
@@ -45,6 +55,14 @@ function writeScavengerHuntItem(name, address, latitude, longitude){
 		latitude: latitude,
 		longitude: longitude
 
+	})
+}
+
+function writeUserScavengerHuntItem(key, name, latitude,longitude){
+	database.ref('scavenger_hunt_items/').set({
+		name: name,
+		latitude: latitude,
+		longitude: longitude
 	})
 }
 
@@ -417,8 +435,10 @@ associateScavengerItemToMap('Knyw3XAPBwbDHJ8qJvi','Knz-XrlJEhAAMd1Ghmb');
 module.exports = {
   database: database,
   writeUserData: writeUserData,
-  writeScavengerHuntMap: writeScavengerHuntMap,
-  writeScavengerHuntItem: writeScavengerHuntItem,
+  writeUserScavengerHuntMap: writeUserScavengerHuntMap,
+	writeScavengerHuntMap: writeScavengerHuntMap,
+  writeUserScavengerHuntItem: writeUserScavengerHuntItem,
+	writeScavengerHuntItem: writeScavengerHuntItem,
   writeCategory: writeCategory,
   addCategoryToScavengerHuntItem: addCategoryToScavengerHuntItem,
   associateScavengerItemToMap: associateScavengerItemToMap,

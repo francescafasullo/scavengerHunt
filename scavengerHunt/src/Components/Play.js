@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import { AppRegistry, StyleSheet, Text, View, Button, Image, Picker } from 'react-native'
 import MapView from 'react-native-maps'
-import {getMaps} from '../reducers/mapsReducer'
 import store from '../../store'
 
 const styles = StyleSheet.create({
@@ -26,10 +25,6 @@ export default class Play extends Component {
 	constructor(props) {
 		super(props)
 		this.state = store.getState()
-	}
-
-	componentDidMount = () => {
-		store.dispatch(getMaps())
 	}
 
 	render() {

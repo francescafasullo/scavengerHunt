@@ -4,6 +4,8 @@ import { writeUserData } from '../../database/firebase'
 import { database } from '../../database/firebase'
 import { associateScavengerItemToMap } from '../../database/firebase'
 import {associateUserToMap} from '../../database/firebase'
+import {writeUserScavengerHuntMap} from '../../database/firebase'
+import {writeUserScavengerHuntItem} from '../../database/firebase'
 import firebase from 'firebase'
 
 /* ------------------ actions ------------------------ */
@@ -41,20 +43,13 @@ const mapsReducer = (state = initialMapsState, action) => {
 
 export const newMap = (mapName, description, city, places,userId) => dispatch => {
 	var mapKey = database.ref('scavenger_hunt_map/').push().key
-	database.ref('scavenger_hunt_map/' + mapKey).set({
-		mapName: mapName,
-		description: description,
-		city: city,
-	})
+	var date = new Date()
+	writeUserScavengerHuntMap(mapKey, mapName, description, city, places, date)
+
 	var itemKeys = []
 	for (i = 0; i < places.length; i++) {
 		itemKeys.push(database.ref('scavenger_hunt_items/').push().key)
-		database.ref('scavenger_hunt_items/' + itemKeys[i]).set({
-			mapName: mapName,
-			category: "Hidden Pusheen",
-			latitude: places[i].coordinate.latitude,
-			longitude: places[i].coordinate.longitude
-		})
+		writeUserScavengerHuntItem(itemKeys[i], mapName, places[i].coordinate.latitude, places[i].coordinate.longitude )
 	}
 
 	associateUserToMap(userId, mapKey)
