@@ -42,7 +42,7 @@ function writeUserScavengerHuntMap(key, name, description, city, places, date){
   database.ref('scavenger_hunt_map/' + key).set({
     mapname: name,
     description: description,
-		city: city, 
+		city: city,
 		places: places,
     date: date
   })
@@ -83,7 +83,7 @@ function addCategoryToScavengerHuntItem(itemId, categoryName){
 // assosiating a scavenger hunt item to a map, both the item and the map should have reference to each other
 function associateScavengerItemToMap(mapId, scavengerItemId){
 
-	
+
 	let update={};
 	update['/scavenger_hunt_map/'+mapId+'/items/'+scavengerItemId] = true;
 	update['/scavenger_hunt_items/'+scavengerItemId+'/maps/'+mapId] = true;
@@ -195,7 +195,7 @@ function readMapsInfo(maps){
 		let mapInfoArr = values.map(item => {
 			return item.val();
 		})
-		
+
 		return mapInfoArr;
 
 	})
@@ -361,7 +361,8 @@ associateScavengerItemToMap('Knyw3XAPBwbDHJ8qJvi','Knz-XrlJEhAAMd1Ghmb');
     '6': [40.7065557, -74.0090503],
     '7': [40.707258, -74.0103563999999],
     '8': [40.7076346, -74.0107747],
-    '9': [40.8010717, -73.93807850000002]
+    '9': [40.8010717, -73.93807850000002],
+    '10': [40.7761098, -73.951832]
   }).then(function() {
   }, function(error) {
     console.log('Error: ' + error)
@@ -427,7 +428,7 @@ associateScavengerItemToMap('Knyw3XAPBwbDHJ8qJvi','Knz-XrlJEhAAMd1Ghmb');
     console.log('reading user from firebase',data.val())
   })
 }
-  
+
 
 
 

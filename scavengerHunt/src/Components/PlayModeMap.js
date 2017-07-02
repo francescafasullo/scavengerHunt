@@ -3,11 +3,106 @@ import { AppRegistry, StyleSheet, Text, View, Dimensions, Button, Image } from '
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 const geoFire = require('../../database/firebase.js').geoFire
 
-const mapStyle = {
-    transform: [
-        { rotateY: '180deg'},
-    ]
-  }
+const mapStyle =
+[
+    {
+        "featureType": "road",
+        "stylers": [
+            {
+                "hue": "#5e00ff"
+            },
+            {
+                "saturation": -79
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "stylers": [
+            {
+                "saturation": -78
+            },
+            {
+                "hue": "#6600ff"
+            },
+            {
+                "lightness": -47
+            },
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "stylers": [
+            {
+                "lightness": 22
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "stylers": [
+            {
+                "hue": "#6600ff"
+            },
+            {
+                "saturation": -11
+            }
+        ]
+    },
+    {},
+    {},
+    {
+        "featureType": "water",
+        "stylers": [
+            {
+                "saturation": -65
+            },
+            {
+                "hue": "#1900ff"
+            },
+            {
+                "lightness": 8
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "stylers": [
+            {
+                "weight": 1.3
+            },
+            {
+                "lightness": 30
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            },
+            {
+                "hue": "#5e00ff"
+            },
+            {
+                "saturation": -16
+            }
+        ]
+    },
+    {
+        "featureType": "transit.line",
+        "stylers": [
+            {
+                "saturation": -72
+            }
+        ]
+    },
+    {}
+]
 
 const {height, width} = Dimensions.get('window')
 
@@ -26,6 +121,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#BFD8D2'
+  },
+  marker: {
+    height: 100,
+    width: 200
   }
 })
 
@@ -48,8 +147,6 @@ export default class PlayModeMap extends Component {
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
           error: null,
-          closestPlaceLat: 40.7052066,
-          closestPlaceLong: -74.01032889999999
         })
         if (!this.geoQuery) {
           const gq = this.geoQuery = geoFire.query({
@@ -106,12 +203,14 @@ export default class PlayModeMap extends Component {
           showsBuildings
         >
         { Object.keys(this.state.keys).length > 0 ? Object.keys(this.state.keys).map((key) => {
+          console.log('keys in render', this.state.keys[key].location)
           return (
-            <Marker
-              location={this.state.keys[key].location}
-            />
-          )
-        }) : null
+              <MapView.Marker
+                coordinate={{latitude: this.state.keys[key].location[0], longitude: this.state.keys[key].location[1]}}
+                image={require('../../public/pusheenMarker.png')}
+              />
+            )
+          }) : null
         }
         </MapView>
       </View>
