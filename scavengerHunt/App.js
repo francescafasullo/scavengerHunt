@@ -27,6 +27,7 @@ import SFMap from './src/Components/SFMap'
 import LAMap from './src/Components/LAMap'
 import AustinMap from './src/Components/AustinMap'
 import SavedConf from './src/Components/SavedConf'
+import Map from './src/Components/Map'
 
 const scavengerHuntRouter = StackNavigator({
   Home: {
@@ -80,6 +81,9 @@ const scavengerHuntRouter = StackNavigator({
   },
   SavedConf: {
     screen: SavedConf
+  }, 
+  Map: {
+    screen: Map
   }
 })
 
