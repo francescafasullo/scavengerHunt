@@ -120,7 +120,9 @@ export default class MyAccount extends Component {
             onValueChange={(itemValue, itemIndex) => this.setSelectedMap(itemIndex)}>
             {
                 this.state.myAccount.maps.map((map, index) => (
-                  <Picker.Item key={index} label={map.mapname} value={map.mapname} />
+                  <Picker.Item key ={index} label={map.mapname} value={map.mapname} />
+                  
+                  
                 )
               )
             }
