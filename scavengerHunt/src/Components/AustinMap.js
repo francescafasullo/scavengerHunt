@@ -89,7 +89,10 @@ export default class NYC extends Component {
                     placeholder="Description"
                     onChangeText={this.updateDescription}
                 />
-                <Button onPress={() => this.saveSH(this.state.mapName, this.state.description)} title="Save Scavenger Hunt" />
+                <Button onPress={() => {
+                    this.saveSH(this.state.mapName, this.state.description)
+                    this.props.navigation.navigate('SavedConf')
+                }} title="Save Scavenger Hunt" />
                 <Button onPress={this.clear} title="Clear all markers" />
                 <MapView
                     onPress={this.addMarker}
