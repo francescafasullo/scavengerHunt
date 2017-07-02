@@ -73,7 +73,7 @@ const scavengerHuntRouter = StackNavigator({
   MoreInfo: 
   {
     screen: MoreInfo
-  }
+  },s
 })
 
 const Tabs = TabNavigator({
