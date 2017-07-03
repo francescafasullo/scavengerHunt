@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, TextInput, View, Button, Image, Picker, TouchableOpacity, Dimensions } from 'react-native'
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { Marker, PROVIDER_GOOGLE, fitToCoordinates } from 'react-native-maps'
 import store from '../../store'
-import { newMap } from '../reducers/mapsReducer'
 
 const { height, width } = Dimensions.get('window')
 
@@ -32,6 +31,7 @@ export default class Map extends Component {
 	constructor(props) {
 		super(props)
 		this.state = store.getState()
+		this.mapRef = null
 	}
 
 	componentDidMount = () => {
@@ -54,13 +54,14 @@ export default class Map extends Component {
 	}
 
 	render() {
-		console.log('state in map', this.state.myAccount.map)
+		console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++state in map', this.state.myAccount.map)
 		return (
 			<View>
 				<MapView
+					ref={(ref) => { this.mapRef = ref }}
 					provider={PROVIDER_GOOGLE}
 					style={styles.map}
-					onLayout = {() => this.mapRef.fitToCoordinates(this.props.myLatLongs, { edgePadding: { top: 10, right: 10, bottom: 10, left: 10 }, animated: false })}
+					// onLayout = {() => this.mapRef.fitToCoordinates(this.props.myLatLongs, { edgePadding: { top: 10, right: 10, bottom: 10, left: 10 }, animated: false })}
 					initialRegion={{
 						latitude: this.state.myAccount.map.city.latitude,
 						longitude: this.state.myAccount.map.city.longitude,
@@ -68,7 +69,7 @@ export default class Map extends Component {
 						longitudeDelta: this.state.myAccount.map.city.longitudeDelta
 					}}
 				>
-					{
+				{
 						this.state.myAccount.map.items.map((item, index) => (
 							<MapView.Marker
 								key={index}
