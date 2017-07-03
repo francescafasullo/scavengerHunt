@@ -56,7 +56,6 @@ export default class MyAccount extends Component {
   render() {
     const userId = (this.state ? this.state.auth.userId : null)//{auth: {userId}} = this.state || {}
     let index = 1;
-
     return (
       <View style={styles.container}>
         {userId ?
