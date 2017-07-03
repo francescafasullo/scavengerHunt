@@ -44,6 +44,15 @@ export default class Map extends Component {
 		this.unsubscribe();
 	}
 
+	centerMarkers = () => {
+		const markers = this.state.myAccount.map.items
+		var bounds = new google.maps.LatLngBounds();
+		for (i = 0; i < markers.length; i++) {
+			bounds.extend(markers[i].getPosition());
+		}
+		map.setCenter(bounds.getCenter());
+	}
+
 	render() {
 		console.log('state in map', this.state.myAccount.map)
 		return (
@@ -51,6 +60,7 @@ export default class Map extends Component {
 				<MapView
 					provider={PROVIDER_GOOGLE}
 					style={styles.map}
+					onLayout = {() => this.mapRef.fitToCoordinates(this.props.myLatLongs, { edgePadding: { top: 10, right: 10, bottom: 10, left: 10 }, animated: false })}
 					initialRegion={{
 						latitude: this.state.myAccount.map.city.latitude,
 						longitude: this.state.myAccount.map.city.longitude,
