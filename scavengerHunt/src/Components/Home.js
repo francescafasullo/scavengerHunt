@@ -7,12 +7,13 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F7CAC9',
+    backgroundColor: '#FCF1E3',
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 40,
     textAlign: 'center',
     margin: 10,
+    color: '#FFB100'
   },
   instructions: {
     textAlign: 'center',
@@ -38,15 +39,11 @@ export default class HomeScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Image source={require('../../public/appIcon.png')} />
         <Text style={styles.welcome}>
-          Welcome to Scavenger Hunt!
+          Welcome to Pusheen Travel!
         </Text>
-        <Button onPress={() => { this.props.navigation.navigate('PlayModeMap') }} title="Play Mode Map!" />
-        <Button onPress={() => { this.props.navigation.navigate('Play') }} title="Play!" />
-        <Button onPress={() => { this.props.navigation.navigate('SignUp') }} title="Sign Up" />
-        <Button onPress={() => { this.props.navigation.navigate('Login') }}
-          title="Login" />
-        <Button onPress={this.logout} title="Logout" />
+
       </View>
 
     );
