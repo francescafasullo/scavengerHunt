@@ -3,22 +3,7 @@ import { AppRegistry, StyleSheet, Text, View, Button, Image, Picker } from 'reac
 import store from '../../store'
 import { logout } from '../reducers/authReducer'
 import {setUserSelectedMap, fetchUserMaps} from '../reducers/myAccountReducer'
-
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F7CAC9'
-  },
-  points: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  }
-
-});
+import styles from '../../stylesheet'
 
 export default class MyAccount extends Component {
   constructor(props) {
