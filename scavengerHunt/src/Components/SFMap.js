@@ -4,7 +4,11 @@
 // import store from '../../store'
 // import { newMap } from '../reducers/mapsReducer'
 
+<<<<<<< HEAD
 // const {height, width} = Dimensions.get('window')
+=======
+const { height, width } = Dimensions.get('window')
+>>>>>>> changed map saved page
 
 // const styles = StyleSheet.create({
 // 	welcome: {
@@ -84,6 +88,7 @@
 // 		this.setState({ places: [] })
 // 	}
 
+<<<<<<< HEAD
 // 	render() {
 // 		const userId = (this.state ? this.state.auth.userId : null)
 // 		return (
@@ -130,4 +135,53 @@
 // 		)
 // 	}
 // }
+=======
+	render() {
+		const userId = (this.state ? this.state.auth.userId : null)
+		return (
+			<View style={styles.container}>
+				<Text>Enter new map name and description.</Text>
+				<TextInput
+					style={{ height: 40 }}
+					placeholder="Map Name"
+					onChangeText={this.updateMapName}
+				/>
+				<TextInput
+					style={{ height: 40 }}
+					placeholder="Description"
+					onChangeText={this.updateDescription}
+				/>
+				<Button onPress={() => {
+					this.saveSH(this.state.mapName, this.state.description, userId)
+					this.props.navigation.navigate('SavedConf')
+				}} title="Save Scavenger Hunt" />
+				<Button onPress={this.clear} title="Clear all markers" />
+				<MapView
+					provider={PROVIDER_GOOGLE}
+					style={styles.map}
+					initialRegion={{
+						latitude: 37.827888,
+						longitude: -122.422899,
+						latitudeDelta: 0.04,
+						longitudeDelta: 0.04
+					}}
+					onPress={this.addMarker}
+				>
+					{
+						(this.state.places || []).map(
+							(place, index) =>
+								<MapView.Marker
+									key={index}
+									coordinate={place.coordinate}
+									title={place.title}
+									description={place.description}
+								/>
+						)
+					}
+				</MapView>
+			</View>
+		)
+	}
+}
+>>>>>>> changed map saved page
 

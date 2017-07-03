@@ -1,11 +1,12 @@
 import React, {Component} from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native'
+import { StyleSheet, Text, View, Button, Image } from 'react-native'
 
 const styles = StyleSheet.create({
 	welcome: {
-		fontSize: 20,
+		fontSize: 40,
 		textAlign: 'center',
 		margin: 10,
+		color: 'white'
 	},
 	map: {
 		width: 300,
@@ -27,6 +28,7 @@ export default class SavedConf extends Component {
   render() {
     return (
       <View style={styles.container}>
+			<Image source={require('../../public/mapsaved.png')}/>
       <Text style={styles.welcome}>
       Map saved!
       </Text>
