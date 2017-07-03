@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, View, Button, Image, Picker } from 'react-native'
+import { AppRegistry, StyleSheet, Text, View, Button, Image, Picker, CameraRoll } from 'react-native'
 import store from '../../store'
 import { logout } from '../reducers/authReducer'
 import {setUserSelectedMap} from '../reducers/myAccountReducer'
@@ -49,6 +49,12 @@ export default class MyAccount extends Component {
 
   }
 
+  getPhotos () {
+    CameraRoll.getPhotos({
+      first: 100
+    })
+
+  }
 
   render() {
     console.log("in my account state", this.state);
