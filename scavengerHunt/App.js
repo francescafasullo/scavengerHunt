@@ -42,7 +42,7 @@ const scavengerHuntRouter = StackNavigator({
     screen: Play
   },
   PlayMap: {
-    screen: PlayMap,
+    screen: PlayMap
   },
   SignUp: {
     screen: SignUpScreen
@@ -52,7 +52,6 @@ const scavengerHuntRouter = StackNavigator({
   },
   MyAccount: {
     screen: MyAccountScreen
-
   },
   SignInSignUp: {
     screen: SignInSignUpScreen
@@ -66,6 +65,9 @@ const scavengerHuntRouter = StackNavigator({
   SavedConf: {
     screen: SavedConf
   },
+  Map: {
+    screen: Map
+  }
 })
 
 const Tabs = TabNavigator({
