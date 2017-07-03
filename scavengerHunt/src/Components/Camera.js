@@ -138,4 +138,4 @@ export default class CameraScreen extends Component {
   }
 }
 
-//AppRegistry.registerComponent('scavengerHunt', () => CameraScreen);
+
