@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, TextInput, View, Button, Image, Picker, TouchableOpacity } from 'react-native'
-import MapView, { Marker } from 'react-native-maps'
+import { AppRegistry, StyleSheet, Text, TextInput, View, Button, Image, Picker, TouchableOpacity, Dimensions } from 'react-native'
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import store from '../../store'
-import { newMap } from '../reducers/mapsReducer'
+import { newMap, setUserSelectedMap } from '../reducers/myAccountReducer'
+
+const {height, width} = Dimensions.get('window')
 
 const styles = StyleSheet.create({
 	welcome: {
@@ -15,7 +17,7 @@ const styles = StyleSheet.create({
 		alignSelf: 'center'
 	},
 	map: {
-		width: 500,
+		width: width,
 		height: 500,
 		alignSelf: 'center',
 	},
@@ -29,46 +31,48 @@ const styles = StyleSheet.create({
 export default class NewSH extends Component {
 	constructor(props) {
 		super(props)
+    userId = store.getState().auth.userId
+    user = store.getState().myAccount
+		this.onRegionChange = this.onRegionChange.bind(this)
 		this.state = {
-			city: {},
-			cities: [
-				{
-					name: 'nyc',
-					latitude: 40.759025,
-					longitude: -73.985185,
-					latitudeDelta: 0.04,
-					longitudeDelta: 0.04
-				},
-				{
-					name: 'sf',
-					latitude: 37.827888,
-					longitude: -122.422899,
-					latitudeDelta: 0.04,
-					longitudeDelta: 0.04
-				},
-				{
-					name: "la",
-					latitude: 34.134323,
-					longitude: -118.321569,
-					latitudeDelta: 0.04,
-					longitudeDelta: 0.04
-				},
-				{
-					name: "austin",
-					latitude: 30.274573,
-					longitude: -97.740307,
-					latitudeDelta: 0.04,
-					longitudeDelta: 0.04
-				}
-			],
-			selectedCity: "",
+      user: user,
 			places: [],
 			mapName: '',
-			description: ''
+			description: '',
+			mapRegion: null,
+      lastLat: null,
+      lastLong: null,
+      location: '',
+      userId: userId
 		}
 	}
 
+	componentDidMount() {
+		this.watchId = navigator.geolocation.watchPosition(
+			(position) => {
+				let region = {
+          latitude:       position.coords.latitude,
+          longitude:      position.coords.longitude,
+          latitudeDelta:  0.00922*2,
+          longitudeDelta: 0.00421*2
+        }
+        this.onRegionChange(region, region.latitude, region.longitude)
+			}
+			)
+	}
 
+	componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchId)
+  }
+
+  onRegionChange(region, lastLat, lastLong) {
+    this.setState({
+      mapRegion: region,
+      // If there are no new values set the current ones
+      lastLat: lastLat || this.state.lastLat,
+      lastLong: lastLong || this.state.lastLong
+    });
+  }
 
 	addMarker = evt => {
 		const { coordinate } = evt.nativeEvent
@@ -80,14 +84,10 @@ export default class NewSH extends Component {
 		})
 	}
 
-	saveSH = (mapName, description) => {
-		console.log("something", mapName, description, city, places)
-		let city = this.state.cities.filter(city => {
-			return city.name === this.state.selectedCity
-		})
-		const places = this.state.places
+	saveSH = (mapName, description, location, userId) => {
+    store.dispatch(newMap(mapName, description, location, userId))
+		console.log("user state in newMap", this.state.user)
 
-		store.dispatch(newMap(mapName, description, city, places))
 	}
 
 	clear = () => {
@@ -95,34 +95,48 @@ export default class NewSH extends Component {
 	}
 
 	updateDescription = (text) => {
-		this.setState({ mapName: text })
+		this.setState({ description: text })
 	}
 
 	updateMapName = (text) => {
-		this.setState({ description: text })
+		this.setState({ mapName: text })
 	}
+
+  updateLocation = (text) => {
+    this.setState({ location: text })
+  }
 
 	render() {
 		return (
 			<View style={styles.container}>
-				<Picker style={styles.picker} selectedValue={this.state.selectedCity}
-					onValueChange={(itemValue, itemIndex) => this.setState({ selectedCity: itemValue })}
-				>
-					<Picker.Item label="Select a city!" />
-					<Picker.Item label="New York City" value="nyc" />
-					<Picker.Item label="San Francisco" value="sf" />
-					<Picker.Item label="Los Angeles" value="la" />
-					<Picker.Item label="Austin" value="austin" />
-
-				</Picker>
-				{this.state.selectedCity === 'nyc' ?
-					this.props.navigation.navigate('NYCMap') : null}
-				{this.state.selectedCity === 'sf' ?
-					this.props.navigation.navigate('SFMap') : null}
-				{this.state.selectedCity === 'la' ?
-					this.props.navigation.navigate('LAMap') : null}
-				{this.state.selectedCity === 'austin' ?
-					this.props.navigation.navigate('AustinMap') : null}
+				<Text>Enter a name and description for your new map:</Text>
+				<TextInput
+					style={{ height: 40 }}
+					placeholder="Map Name"
+					onChangeText={this.updateMapName}
+				/>
+				<TextInput
+					style={{ height: 40 }}
+					placeholder="Description"
+					onChangeText={this.updateDescription}
+				/>
+        <TextInput
+          style={{ height: 40 }}
+          placeholder="Location"
+          onChangeText={this.updateLocation}
+        />
+				<Button onPress={() => {
+					this.saveSH(this.state.mapName, this.state.description, this.state.location, this.state.userId)
+				}}
+					title="Save Map" />
+				<MapView
+          provider={PROVIDER_GOOGLE}
+          style={styles.map}
+          region={this.state.mapRegion}
+          onRegionChange={this.onRegionChange}
+          showsBuildings
+        >
+        </MapView>
 			</View>
 		)
 	}

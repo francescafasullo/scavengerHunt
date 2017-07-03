@@ -22,10 +22,6 @@ import LoginScreen from './src/Components/Login'
 import MyAccountScreen from './src/Components/MyAccount'
 import PlayModeMap from './src/Components/PlayModeMap'
 import NewSH from './src/Components/NewSH'
-import NYCMap from './src/Components/NYCMap'
-import SFMap from './src/Components/SFMap'
-import LAMap from './src/Components/LAMap'
-import AustinMap from './src/Components/AustinMap'
 import SavedConf from './src/Components/SavedConf'
 
 const scavengerHuntRouter = StackNavigator({
@@ -66,21 +62,9 @@ const scavengerHuntRouter = StackNavigator({
   NewSH: {
     screen: NewSH
   },
-  NYCMap: {
-    screen: NYCMap
-  },
-  SFMap: {
-    screen: SFMap
-  },
-  LAMap: {
-    screen: LAMap
-  },
-  AustinMap: {
-    screen: AustinMap
-  },
   SavedConf: {
     screen: SavedConf
-  }
+  },
 })
 
 const Tabs = TabNavigator({
