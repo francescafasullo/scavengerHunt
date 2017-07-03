@@ -45,7 +45,7 @@ export default class Map extends Component {
 	}
 
 	render() {
-		console.log('state in map', this.state.myAccount.maps)
+		console.log('state in map', this.state.myAccount.map)
 		return (
 			<View>
 				<MapView
