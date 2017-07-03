@@ -43,7 +43,6 @@ export default class HomeScreen extends Component {
         <Text style={styles.welcome}>
           Welcome to Pusheen Travel!
         </Text>
-
       </View>
 
     );

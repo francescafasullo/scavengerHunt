@@ -24,6 +24,7 @@ import PlayModeMap from './src/Components/PlayModeMap'
 import NewSH from './src/Components/NewSH'
 import SavedConf from './src/Components/SavedConf'
 import AddItems from './src/Components/AddItems'
+import Map from './src/Components/Map'
 
 const scavengerHuntRouter = StackNavigator({
   Home: {

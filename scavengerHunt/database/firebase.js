@@ -2,13 +2,13 @@ const firebase = require('firebase')
 const GeoFire = require('geofire')
 
 var config = {
-    apiKey: "AIzaSyDgSoVrvjyZTFsT3Udks1x0KkGZGrYjThQ",
-    authDomain: "scavngo-da953.firebaseapp.com",
-    databaseURL: "https://scavngo-da953.firebaseio.com",
-    projectId: "scavngo-da953",
-    storageBucket: "",
-    messagingSenderId: "80431684805"
-  };
+  apiKey: "AIzaSyDgSoVrvjyZTFsT3Udks1x0KkGZGrYjThQ",
+  authDomain: "scavngo-da953.firebaseapp.com",
+  databaseURL: "https://scavngo-da953.firebaseio.com",
+  projectId: "scavngo-da953",
+  storageBucket: "",
+  messagingSenderId: "80431684805"
+};
 
 //  Initializes the Firebase SDK
 firebase.initializeApp(config)
@@ -17,10 +17,10 @@ firebase.initializeApp(config)
 var database = firebase.database()
 var firebaseRef = database.ref('geoFire/')
 
- // Creates a GeoFire index
+// Creates a GeoFire index
 var geoFire = new GeoFire(firebaseRef)
 
-function writeUserData(userId, name, email,score,profile_picURL) {
+function writeUserData(userId, name, email, score, profile_picURL) {
   database.ref('users/' + userId).set({
     username: name,
     email: email,
@@ -130,16 +130,16 @@ function writeUserScavengerHuntItem(key, name, description, latitude, longitude,
 }
 
 
-function writeCategory(name, description){
+function writeCategory(name, description) {
   database.ref('location_categories/' + name).set({
     description: description
   })
 }
 
 // setting the update object to be added to the database
-function addCategoryToScavengerHuntItem(itemId, categoryName){
-  let update={};
-  update['/scavenger_hunt_items/'+itemId+'/category/'+categoryName] = true;
+function addCategoryToScavengerHuntItem(itemId, categoryName) {
+  let update = {};
+  update['/scavenger_hunt_items/' + itemId + '/category/' + categoryName] = true;
   return database.ref().update(update);
 }
 
@@ -163,20 +163,20 @@ function associateUserToMap(userId, mapId){
 // help functions to re-construct data retrieved from db
 // takes an array of maps keys and maps them to an array of map objects
 // that each one would have the map info
-function readMapsInfo(maps){
+function readMapsInfo(maps) {
   let res = maps.map((item) => {
     return database.ref('/scavenger_hunt_map/' + item).once('value')
-    });
-    return Promise.all(res).then (values => {
-    	let mapInfoArr = values.map(item => {
-        return item.val();
-      })
-      return mapInfoArr;
+  });
+  return Promise.all(res).then(values => {
+    let mapInfoArr = values.map(item => {
+      return item.val();
     })
-    .catch((error)=>{console.log(error)})
+    return mapInfoArr;
+  })
+    .catch((error) => { console.log(error) })
 }
 
-function readMapsItemsInfo(items){
+function readMapsItemsInfo(items) {
   let res = items.map((item) => {
     return database.ref('/scavenger_hunt_items/' + item).once('value')
   });
@@ -186,7 +186,7 @@ function readMapsItemsInfo(items){
     })
     return itemInfoArr;
   })
-  .catch((error)=>{console.log(error)})
+    .catch((error) => { console.log(error) })
 }
 
 //read one item info
@@ -208,7 +208,7 @@ function readUserMaps(userId) {
   let userMaps;
   return database.ref('/users/' + userId).once('value')
     .then(data => {
-      if(!data.val().maps)
+      if (!data.val().maps)
         return null
       mapKeys = Object.keys(data.val().maps);
       return readMapsInfo(mapKeys);
@@ -246,20 +246,20 @@ function readUserInfo(userId) {
 
 
 
-function readMapsItemsInfo(items){
+function readMapsItemsInfo(items) {
 
-	let res = items.map((item) => {
-		return database.ref('/scavenger_hunt_items/' + item).once('value')
-	});
-	return Promise.all(res).then (values => {
+  let res = items.map((item) => {
+    return database.ref('/scavenger_hunt_items/' + item).once('value')
+  });
+  return Promise.all(res).then(values => {
 
-		let itemInfoArr = values.map(item => {
-			return item.val();
-		})
-		return itemInfoArr;
+    let itemInfoArr = values.map(item => {
+      return item.val();
+    })
+    return itemInfoArr;
 
-	})
-	.catch((error)=>{console.log(error)})
+  })
+    .catch((error) => { console.log(error) })
 
 }
 
@@ -267,15 +267,15 @@ function readMapsItemsInfo(items){
 
 
 function readUserInfo(userId) {
-	let user= {};
-	return database.ref('/users/' + userId).once('value')
-	.then(data => {
-		user.username = data.val().username;
-		user.email = data.val().email;
-		user.score = data.val().score;
-		user.profile_pic = data.val().profile_pic
-		return user;
-	})
+  let user = {};
+  return database.ref('/users/' + userId).once('value')
+    .then(data => {
+      user.username = data.val().username;
+      user.email = data.val().email;
+      user.score = data.val().score;
+      user.profile_pic = data.val().profile_pic
+      return user;
+    })
 }
 
 
@@ -312,16 +312,16 @@ if(module === require.main){
 // writeCategory('Museum', 'a building in which objects of historical, scientific, artistic, or cultural interest are stored and exhibited');
 // writeCategory('Gallery', 'a room or building for the display or sale of works of art');
 
-// //seeding users in the data base
-// writeUserData(1, "Stella", "stella@stella.stella",0,"https://i.imgur.com/O5wwwaG.jpg");
-// writeUserData(2,"Emma","emma@yahoo.com",0,"https://i.imgur.com/akaLrwh.jpg");
-// writeUserData(3,"John", "john@gmail.com",0,"http://i.imgur.com/xoH7gvu.jpg");
+  // //seeding users in the data base
+  // writeUserData(1, "Stella", "stella@stella.stella",0,"https://i.imgur.com/O5wwwaG.jpg");
+  // writeUserData(2,"Emma","emma@yahoo.com",0,"https://i.imgur.com/akaLrwh.jpg");
+  // writeUserData(3,"John", "john@gmail.com",0,"http://i.imgur.com/xoH7gvu.jpg");
 
-// //seeding scavenger hunt maps
-// writeScavengerHuntMap("NYC john map",3, "john's trip to nyc may 2017","05052017");
-// writeScavengerHuntMap("NYC wall street",3, "nice places to visit in wall street area","20062017");
-// writeScavengerHuntMap("wall street dining",2, "great eating spots in wall street area","04032017");
-// writeScavengerHuntMap("wall street tour",1, "a one day tour in wall street area NYC","10202016");
+  // //seeding scavenger hunt maps
+  // writeScavengerHuntMap("NYC john map",3, "john's trip to nyc may 2017","05052017");
+  // writeScavengerHuntMap("NYC wall street",3, "nice places to visit in wall street area","20062017");
+  // writeScavengerHuntMap("wall street dining",2, "great eating spots in wall street area","04032017");
+  // writeScavengerHuntMap("wall street tour",1, "a one day tour in wall street area NYC","10202016");
 
 
 
