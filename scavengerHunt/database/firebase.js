@@ -148,8 +148,9 @@ function readMapsInfo(maps) {
 }
 
 function readMapsItemsInfo(items) {
-  let res = items.map((item) => {
-    return database.ref('/scavenger_hunt_items/' + item).once('value')
+  let keys = Object.keys(items)
+  let res = keys.map((key) => {
+    return database.ref('/scavenger_hunt_items/' + key).once('value')
   });
   return Promise.all(res).then (values => {
     let itemInfoArr = values.map(item => {
@@ -206,22 +207,22 @@ function readUserInfo(userId) {
 
 
 
-function readMapsItemsInfo(items) {
+// function readMapsItemsInfo(items) {
 
-  let res = items.map((item) => {
-    return database.ref('/scavenger_hunt_items/' + item).once('value')
-  });
-  return Promise.all(res).then(values => {
+//   let res = items.map((item) => {
+//     return database.ref('/scavenger_hunt_items/' + item).once('value')
+//   });
+//   return Promise.all(res).then(values => {
 
-    let itemInfoArr = values.map(item => {
-      return item.val();
-    })
-    return itemInfoArr;
+//     let itemInfoArr = values.map(item => {
+//       return item.val();
+//     })
+//     return itemInfoArr;
 
-  })
-    .catch((error) => { console.log(error) })
+//   })
+//     .catch((error) => { console.log(error) })
 
-}
+// }
 
 
 
@@ -341,7 +342,8 @@ module.exports = {
   geoFire: geoFire,
   readUserMaps: readUserMaps,
   readUserInfo: readUserInfo,
-  readOneMap: readOneMap
+  readOneMap: readOneMap,
+  readMapsItemsInfo: readMapsItemsInfo
 }
 
 
