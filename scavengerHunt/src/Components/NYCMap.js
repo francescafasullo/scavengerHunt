@@ -94,7 +94,6 @@
 // 		this.setState({ places: [] })
 // 	}
 
-<<<<<<< HEAD
 // 	render() {
 // 		const userId = (this.state ? this.state.auth.userId : null)
 // 		return (
@@ -141,53 +140,4 @@
 // 		)
 // 	}
 // }
-=======
-	render() {
-		const userId = (this.state ? this.state.auth.userId : null)
-		return (
-			<View style={styles.container}>
-				<Text>Enter new map name and description.</Text>
-				<TextInput
-					style={{ height: 40 }}
-					placeholder="Map Name"
-					onChangeText={this.updateMapName}
-				/>
-				<TextInput
-					style={{ height: 40 }}
-					placeholder="Description"
-					onChangeText={this.updateDescription}
-				/>
-				<Button onPress={() => {
-					this.saveSH(this.state.mapName, this.state.description, userId)
-					this.props.navigation.navigate('SavedConf')
-				}}
-					title="Save Scavenger Hunt" />
-				<Button onPress={this.clear} title="Clear all markers" />
-				<MapView
-					provider={PROVIDER_GOOGLE}
-					onPress={this.addMarker}
-					style={styles.map}
-					initialRegion={{
-						latitude: 40.759025,
-						longitude: -73.985185,
-						latitudeDelta: 0.04,
-						longitudeDelta: 0.04
-					}}>
-					{
-						(this.state.places || []).map(
-							(place, index) =>
-								<MapView.Marker
-									key={index}
-									coordinate={place.coordinate}
-									title={place.title}
-									description={place.description}
-								/>
-						)
-					}
-				</MapView>
-			</View>
-		)
-	}
-}
->>>>>>> changed map saved page
 

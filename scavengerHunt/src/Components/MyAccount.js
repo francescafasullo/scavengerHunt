@@ -62,7 +62,7 @@ export default class MyAccount extends Component {
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState());
-      //this.getUserMaps(this.state.auth.userId)
+      // this.getUserMaps(this.state.auth.userId)
     });
   }
 

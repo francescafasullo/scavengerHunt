@@ -3,8 +3,111 @@ import { StyleSheet, Text, TextInput, View, Button, Image, Picker, TouchableOpac
 import MapView, { Marker, PROVIDER_GOOGLE, fitToCoordinates } from 'react-native-maps'
 import store from '../../store'
 import { readMapsItemsInfo } from '../../database/firebase'
+//import styles from '../../stylesheet'
+//import {mapStyle} from '../../stylesheet'
 
 const { height, width } = Dimensions.get('window')
+
+const mapStyle =
+[
+    {
+        "featureType": "road",
+        "stylers": [
+            {
+                "hue": "#5e00ff"
+            },
+            {
+                "saturation": -79
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "stylers": [
+            {
+                "saturation": -78
+            },
+            {
+                "hue": "#6600ff"
+            },
+            {
+                "lightness": -47
+            },
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "stylers": [
+            {
+                "lightness": 22
+            }
+        ]
+    },
+    {
+        "featureType": "landscape",
+        "stylers": [
+            {
+                "hue": "#6600ff"
+            },
+            {
+                "saturation": -11
+            }
+        ]
+    },
+    {},
+    {},
+    {
+        "featureType": "water",
+        "stylers": [
+            {
+                "saturation": -65
+            },
+            {
+                "hue": "#1900ff"
+            },
+            {
+                "lightness": 8
+            }
+        ]
+    },
+    {
+        "featureType": "road.local",
+        "stylers": [
+            {
+                "weight": 1.3
+            },
+            {
+                "lightness": 30
+            }
+        ]
+    },
+    {
+        "featureType": "transit",
+        "stylers": [
+            {
+                "visibility": "simplified"
+            },
+            {
+                "hue": "#5e00ff"
+            },
+            {
+                "saturation": -16
+            }
+        ]
+    },
+    {
+        "featureType": "transit.line",
+        "stylers": [
+            {
+                "saturation": -72
+            }
+        ]
+    },
+    {}
+]
 
 const styles = StyleSheet.create({
 	welcome: {
@@ -38,16 +141,12 @@ export default class Map extends Component {
 
 	}
 
-
-
 	componentDidMount = () => {
 		this.unsubscribe = store.subscribe(() => {
 			this.setState(store.getState());
 		});
-		console.log('!@#$%^&*()(*^%$#@#$%^&*(*$#@#$%^&*&$#@#$%^&*&^$##$%^&*&^%$#$%^&*')
 		readMapsItemsInfo(this.items).then(res => {
-			console.log("!!@@#$%^&*()(*&^%$#@!@#$%^&", res)
-			this.state.items = res
+			this.setState({ items: res })
 		})
 	}
 
@@ -55,40 +154,33 @@ export default class Map extends Component {
 		this.unsubscribe();
 	}
 
-	centerMarkers = () => {
-		const markers = this.state.myAccount.map.items
-		var bounds = new google.maps.LatLngBounds();
-		for (i = 0; i < markers.length; i++) {
-			bounds.extend(markers[i].getPosition());
-		}
-		map.setCenter(bounds.getCenter());
-	}
-
 	render() {
+		console.log(this.state)
 		return (
 			<View>
-			{this.state.items.length ? 
-				<MapView
-					ref={(ref) => { this.mapRef = ref }}
-					provider={PROVIDER_GOOGLE}
-					style={styles.map}
-				initialRegion={{
-					latitude: this.state.items[0].latitude,
-					longitude: this.state.items[0].longitude,
-					latitudeDelta: 0.04,
-					longitudeDelta: 0.04
-				}}
-				>
-					{
-						this.state.items.map((item, index) => (
-							<MapView.Marker
-								key={index}
-								coordinate={{ longitude: item.longitude, latitude: item.latitude }}
-								title={item.name}
-							/>
-						))
-					}
-				</MapView> : null}
+				{this.state.items.length ?
+					<MapView
+						provider={PROVIDER_GOOGLE}
+						customMapStyle={mapStyle}
+						style={styles.map}
+						initialRegion={{
+							latitude: this.state.items[0].latitude,
+							longitude: this.state.items[0].longitude,
+							latitudeDelta: 0.04,
+							longitudeDelta: 0.04
+						}}
+					>
+						{
+							this.state.items.map((item, index) => (
+								<MapView.Marker
+									image={require('../../public/pusheenMarker.png')}
+									key={index}
+									coordinate={{ longitude: item.longitude, latitude: item.latitude }}
+									title={item.name}
+								/>
+							))
+						}
+					</MapView> : null}
 			</View>
 		)
 	}
