@@ -55,6 +55,7 @@
 // 		this.unsubscribe();
 // 	}
 
+<<<<<<< HEAD
 // 	updateDescription = (text) => {
 // 		this.setState({ mapName: text })
 // 	}
@@ -62,6 +63,15 @@
 // 	updateMapName = (text) => {
 // 		this.setState({ description: text })
 // 	}
+=======
+	updateDescription = (text) => {
+		this.setState({ description: text })
+	}
+
+	updateMapName = (text) => {
+		this.setState({ mapName: text })
+	}
+>>>>>>> changed map saved page
 
 
 // 	addMarker = evt => {
