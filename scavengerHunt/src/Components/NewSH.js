@@ -4,7 +4,7 @@ import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import store from '../../store'
 import { newMap, setUserSelectedMap } from '../reducers/myAccountReducer'
 
-const {height, width} = Dimensions.get('window')
+const { height, width } = Dimensions.get('window')
 
 const styles = StyleSheet.create({
 	welcome: {
@@ -31,19 +31,19 @@ const styles = StyleSheet.create({
 export default class NewSH extends Component {
 	constructor(props) {
 		super(props)
-    userId = store.getState().auth.userId
-    user = store.getState().myAccount
+		userId = store.getState().auth.userId
+		user = store.getState().myAccount
 		this.onRegionChange = this.onRegionChange.bind(this)
 		this.state = {
-      user: user,
+			user: user,
 			places: [],
 			mapName: '',
 			description: '',
 			mapRegion: null,
-      lastLat: null,
-      lastLong: null,
-      location: '',
-      userId: userId
+			lastLat: null,
+			lastLong: null,
+			location: '',
+			userId: userId
 		}
 	}
 
@@ -51,28 +51,28 @@ export default class NewSH extends Component {
 		this.watchId = navigator.geolocation.watchPosition(
 			(position) => {
 				let region = {
-          latitude:       position.coords.latitude,
-          longitude:      position.coords.longitude,
-          latitudeDelta:  0.00922*2,
-          longitudeDelta: 0.00421*2
-        }
-        this.onRegionChange(region, region.latitude, region.longitude)
+					latitude: position.coords.latitude,
+					longitude: position.coords.longitude,
+					latitudeDelta: 0.00922 * 2,
+					longitudeDelta: 0.00421 * 2
+				}
+				this.onRegionChange(region, region.latitude, region.longitude)
 			}
-			)
+		)
 	}
 
 	componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchId)
-  }
+		navigator.geolocation.clearWatch(this.watchId)
+	}
 
-  onRegionChange(region, lastLat, lastLong) {
-    this.setState({
-      mapRegion: region,
-      // If there are no new values set the current ones
-      lastLat: lastLat || this.state.lastLat,
-      lastLong: lastLong || this.state.lastLong
-    });
-  }
+	onRegionChange(region, lastLat, lastLong) {
+		this.setState({
+			mapRegion: region,
+			// If there are no new values set the current ones
+			lastLat: lastLat || this.state.lastLat,
+			lastLong: lastLong || this.state.lastLong
+		});
+	}
 
 	addMarker = evt => {
 		const { coordinate } = evt.nativeEvent
@@ -84,8 +84,8 @@ export default class NewSH extends Component {
 		})
 	}
 
-	saveSH = (mapName, description, location, userId) => {
-    store.dispatch(newMap(mapName, description, location, userId))
+	saveSH = (mapName, description, location, places, userId) => {
+		store.dispatch(newMap(mapName, description, location, places, userId))
 		console.log("user state in newMap", this.state.user)
 
 	}
@@ -102,9 +102,9 @@ export default class NewSH extends Component {
 		this.setState({ mapName: text })
 	}
 
-  updateLocation = (text) => {
-    this.setState({ location: text })
-  }
+	updateLocation = (text) => {
+		this.setState({ location: text })
+	}
 
 	render() {
 		return (
@@ -120,23 +120,37 @@ export default class NewSH extends Component {
 					placeholder="Description"
 					onChangeText={this.updateDescription}
 				/>
-        <TextInput
-          style={{ height: 40 }}
-          placeholder="Location"
-          onChangeText={this.updateLocation}
-        />
+				<TextInput
+					style={{ height: 40 }}
+					placeholder="Location"
+					onChangeText={this.updateLocation}
+				/>
 				<Button onPress={() => {
-					this.saveSH(this.state.mapName, this.state.description, this.state.location, this.state.userId)
+					this.saveSH(this.state.mapName, this.state.description, this.state.location, this.state.places, this.state.userId)
+					this.props.navigation.navigate('SavedConf')
 				}}
 					title="Save Map" />
+					<Button onPress={this.clear} title="Clear all markers" />
 				<MapView
-          provider={PROVIDER_GOOGLE}
-          style={styles.map}
-          region={this.state.mapRegion}
-          onRegionChange={this.onRegionChange}
-          showsBuildings
-        >
-        </MapView>
+					onPress={this.addMarker}
+					provider={PROVIDER_GOOGLE}
+					style={styles.map}
+					region={this.state.mapRegion}
+					onRegionChange={this.onRegionChange}
+					showsBuildings
+				>
+					{
+						(this.state.places || []).map(
+							(place, index) =>
+								<MapView.Marker
+									key={index}
+									coordinate={place.coordinate}
+									title={place.title}
+									description={place.description}
+								/>
+						)
+					}
+				</MapView>
 			</View>
 		)
 	}
