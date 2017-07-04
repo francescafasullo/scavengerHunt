@@ -8,18 +8,21 @@ import { readUserMaps, readUserInfo } from '../../database/firebase'
 SET_USER_MAPS = 'SET_USER_MAPS'
 SET_CUR_MAP = 'SET_CUR_MAP'
 SET_USER_INFO = 'SET_USER_INFO'
+SET_CUR_ITEM = 'SET_CUR_ITEM'
 
 
 /* ------------------ action creators ---------------- */
 export const setUserMaps = (maps) => ({ type: SET_USER_MAPS, maps });
 export const setCurMap = (map) => ({ type: SET_CUR_MAP, map });
 export const setUserPersonalInfo = (userInfo) => ({ type: SET_USER_INFO, userInfo })
+export const setCurItem = (item) => ({ type: SET_CUR_ITEM, item })
 
 /* ------------------ reducer ------------------------ */
 const initialMyAccountState = {
 	maps: [],
 	map: {},
-	userPersonalInfo: {}
+	userPersonalInfo: {},
+	curItem: {}
 }
 
 const myAccountReducer = (state = initialMyAccountState, action) => {
@@ -30,6 +33,8 @@ const myAccountReducer = (state = initialMyAccountState, action) => {
 			return Object.assign({}, state, { map: action.map });
 		case SET_USER_INFO:
 			return Object.assign({}, state, { userPersonalInfo: action.userInfo })
+		case SET_CUR_ITEM:
+			return Object.assign({},state, {curItem: action.item})
 		default:
 			return state;
 
@@ -81,6 +86,10 @@ export const fetchUserPersonalInfo = (userId) => dispatch => {
 export const setUserSelectedMap = (map) => dispatch => {
 	dispatch(setCurMap(map));
 
+}
+
+export const setUserCurLocation = (item) => dispatch => {
+	dispatch(setCurItem(item))
 }
 
 export default myAccountReducer;

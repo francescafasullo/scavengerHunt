@@ -1,6 +1,8 @@
 import React, {Component} from 'react'
 import { AppRegistry, StyleSheet, Text, View, Dimensions, Button, Image } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
+import { setUserCurLocation } from '../reducers/myAccountReducer'
+import store from '../../store'
 const geoFire = require('../../database/firebase.js').geoFire
 
 const mapStyle =
@@ -133,6 +135,16 @@ export default class PlayModeMap extends Component {
     super(props)
     this.updateKeys = this.updateKeys.bind(this)
     this.onRegionChange = this.onRegionChange.bind(this)
+    this.checkTokenDistance = this.checkTokenDistance.bind(this)
+    this.findItemFromUserCureMap = this.findItemFromUserCureMap.bind(this)
+    
+    // this.state.latitutde = null
+    // this.state.longitude = null
+    // this.state.error = null
+    // this.state.keys = {}
+    // this.state.mapRegion = null
+    // this.state.lastLat = null
+    // this.state.lastLong = null
     this.state = {
       latitutde: null,
       longitude: null,
@@ -142,6 +154,7 @@ export default class PlayModeMap extends Component {
       lastLat: null,
       lastLong: null
     }
+    this.state.store = store.getState()
   }
 
   componentDidMount() {
@@ -185,10 +198,14 @@ export default class PlayModeMap extends Component {
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 500, maximumAge: 1000, distanceFilter: 10 }
     )
+    this.unsubscribe = store.subscribe(() => {
+      this.setState(store.getState())
+    });
   }
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchId)
+    this.unsubscribe()
   }
 
   updateKeys(position) {
@@ -204,6 +221,61 @@ export default class PlayModeMap extends Component {
       lastLat: lastLat || this.state.lastLat,
       lastLong: lastLong || this.state.lastLong
     });
+  }
+
+  findItemFromUserCureMap(latitude,longitude){
+    let itemOnMap = null
+    //checks if there is a current map on the state
+
+    if(this.state.store.myAccount.map){
+      //checks there are items on the map
+      if(this.state.store.myAccount.map.items){
+        itemOnMap = this.state.store.myAccount.map.items.filter((item) => {
+          console.log('in items loop item coordinates', item.latitude,item.longitude)
+          return ((item.latitude === latitude) && (item.longitude === longitude))
+        })
+      }
+    }
+    console.log('Item finding', itemOnMap);
+    return itemOnMap
+
+  }
+
+  checkTokenDistance(evt,key){
+    console.log('in checkout distance key',key)
+    const coordinate = {
+      'latitude': this.state.keys[key].location[0],
+      'longitude': this.state.keys[key].location[1]
+    }
+    console.log('touch coordinates', coordinate);
+    if(!coordinate)
+      alert('coordinates were not captured,please try again');
+    else
+    {
+      let distanceFromUser = getDistance(this.state.latitude,this.state.longitude,coordinate.latitude,coordinate.longitude)
+      if(distanceFromUser <= 0.1)
+      { 
+        //find the item the user pressed on in the user's map
+        let itemOnMap = this.findItemFromUserCureMap(coordinate.latitude,coordinate.longitude)
+        //if exists - set it as the chosen item in the store
+        if(itemOnMap){
+          store.dispatch(setUserCurLocation(itemOnMap[0]))
+
+        }
+        //if not exists - alert the user that he didn't press on any token
+        else{
+          alert("there is no such location on your map, please get closer to a location on your map")
+        }
+        
+      }
+      else
+      {
+        alert("you are not close enough to your token...get closer and try again");
+      }
+      console.log('distance user from marker', distanceFromUser);
+    }
+    
+
   }
 
   render() {
@@ -224,6 +296,7 @@ export default class PlayModeMap extends Component {
               <MapView.Marker
                 coordinate={{latitude: this.state.keys[key].location[0], longitude: this.state.keys[key].location[1]}}
                 image={require('../../public/pusheenMarker.png')}
+                onPress = {(e) => this.checkTokenDistance(e,key)}
               />
             )
           }) : null
@@ -276,3 +349,8 @@ function placeWithDirectionAndDistance(place, {latitude, longitude}) {
                           placeLat, placeLng),
   }
 }
+
+/*
+onSelect = {this.checkTokenDistance}
+                onPress = {this.checkTokenDistance}
+*/
