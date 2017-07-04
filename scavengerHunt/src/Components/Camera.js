@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { AppRegistry, StyleSheet, Text, View, Dimensions, Image, Button} from 'react-native'
 import Camera from 'react-native-camera'
 import store from '../../store'
-import { setUserCurLocation } from '../reducers/myAccountReducer'
+import { setUserCurLocation,takeItemOfMap } from '../reducers/myAccountReducer'
 import * as Animatable from 'react-native-animatable'
 
 const styles = StyleSheet.create({
@@ -66,6 +66,7 @@ export default class CameraScreen extends Component {
       closestPlaceLat: null,
       closestPlaceLong: null
     }
+    this.state.store = store.getState()
   }
 
   componentDidMount() {
@@ -119,8 +120,10 @@ export default class CameraScreen extends Component {
 
   TakeOfItemAndNavigateBack(){
     store.dispatch(setUserCurLocation(""))
-    //this.props.navigation.navigate('PlayModeMap');
+    store.dispatch(takeItemOfMap(this.state.store.myAccount.curItem))
+    
 }
+
 
   render() {
     return (
@@ -132,7 +135,6 @@ export default class CameraScreen extends Component {
           }}
           style={styles.preview}
           aspect={Camera.constants.Aspect.fill}
-          type = "front"
            >
 
           <View style={styles.arDisplay}>
@@ -159,34 +161,7 @@ export default class CameraScreen extends Component {
       </View>
     );
   }
-  // render() {
-  //   return (
-  //     <View style={styles.container}>
-  //       {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
-  //       <Camera
-  //         ref={(cam) => {
-  //           this.camera = cam
-  //         }}
-  //         style={styles.preview}
-  //         aspect={Camera.constants.Aspect.fill} >
-  //         <View style={styles.arDisplay}>
-  //           { this.state.distance < 0.1 ?
-  //             <Image
-  //               style={styles.overlay}
-  //               source={require('../../public/pusheenSunglasses.png')}
-  //               resizeMode="contain"
-  //             /> : <Image
-  //               style={styles.overlay}
-  //               source={require('../../public/pusheen.png')}
-  //               resizeMode="contain"
-  //             />
-  //           }
-  //         </View>
-  //         <Text style={styles.capture} onPress={this.takePicture}>CAPTURE</Text>
-  //       </Camera>
-  //     </View>
-  //   );
-  // }
+  
 }
 
 //AppRegistry.registerComponent('scavengerHunt', () => CameraScreen);

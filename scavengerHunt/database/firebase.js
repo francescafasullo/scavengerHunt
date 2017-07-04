@@ -263,6 +263,7 @@ function readUserInfo(userId) {
 	})
 }
 
+
 if(module === require.main){
 
 	//seeding scavenger hunt items
@@ -324,7 +325,7 @@ if(module === require.main){
     '8': [40.7076346, -74.0107747],
     '9': [40.8010717, -73.93807850000002],
     '10': [40.7761098, -73.951832],
-    '-Ko8D86Tb3PI3a5yCW-8': [40.775725, -73.950204],
+    '-KoAXn60VAfqgBQN2nTW': [40.775725, -73.950204],
     '-KoAXn61cnfmemUKpOxE': [40.775998,-73.951918],
     '-Ko96h_anwEEAAOUJvhZ': [40.748232,-74.008267],
     '-KoAXn62BoldVYYLrNRj': [40.774246, -73.945809]

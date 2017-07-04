@@ -130,6 +130,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: 200
   }
+  
 })
 
 export default class PlayModeMap extends Component {
@@ -139,15 +140,6 @@ export default class PlayModeMap extends Component {
     this.onRegionChange = this.onRegionChange.bind(this)
     this.checkTokenDistance = this.checkTokenDistance.bind(this)
     this.findItemFromUserCureMap = this.findItemFromUserCureMap.bind(this)
-    
-    
-    // this.state.latitutde = null
-    // this.state.longitude = null
-    // this.state.error = null
-    // this.state.keys = {}
-    // this.state.mapRegion = null
-    // this.state.lastLat = null
-    // this.state.lastLong = null
     this.state = {
       latitutde: null,
       longitude: null,
@@ -157,7 +149,6 @@ export default class PlayModeMap extends Component {
       lastLat: null,
       lastLong: null
     }
-    //this.state.store = store.getState()
   }
 
   componentDidMount() {
@@ -181,7 +172,6 @@ export default class PlayModeMap extends Component {
             radius: 0.5
           })
           this.geoQuery.on('key_entered', (key, location, distance) => {
-            console.log('these are keys', this.state.keys)
             const keys = {...this.state.keys, [key]: {location}}
             this.setState({keys: withDirectionAndDistance(keys, position.coords)}, console.log)
           })
@@ -236,23 +226,19 @@ export default class PlayModeMap extends Component {
       if(this.state.myAccount.map.items){
         itemKeys = Object.keys(this.state.myAccount.map.items)
         itemOnMap = itemKeys.filter((item) => {
-          console.log('in items loop item coordinates', item)
           return (item === key)
         })
       }
     }
-    console.log('Item finding', itemOnMap);
     return itemOnMap
 
   }
 
   checkTokenDistance(evt,key){
-    console.log('in checkout distance key',key)
     const coordinate = {
       'latitude': this.state.keys[key].location[0],
       'longitude': this.state.keys[key].location[1]
     }
-    console.log('touch coordinates', coordinate);
     if(!coordinate)
       alert('coordinates were not captured,please try again');
     else
@@ -264,7 +250,6 @@ export default class PlayModeMap extends Component {
         let itemOnMap = this.findItemFromUserCureMap(key)
         //if exists - set it as the chosen item in the store
         if(itemOnMap){
-          console.log("item found", itemOnMap)
           store.dispatch(setUserCurLocation(itemOnMap[0]))
 
         }
@@ -278,13 +263,15 @@ export default class PlayModeMap extends Component {
       {
         alert("you are not close enough to your token...get closer and try again");
       }
-      console.log('distance user from marker', distanceFromUser);
     }
     
 
   }
 
+  
+
   render() {
+    let curmap,keyExist=true
     const itemKey = (this.state.myAccount ? this.state.myAccount.curItem : null)
     return (
       <View style={styles.container}>
@@ -305,18 +292,36 @@ export default class PlayModeMap extends Component {
           showsBuildings
         >
         { Object.keys(this.state.keys).length > 0 ? Object.keys(this.state.keys).map((key) => {
+          curmap = (this.state.myAccount ? this.state.myAccount.map : null)
+          if(curmap){
+            if(curmap.items){
+              keyExist = curmap.items[key];
+            }
+
+          }
+          if(keyExist){
           return (
-              <MapView.Marker
-                coordinate={{latitude: this.state.keys[key].location[0], longitude: this.state.keys[key].location[1]}}
-                image={require('../../public/pusheenMarker.png')}
-                onPress = {(e) => this.checkTokenDistance(e,key)}
-              />
+            
+            <MapView.Marker
+              coordinate={{latitude: this.state.keys[key].location[0], longitude: this.state.keys[key].location[1]}}
+              image={require('../../public/pusheenMarker.png')}
+              onPress = {(e) => this.checkTokenDistance(e,key)}
+            />
+            
+            
             )
+          }
+          else{
+            return null
+
+          } 
           }) : null
         }
         </MapView>
+
       }
       </View>
+      
     )
   }
 
@@ -364,7 +369,4 @@ function placeWithDirectionAndDistance(place, {latitude, longitude}) {
   }
 }
 
-/*
-onSelect = {this.checkTokenDistance}
-                onPress = {this.checkTokenDistance}
-*/
+
