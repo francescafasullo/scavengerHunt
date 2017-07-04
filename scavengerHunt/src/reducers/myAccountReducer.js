@@ -30,6 +30,7 @@ const initialMyAccountState = {
 }
 
 const myAccountReducer = (state = initialMyAccountState, action) => {
+	const newState = Object.assign({},state)
 	switch (action.type) {
 		case SET_USER_MAPS:
 			return Object.assign({}, state, { maps: action.maps });
@@ -42,7 +43,9 @@ const myAccountReducer = (state = initialMyAccountState, action) => {
 		case SET_CUR_ITEM:
 			return Object.assign({},state, {curItem: action.item})
 		case ADD_MAP:
+			//newState.maps.push(action.map)
 			return Object.assign({}, state, { maps: state.maps.push(action.map), map: action.map })
+			//return newState;
 		default:
 			return state;
 

@@ -78,7 +78,7 @@ const Tabs = TabNavigator({
 
   },
   Play: {
-    screen: CameraScreen,
+    screen: PlayModeMap,
     navigationOptions: {
       tabBarLabel: 'Play',
       tabBarIcon: ({ tintColor }) => <Icon name="play-circle-filled" size={26} color={tintColor} />
