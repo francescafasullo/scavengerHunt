@@ -41,7 +41,7 @@ export default class SignInSignUp extends Component {
 	          Sign In or Sign Up
 	        </Text>
 	        <Button onPress={() => { this.props.navigation.navigate('SignUp') }} title="Sign Up" />
-	        <Button onPress={() => {this.props.navigation.navigate('Login')}} 
+	        <Button onPress={() => {this.props.navigation.navigate('Login')}}
 	        title="Login"/>
 		 </View>
 	);

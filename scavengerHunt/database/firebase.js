@@ -30,11 +30,11 @@ function writeUserData(userId, name, email,score,profile_picURL) {
 }
 
 
-function writeUserScavengerHuntMap(key, name, description, city, date){
+function writeUserScavengerHuntMap(key, name, description, location, date){
   database.ref('scavenger_hunt_map/' + key).set({
     mapname: name,
     description: description,
-	city: city,
+	  location: location,
     date: date
   })
 }
@@ -46,25 +46,25 @@ function createOneUser(username, email, password){
             	writeUserData(res.uid, username, email, 500, "url");
             	return res.uid
             });
-                
+
 
 }
-function newMap (mapName, description, city, places,userId) {
+function newMap (mapName, description, location, userId) {
     var mapKey = database.ref('scavenger_hunt_map/').push().key
     var date = new Date()
-    writeUserScavengerHuntMap(mapKey, mapName, description, city, date)
+    writeUserScavengerHuntMap(mapKey, mapName, description, location, date)
 
-    var itemKeys = []
-    for (i = 0; i < places.length; i++) {
-        itemKeys.push(database.ref('scavenger_hunt_items/').push().key)
-        writeUserScavengerHuntItem(itemKeys[i], places[i].title, places[i].coordinate.latitude, places[i].coordinate.longitude )
-    }
+    // var itemKeys = []
+    // for (i = 0; i < places.length; i++) {
+    //     itemKeys.push(database.ref('scavenger_hunt_items/').push().key)
+    //     writeUserScavengerHuntItem(itemKeys[i], places[i].title, places[i].coordinate.latitude, places[i].coordinate.longitude )
+    // }
 
     associateUserToMap(userId, mapKey)
 
-    for (i = 0; i < itemKeys.length; i++) {
-        associateScavengerItemToMap(mapKey, itemKeys[i])
-    }
+    // for (i = 0; i < itemKeys.length; i++) {
+    //     associateScavengerItemToMap(mapKey, itemKeys[i])
+    // }
 }
 
 function createItemsToDefaultMapDownTown() {
@@ -149,7 +149,7 @@ function associateScavengerItemToMap(mapId, scavengerItemId){
 }
 
 
-function associateUserToMap(userId,mapId){
+function associateUserToMap(userId, mapId){
   let update={};
   update['/users/'+userId+'/maps/'+mapId] = true;
   update['/scavenger_hunt_map/'+mapId+'/users/'+userId] = true;
@@ -176,7 +176,7 @@ function readMapsItemsInfo(items){
   let res = items.map((item) => {
     return database.ref('/scavenger_hunt_items/' + item).once('value')
   });
-  return Promise.all(res).then (values => {	
+  return Promise.all(res).then (values => {
     let itemInfoArr = values.map(item => {
       return item.val();
     })
@@ -195,42 +195,32 @@ function readUserMaps(userId) {
     .then(data => {
       if(!data.val().maps)
         return null
-	mapKeys = Object.keys(data.val().maps);
-	return readMapsInfo(mapKeys);
+      mapKeys = Object.keys(data.val().maps);
+      return readMapsInfo(mapKeys);
     })
     .then(data => {
       if(!data)
-	return null
+  return null
       userMaps = data;
-      console.log('usermaps',userMaps);
-      return userMaps.map(item => {
-
-      mapItemsKeys = Object.keys(item.items);
-	return readMapsItemsInfo(mapItemsKeys)
-      })
-    })
-    .then(data => {
-      if(!data)
-        return null;
-      return Promise.all(data);
-     })
-    .then(res => {
-      if(!res)
-	return null;
-      let i=0;
-      userMaps = userMaps.map(map => {
-        map.items = res[i];
-	i++;
-	return map;
-      })
       return userMaps
     });
+}
+
+function readOneMap(mapId) {
+  return database.ref('/scavenger_hunt_map/' + mapId).once('value')
+    .then((data) => {
+      return data.val()
+    })
+    .then((data) => {
+      return data
+    })
 }
 
 function readUserInfo(userId) {
 	let user= {};
 	return database.ref('/users/' + userId).once('value')
 	.then(data => {
+    user.id = userId;
 		user.username = data.val().username;
 		user.email = data.val().email;
 		user.score = data.val().score;
@@ -354,7 +344,7 @@ if(module === require.main){
 
 
 
-  
+
 
 }
 
@@ -373,7 +363,8 @@ module.exports = {
   associateUserToMap: associateUserToMap,
   geoFire: geoFire,
   readUserMaps: readUserMaps,
-  readUserInfo: readUserInfo
+  readUserInfo: readUserInfo,
+  readOneMap: readOneMap
 }
 
 
