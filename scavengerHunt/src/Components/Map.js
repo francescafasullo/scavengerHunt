@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { StyleSheet, Text, TextInput, View, Button, Image, Picker, TouchableOpacity, Dimensions } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE, fitToCoordinates } from 'react-native-maps'
 import store from '../../store'
+import { readMapsItemsInfo } from '../../database/firebase'
 
 const { height, width } = Dimensions.get('window')
 
@@ -30,14 +31,24 @@ const styles = StyleSheet.create({
 export default class Map extends Component {
 	constructor(props) {
 		super(props)
-		this.state = store.getState()
-		this.mapRef = null
+		this.items = store.getState().myAccount.map.items
+		this.state = {
+			items: []
+		}
+
 	}
+
+
 
 	componentDidMount = () => {
 		this.unsubscribe = store.subscribe(() => {
 			this.setState(store.getState());
 		});
+		console.log('!@#$%^&*()(*^%$#@#$%^&*(*$#@#$%^&*&$#@#$%^&*&^$##$%^&*&^%$#$%^&*')
+		readMapsItemsInfo(this.items).then(res => {
+			console.log("!!@@#$%^&*()(*&^%$#@!@#$%^&", res)
+			this.state.items = res
+		})
 	}
 
 	componentWillUnmount = () => {
@@ -54,23 +65,22 @@ export default class Map extends Component {
 	}
 
 	render() {
-		console.log('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++state in map', this.state.myAccount.map)
 		return (
 			<View>
+			{this.state.items.length ? 
 				<MapView
 					ref={(ref) => { this.mapRef = ref }}
 					provider={PROVIDER_GOOGLE}
 					style={styles.map}
-					// onLayout = {() => this.mapRef.fitToCoordinates(this.props.myLatLongs, { edgePadding: { top: 10, right: 10, bottom: 10, left: 10 }, animated: false })}
-					initialRegion={{
-						latitude: this.state.myAccount.map.city.latitude,
-						longitude: this.state.myAccount.map.city.longitude,
-						latitudeDelta: this.state.myAccount.map.city.latitudeDelta,
-						longitudeDelta: this.state.myAccount.map.city.longitudeDelta
-					}}
+				initialRegion={{
+					latitude: this.state.items[0].latitude,
+					longitude: this.state.items[0].longitude,
+					latitudeDelta: 0.04,
+					longitudeDelta: 0.04
+				}}
 				>
-				{
-						this.state.myAccount.map.items.map((item, index) => (
+					{
+						this.state.items.map((item, index) => (
 							<MapView.Marker
 								key={index}
 								coordinate={{ longitude: item.longitude, latitude: item.latitude }}
@@ -78,7 +88,7 @@ export default class Map extends Component {
 							/>
 						))
 					}
-				</MapView>
+				</MapView> : null}
 			</View>
 		)
 	}
