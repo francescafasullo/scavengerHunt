@@ -32,10 +32,7 @@ const scavengerHuntRouter = StackNavigator({
     }
   },
   Camera: {
-    screen: CameraScreen,
-    navigationOptions: {
-      title: 'Play'
-    }
+    screen: CameraScreen
   },
   Play: {
     screen: Play

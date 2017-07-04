@@ -26,7 +26,7 @@ const initialMyAccountState = {
 	maps: [],
 	map: {},
 	userPersonalInfo: {},
-	curItem: {}
+	curItem: ""
 }
 
 const myAccountReducer = (state = initialMyAccountState, action) => {

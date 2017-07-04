@@ -1,6 +1,9 @@
 import React, {Component} from 'react'
-import { AppRegistry, StyleSheet, Text, View, Dimensions, Image } from 'react-native'
+import { AppRegistry, StyleSheet, Text, View, Dimensions, Image, Button} from 'react-native'
 import Camera from 'react-native-camera'
+import store from '../../store'
+import { setUserCurLocation } from '../reducers/myAccountReducer'
+import * as Animatable from 'react-native-animatable'
 
 const styles = StyleSheet.create({
   container: {
@@ -54,6 +57,7 @@ export default class CameraScreen extends Component {
     super(props)
     this.takePicture = this.takePicture.bind(this)
     this.getDistance = this.getDistance.bind(this)
+    this.TakeOfItemAndNavigateBack=this.TakeOfItemAndNavigateBack.bind(this)
     this.state = {
       latitude: null,
       longitude: null,
@@ -79,10 +83,16 @@ export default class CameraScreen extends Component {
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 2000, maximumAge: 1000, distanceFilter: 10 }
     )
+    this.unsubscribe = store.subscribe(() => {
+      this.setState(store.getState())
+    })
+    
+
   }
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchId)
+    this.unsubscribe()
   }
 
   takePicture() {
@@ -105,37 +115,78 @@ export default class CameraScreen extends Component {
     return d
   }
 
+  
+
+  TakeOfItemAndNavigateBack(){
+    store.dispatch(setUserCurLocation(""))
+    //this.props.navigation.navigate('PlayModeMap');
+}
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Latitude: {this.state.latitude}</Text>
-        <Text style={styles.welcome}>Longitude: {this.state.longitude}</Text>
-        <Text style={styles.welcome}>Distance to Open Market: {this.state.distance}</Text>
         {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
         <Camera
           ref={(cam) => {
             this.camera = cam
           }}
           style={styles.preview}
-          aspect={Camera.constants.Aspect.fill} >
+          aspect={Camera.constants.Aspect.fill}
+          type = "front"
+           >
+
           <View style={styles.arDisplay}>
-            { this.state.distance < 0.1 ?
-              <Image
+            <Animatable.Image
+                animation="slideInDown"
+                iterationCount={10}
+                direction="alternate"
                 style={styles.overlay}
                 source={require('../../public/pusheenSunglasses.png')}
                 resizeMode="contain"
-              /> : <Image
-                style={styles.overlay}
-                source={require('../../public/pusheen.png')}
-                resizeMode="contain"
-              />
-            }
+              > 
+              </Animatable.Image>
+              <Animatable.Text
+              animation="slideInDown"
+              iterationCount={10}
+              direction="alternate"
+              >
+              You Have Collected a Pusheen
+            </Animatable.Text>
           </View>
-          <Text style={styles.capture} onPress={this.takePicture}>CAPTURE</Text>
+          <Button style={styles.capture} onPress={this.takePicture} title="CAPTURE"/>
+          <Button style={styles.capture} onPress={this.TakeOfItemAndNavigateBack} title="MAP"/>
         </Camera>
       </View>
     );
   }
+  // render() {
+  //   return (
+  //     <View style={styles.container}>
+  //       {this.state.error ? <Text>Error: {this.state.error}</Text> : null}
+  //       <Camera
+  //         ref={(cam) => {
+  //           this.camera = cam
+  //         }}
+  //         style={styles.preview}
+  //         aspect={Camera.constants.Aspect.fill} >
+  //         <View style={styles.arDisplay}>
+  //           { this.state.distance < 0.1 ?
+  //             <Image
+  //               style={styles.overlay}
+  //               source={require('../../public/pusheenSunglasses.png')}
+  //               resizeMode="contain"
+  //             /> : <Image
+  //               style={styles.overlay}
+  //               source={require('../../public/pusheen.png')}
+  //               resizeMode="contain"
+  //             />
+  //           }
+  //         </View>
+  //         <Text style={styles.capture} onPress={this.takePicture}>CAPTURE</Text>
+  //       </Camera>
+  //     </View>
+  //   );
+  // }
 }
 
 //AppRegistry.registerComponent('scavengerHunt', () => CameraScreen);

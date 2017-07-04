@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import { AppRegistry, StyleSheet, Text, View, Dimensions, Button, Image } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import { setUserCurLocation } from '../reducers/myAccountReducer'
+import Camera from 'react-native-camera'
+import CameraScreen from './Camera'
 import store from '../../store'
 const geoFire = require('../../database/firebase.js').geoFire
 
@@ -138,6 +140,7 @@ export default class PlayModeMap extends Component {
     this.checkTokenDistance = this.checkTokenDistance.bind(this)
     this.findItemFromUserCureMap = this.findItemFromUserCureMap.bind(this)
     
+    
     // this.state.latitutde = null
     // this.state.longitude = null
     // this.state.error = null
@@ -154,7 +157,7 @@ export default class PlayModeMap extends Component {
       lastLat: null,
       lastLong: null
     }
-    this.state.store = store.getState()
+    //this.state.store = store.getState()
   }
 
   componentDidMount() {
@@ -223,16 +226,18 @@ export default class PlayModeMap extends Component {
     });
   }
 
-  findItemFromUserCureMap(latitude,longitude){
+  findItemFromUserCureMap(key){
     let itemOnMap = null
+    let itemKeys;
     //checks if there is a current map on the state
 
-    if(this.state.store.myAccount.map){
+    if(this.state.myAccount.map){
       //checks there are items on the map
-      if(this.state.store.myAccount.map.items){
-        itemOnMap = this.state.store.myAccount.map.items.filter((item) => {
-          console.log('in items loop item coordinates', item.latitude,item.longitude)
-          return ((item.latitude === latitude) && (item.longitude === longitude))
+      if(this.state.myAccount.map.items){
+        itemKeys = Object.keys(this.state.myAccount.map.items)
+        itemOnMap = itemKeys.filter((item) => {
+          console.log('in items loop item coordinates', item)
+          return (item === key)
         })
       }
     }
@@ -256,9 +261,10 @@ export default class PlayModeMap extends Component {
       if(distanceFromUser <= 0.1)
       { 
         //find the item the user pressed on in the user's map
-        let itemOnMap = this.findItemFromUserCureMap(coordinate.latitude,coordinate.longitude)
+        let itemOnMap = this.findItemFromUserCureMap(key)
         //if exists - set it as the chosen item in the store
         if(itemOnMap){
+          console.log("item found", itemOnMap)
           store.dispatch(setUserCurLocation(itemOnMap[0]))
 
         }
@@ -279,8 +285,15 @@ export default class PlayModeMap extends Component {
   }
 
   render() {
+    const itemKey = (this.state.myAccount ? this.state.myAccount.curItem : null)
     return (
       <View style={styles.container}>
+      {itemKey ?
+        <View>
+        <CameraScreen>
+        </CameraScreen>
+        </View>
+        :
         <MapView
           provider={PROVIDER_GOOGLE}
           customMapStyle={mapStyle}
@@ -302,6 +315,7 @@ export default class PlayModeMap extends Component {
           }) : null
         }
         </MapView>
+      }
       </View>
     )
   }
