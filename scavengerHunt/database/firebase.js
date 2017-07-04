@@ -67,7 +67,7 @@ function newMap (mapName, description, location, userId) {
     // }
 }
 
-function createItemsToDefaultMap() {
+function createItemsToDefaultMapDownTown() {
 	let places = [{
 		'coordinate': {'latitude': 40.7052066,'longitude': -74.0103288999999},
 		'title': "Open Market",
@@ -87,6 +87,30 @@ function createItemsToDefaultMap() {
 
 	return places;
 
+
+}
+
+function createItemsToDefaultMapUpTown() {
+	let places = [{
+		'coordinate': {'latitude': 40.775725,'longitude': -73.950204},
+		'title': "Nica Trattoria",
+		'description': "An italian restaurant",
+		'image': "../public/restaurantPusheen.png"
+	},{
+		'coordinate': {'latitude': 40.775998,'longitude':-73.951918},
+		'title': "Jax Cafe",
+		'description': "An internet cafe",
+		'image': "../public/restaurantPusheen.png"
+	},
+	{
+		'coordinate': {'latitude': 40.774246,'longitude':-73.945809},
+		'title': "Zangi Cafe",
+		'description': "A home coffee",
+		'image': "../public/restaurantPusheen.png"
+
+	}];
+
+	return places;
 
 }
 //////////////////////////////////////////////////////////////////////////////
@@ -239,15 +263,19 @@ function readUserInfo(userId) {
 	})
 }
 
+
 if(module === require.main){
 
 	//seeding scavenger hunt items
 
 	//let userKey = createOneUser("jonny", "jjo@gmail.com", "123456");
-	writeUserData("iIAz1Ht7TIO5vK0HPQQRaNjyYPv2", "jonny", "jjo@gmail.com",500,"url");
-	let userKey = "iIAz1Ht7TIO5vK0HPQQRaNjyYPv2";
-	let places = createItemsToDefaultMap();
-	newMap("NYC down town trip", "restaurants and museum downtown", "NYC", places,userKey);
+	// writeUserData("iIAz1Ht7TIO5vK0HPQQRaNjyYPv2", "jonny", "jjo@gmail.com",500,"url");
+	// let userKey = "iIAz1Ht7TIO5vK0HPQQRaNjyYPv2";
+	// //let places = createItemsToDefaultMapDownTown();
+	// //newMap("NYC down town trip", "restaurants and museum downtown", "NYC", places,userKey);
+	// places = createItemsToDefaultMapUpTown();
+	// newMap("NYC up town trip", "restaurants and cafe places uptown", "NYC", places,userKey);
+
 
 
 // writeScavengerHuntItem(1,'Open Market', '15 William St, New York, NY 10005, USA', 40.7052066, -74.0103288999999);
@@ -296,7 +324,11 @@ if(module === require.main){
     '7': [40.707258, -74.0103563999999],
     '8': [40.7076346, -74.0107747],
     '9': [40.8010717, -73.93807850000002],
-    '10': [40.7761098, -73.951832]
+    '10': [40.7761098, -73.951832],
+    '-KoAXn60VAfqgBQN2nTW': [40.775725, -73.950204],
+    '-KoAXn61cnfmemUKpOxE': [40.775998,-73.951918],
+    '-Ko96h_anwEEAAOUJvhZ': [40.748232,-74.008267],
+    '-KoAXn62BoldVYYLrNRj': [40.774246, -73.945809]
   }).then(function() {
   }, function(error) {
     console.log('Error: ' + error)
