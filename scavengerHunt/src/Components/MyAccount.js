@@ -90,9 +90,15 @@ export default class MyAccount extends Component {
             email:     {this.state.myAccount.userPersonalInfo.email + '\n'}
             score:    {this.state.myAccount.userPersonalInfo.score + '\n'}
             </Text>
-            
-            {(this.state.myAccount.map) ?
-              <Text>chosen map: {this.state.myAccount.map.mapname}</Text> : null }
+
+            {(this.state.myAccount.map.mapname) ?
+              <View>
+                <Text>chosen map: {this.state.myAccount.map.mapname}</Text>
+                <Button onPress={() => {
+                  this.props.navigation.navigate('AddItems')
+                }} title="Edit map items" />
+              </View>
+              : null }
             {(this.state.myAccount.maps.length) ?
             <Picker
             selectedValue={this.state.myAccount.maps}

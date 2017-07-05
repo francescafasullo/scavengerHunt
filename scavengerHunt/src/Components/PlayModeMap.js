@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: 200
   }
-  
+
 })
 
 export default class PlayModeMap extends Component {
@@ -146,7 +146,7 @@ export default class PlayModeMap extends Component {
     {
       let distanceFromUser = getDistance(this.state.latitude,this.state.longitude,coordinate.latitude,coordinate.longitude)
       if(distanceFromUser <= 0.1)
-      { 
+      {
         //find the item the user pressed on in the user's map
         let itemOnMap = this.findItemFromUserCureMap(key)
         //if exists - set it as the chosen item in the store
@@ -159,18 +159,18 @@ export default class PlayModeMap extends Component {
         else{
           alert("there is no such location on your map, please get closer to a location on your map")
         }
-        
+
       }
       else
       {
         alert("you are not close enough to your token...get closer and try again");
       }
     }
-    
+
 
   }
 
-  
+
 
   render() {
     let curmap,keyExist=true
@@ -204,27 +204,27 @@ export default class PlayModeMap extends Component {
           }
           if(keyExist){
           return (
-            
+
             <MapView.Marker
               coordinate={{latitude: this.state.keys[key].location[0], longitude: this.state.keys[key].location[1]}}
               image={require('../../public/pusheenMarker.png')}
               onPress = {(e) => this.checkTokenDistance(e,key)}
             />
-            
-            
+
+
             )
           }
           else{
             return null
 
-          } 
+          }
           }) : null
         }
         </MapView>
 
       }
       </View>
-      
+
     )
   }
 
