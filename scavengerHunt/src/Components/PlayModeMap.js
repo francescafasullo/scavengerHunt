@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { AppRegistry, StyleSheet, Text, View, Dimensions, Button, Image } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
-import { setUserCurLocation } from '../reducers/myAccountReducer'
+import { setUserCurLocation, addItemToBank } from '../reducers/myAccountReducer'
 import Camera from 'react-native-camera'
 import CameraScreen from './Camera'
 import store from '../../store'
@@ -11,6 +11,7 @@ import styles, { mapStyle } from '../../stylesheet'
 const {height, width} = Dimensions.get('window')
 
 
+<<<<<<< HEAD
 /*
 container: {
     flex: 1,
@@ -18,6 +19,9 @@ container: {
     backgroundColor: '#BFD8D2'
   },
 */
+=======
+
+>>>>>>> master
 
 export default class PlayModeMap extends Component {
   constructor(props) {
@@ -131,30 +135,31 @@ export default class PlayModeMap extends Component {
     {
       let distanceFromUser = getDistance(this.state.latitude,this.state.longitude,coordinate.latitude,coordinate.longitude)
       if(distanceFromUser <= 0.1)
-      { 
+      {
         //find the item the user pressed on in the user's map
         let itemOnMap = this.findItemFromUserCureMap(key)
         //if exists - set it as the chosen item in the store
         if(itemOnMap){
           store.dispatch(setUserCurLocation(itemOnMap[0]))
+          store.dispatch(addItemToBank('../../public/pusheenMarker.png',itemOnMap[0]))
 
         }
         //if not exists - alert the user that he didn't press on any token
         else{
           alert("there is no such location on your map, please get closer to a location on your map")
         }
-        
+
       }
       else
       {
         alert("you are not close enough to your token...get closer and try again");
       }
     }
-    
+
 
   }
 
-  
+
 
   render() {
     let curmap,keyExist=true
@@ -188,27 +193,27 @@ export default class PlayModeMap extends Component {
           }
           if(keyExist){
           return (
-            
+
             <MapView.Marker
               coordinate={{latitude: this.state.keys[key].location[0], longitude: this.state.keys[key].location[1]}}
               image={require('../../public/pusheenMarker.png')}
               onPress = {(e) => this.checkTokenDistance(e,key)}
             />
-            
-            
+
+
             )
           }
           else{
             return null
 
-          } 
+          }
           }) : null
         }
         </MapView>
 
       }
       </View>
-      
+
     )
   }
 

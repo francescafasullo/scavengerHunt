@@ -1,11 +1,10 @@
 import React, {Component} from 'react'
 import { AppRegistry, StyleSheet, Text, View, Dimensions, Image, Button, TouchableHighlight} from 'react-native'
 import Camera from 'react-native-camera'
-import styles from '../../stylesheet' 
+import styles from '../../stylesheet'
 import store from '../../store'
 import { setUserCurLocation,takeItemOfMap } from '../reducers/myAccountReducer'
 import * as Animatable from 'react-native-animatable'
-
 
 
 
@@ -44,7 +43,7 @@ export default class CameraScreen extends Component {
     this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState())
     })
-    
+
 
   }
 
@@ -73,12 +72,12 @@ export default class CameraScreen extends Component {
     return d
   }
 
-  
+
 
   TakeOfItemAndNavigateBack(){
     store.dispatch(setUserCurLocation(""))
     store.dispatch(takeItemOfMap(this.state.store.myAccount.curItem))
-    
+
 }
 
 
@@ -103,7 +102,7 @@ export default class CameraScreen extends Component {
                 style={styles.overlay}
                 source={require('../../public/pusheenSunglasses.png')}
                 resizeMode="contain"
-              > 
+              >
               </Animatable.Image>
               </View>
               <View style={styles.view_no_background}>
@@ -129,12 +128,7 @@ export default class CameraScreen extends Component {
       </View>
     );
   }
-  
+
 }
 
 
-/*
-<Button style={styles.capture} onPress={this.takePicture} title="CAPTURE"/>
-          <Button style={styles.capture} onPress={this.TakeOfItemAndNavigateBack} title="MAP"/>
-*/
-//AppRegistry.registerComponent('scavengerHunt', () => CameraScreen);

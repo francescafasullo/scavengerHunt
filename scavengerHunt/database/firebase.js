@@ -32,6 +32,7 @@ function writeUserData(userId, name, email,score,profile_picURL) {
 
 function writeUserScavengerHuntMap(key, name, description, location, date){
   database.ref('scavenger_hunt_map/' + key).set({
+    key: key,
     mapname: name,
     description: description,
 	  location: location,
@@ -54,17 +55,8 @@ function newMap (mapName, description, location, userId) {
     var date = new Date()
     writeUserScavengerHuntMap(mapKey, mapName, description, location, date)
 
-    // var itemKeys = []
-    // for (i = 0; i < places.length; i++) {
-    //     itemKeys.push(database.ref('scavenger_hunt_items/').push().key)
-    //     writeUserScavengerHuntItem(itemKeys[i], places[i].title, places[i].coordinate.latitude, places[i].coordinate.longitude )
-    // }
-
     associateUserToMap(userId, mapKey)
 
-    // for (i = 0; i < itemKeys.length; i++) {
-    //     associateScavengerItemToMap(mapKey, itemKeys[i])
-    // }
 }
 
 function createItemsToDefaultMapDownTown() {
@@ -83,7 +75,13 @@ function createItemsToDefaultMapDownTown() {
 		'title': "Museum of American Finance",
 		'description': "A museum for American finance history",
 		'image': "../public/museumPusheen.png"
-	}];
+	},{
+    'coordinate': {'latitude': 40.705076,'longitude':-74.009160},
+    'title': "Grace hopper museum",
+    'description': "A museum for computer science history",
+    'image': "../public/museumPusheen.png"
+
+  }];
 
 	return places;
 
@@ -108,18 +106,26 @@ function createItemsToDefaultMapUpTown() {
 		'description': "A home coffee",
 		'image': "../public/restaurantPusheen.png"
 
-	}];
+	},
+  {
+    'coordinate': {'latitude': 40.774441,'longitude':-73.946303},
+    'title': "Yorkville Cafe",
+    'description': "A local coffee",
+    'image': "../public/restaurantPusheen.png"
+  }];
 
 	return places;
 
 }
 //////////////////////////////////////////////////////////////////////////////
-function writeUserScavengerHuntItem(key, name, latitude,longitude){
+function writeUserScavengerHuntItem(key, name, description, latitude, longitude, imagePath){
 	database.ref('scavenger_hunt_items/' + key).set({
 		name: name,
 		latitude: latitude,
 		longitude: longitude,
-		key: key
+		key: key,
+    description: description,
+    imagePath: imagePath
 	})
 }
 
@@ -139,8 +145,6 @@ function addCategoryToScavengerHuntItem(itemId, categoryName){
 
 // assosiating a scavenger hunt item to a map, both the item and the map should have reference to each other
 function associateScavengerItemToMap(mapId, scavengerItemId){
-
-
 	let update={};
 	update['/scavenger_hunt_map/'+mapId+'/items/'+scavengerItemId] = true;
 	update['/scavenger_hunt_items/'+scavengerItemId+'/maps/'+mapId] = true;
@@ -184,6 +188,17 @@ function readMapsItemsInfo(items){
   })
   .catch((error)=>{console.log(error)})
 }
+
+//read one item info
+function readItemInfo(itemKey){
+  return database.ref('/scavenger_hunt_items/' + itemKey).once('value')
+    .then((data) => {
+      return data.val()
+    })
+    .then((data) => {
+      return data
+    })
+  }
 
 // readingdata function
 
@@ -269,14 +284,12 @@ if(module === require.main){
 	//seeding scavenger hunt items
 
 	//let userKey = createOneUser("jonny", "jjo@gmail.com", "123456");
-	// writeUserData("iIAz1Ht7TIO5vK0HPQQRaNjyYPv2", "jonny", "jjo@gmail.com",500,"url");
-	// let userKey = "iIAz1Ht7TIO5vK0HPQQRaNjyYPv2";
-	// //let places = createItemsToDefaultMapDownTown();
-	// //newMap("NYC down town trip", "restaurants and museum downtown", "NYC", places,userKey);
-	// places = createItemsToDefaultMapUpTown();
-	// newMap("NYC up town trip", "restaurants and cafe places uptown", "NYC", places,userKey);
-
-
+	// // writeUserData("iIAz1Ht7TIO5vK0HPQQRaNjyYPv2", "jonny", "jjo@gmail.com",500,"url");
+	//  let userKey = "iIAz1Ht7TIO5vK0HPQQRaNjyYPv2";
+	//  let places = createItemsToDefaultMapDownTown();
+	// // //newMap("NYC down town trip", "restaurants and museum downtown", "NYC", places,userKey);
+	//  //places = createItemsToDefaultMapUpTown();
+	//  newMap("NYC up town trip", "cool places wall street area", "NYC", places,userKey);
 
 // writeScavengerHuntItem(1,'Open Market', '15 William St, New York, NY 10005, USA', 40.7052066, -74.0103288999999);
 // writeScavengerHuntItem(2, 'La Pain Quotidien', '85 Broad St, New York, NY 10005, USA', 40.7039915, -74.0110917);
@@ -313,7 +326,7 @@ if(module === require.main){
 
 
 
-  // Seeds scavenger hunt list items in geoFire
+  //Seeds scavenger hunt list items in geoFire
   geoFire.set({
     '1': [40.7052066, -74.0103288999999],
     '2': [40.7039915, -74.0110917],
@@ -325,10 +338,10 @@ if(module === require.main){
     '8': [40.7076346, -74.0107747],
     '9': [40.8010717, -73.93807850000002],
     '10': [40.7761098, -73.951832],
-    '-KoAXn60VAfqgBQN2nTW': [40.775725, -73.950204],
-    '-KoAXn61cnfmemUKpOxE': [40.775998,-73.951918],
-    '-Ko96h_anwEEAAOUJvhZ': [40.748232,-74.008267],
-    '-KoAXn62BoldVYYLrNRj': [40.774246, -73.945809]
+    '-KoIDM9yOe00NT7y5TBx': [40.7052066, -74.0103288999999],
+    '-KoIDMA-5Le9I808SRJg': [40.7039915,-74.0110917],
+    '-KoIDMA0rEiyyOtmE_C9': [40.7065557,-74.0090503],
+    '-KoIDMA1dOlttfWTFPc-': [40.705076, -74.00916]
   }).then(function() {
   }, function(error) {
     console.log('Error: ' + error)
@@ -365,7 +378,8 @@ module.exports = {
   geoFire: geoFire,
   readUserMaps: readUserMaps,
   readUserInfo: readUserInfo,
-  readOneMap: readOneMap
+  readOneMap: readOneMap,
+  readItemInfo: readItemInfo
 }
 
 

@@ -23,6 +23,7 @@ import MyAccountScreen from './src/Components/MyAccount'
 import PlayModeMap from './src/Components/PlayModeMap'
 import NewSH from './src/Components/NewSH'
 import SavedConf from './src/Components/SavedConf'
+import AddItems from './src/Components/AddItems'
 
 const scavengerHuntRouter = StackNavigator({
   Home: {
@@ -62,6 +63,9 @@ const scavengerHuntRouter = StackNavigator({
   SavedConf: {
     screen: SavedConf
   },
+  AddItems: {
+    screen: AddItems
+  }
 })
 
 const Tabs = TabNavigator({
