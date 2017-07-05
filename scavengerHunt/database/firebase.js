@@ -32,6 +32,7 @@ function writeUserData(userId, name, email,score,profile_picURL) {
 
 function writeUserScavengerHuntMap(key, name, description, location, date){
   database.ref('scavenger_hunt_map/' + key).set({
+    key: key,
     mapname: name,
     description: description,
 	  location: location,
@@ -54,17 +55,8 @@ function newMap (mapName, description, location, userId) {
     var date = new Date()
     writeUserScavengerHuntMap(mapKey, mapName, description, location, date)
 
-    // var itemKeys = []
-    // for (i = 0; i < places.length; i++) {
-    //     itemKeys.push(database.ref('scavenger_hunt_items/').push().key)
-    //     writeUserScavengerHuntItem(itemKeys[i], places[i].title, places[i].coordinate.latitude, places[i].coordinate.longitude )
-    // }
-
     associateUserToMap(userId, mapKey)
 
-    // for (i = 0; i < itemKeys.length; i++) {
-    //     associateScavengerItemToMap(mapKey, itemKeys[i])
-    // }
 }
 
 function createItemsToDefaultMapDownTown() {
@@ -126,12 +118,14 @@ function createItemsToDefaultMapUpTown() {
 
 }
 //////////////////////////////////////////////////////////////////////////////
-function writeUserScavengerHuntItem(key, name, latitude,longitude){
+function writeUserScavengerHuntItem(key, name, description, latitude, longitude, imagePath){
 	database.ref('scavenger_hunt_items/' + key).set({
 		name: name,
 		latitude: latitude,
 		longitude: longitude,
-		key: key
+		key: key,
+    description: description,
+    imagePath: imagePath
 	})
 }
 
@@ -151,8 +145,6 @@ function addCategoryToScavengerHuntItem(itemId, categoryName){
 
 // assosiating a scavenger hunt item to a map, both the item and the map should have reference to each other
 function associateScavengerItemToMap(mapId, scavengerItemId){
-
-
 	let update={};
 	update['/scavenger_hunt_map/'+mapId+'/items/'+scavengerItemId] = true;
 	update['/scavenger_hunt_items/'+scavengerItemId+'/maps/'+mapId] = true;

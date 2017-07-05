@@ -1,132 +1,296 @@
-// import React, { Component } from 'react'
-// import { AppRegistry, StyleSheet, Text, TextInput, View, Button, Image, Picker, TouchableOpacity, Dimensions } from 'react-native'
-// import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
-// import store from '../../store'
-// import { newMap } from '../reducers/mapsReducer'
+import React, { Component } from 'react'
+import { AppRegistry, StyleSheet, Text, TextInput, View, Button, Image, Picker, TouchableOpacity, Dimensions, ScrollView } from 'react-native'
+import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
+import store from '../../store'
+import { newMap, setUserSelectedMap, newItem } from '../reducers/myAccountReducer'
 
-// const {height, width} = Dimensions.get('window')
+const {height, width} = Dimensions.get('window')
 
-// const styles = StyleSheet.create({
-//   welcome: {
-//     fontSize: 20,
-//     textAlign: 'center',
-//     margin: 10,
-//   },
-//   picker: {
-//     width: 300,
-//     alignSelf: 'center'
-//   },
-//   map: {
-//     width: 500,
-//     height: 500,
-//     alignSelf: 'center',
-//   },
-//   container: {
-//     flex: 1,
-//     alignItems: 'center',
-//     backgroundColor: '#BFD8D2'
-//   },
-// })
+const pusheenImages = [
+{name: 'DJ Pusheen', imagePath: '../../public/djPusheen.png'},
+{name: 'Ice Cream Pusheen', imagePath: '../../public/iceCreamPusheen.png'},
+{name: 'Laptop Pusheen', imagePath: '../../public/laptopPusheen.png'},
+{name: 'Mermaid Pusheen', imagePath: '../../public/mermaidPusheen.png'},
+{name: 'Fancy Pusheen', imagePath: '../../public/museumPusheen.png'},
+{name: 'Noodle Pusheen', imagePath: '../../public/noodlePusheen.png'},
+{name: 'Plain Pusheen', imagePath: '../../public/pusheen.png'},
+{name: 'Sunglasses Pusheen', imagePath: '../../public/pusheenSunglasses.png'},
+{name: 'Chef Pusheen', imagePath: '../../public/restaurantPusheen.png'},
+{name: 'Scooter Pusheen', imagePath: '../../public/scooterPusheen.png'},
+{name: 'Unicorn Pusheen', imagePath: '../../public/unicornPusheen.png'}
+]
 
-// export default class AddItems extends Component {
-//   constructor(props) {
-//     super(props)
-//     this.state = store.getState();
-//     this.state.city = {
-//       name: 'nyc',
-//       latitude: 40.759025,
-//       longitude: -73.985185,
-//       latitudeDelta: 0.04,
-//       longitudeDelta: 0.04
-//     }
-//     this.state.selectedCity = ""
-//     this.state.places = []
-//     this.state.mapName = ""
-//     this.state.description = ""
-//   }
+const styles = StyleSheet.create({
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  picker: {
+    width: 300,
+    alignSelf: 'center'
+  },
+  map: {
+    width: width,
+    height: 500,
+    alignSelf: 'center',
+  },
+  image: {
+    width: 200
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#BFD8D2'
+  },
+})
 
-//   componentDidMount = () => {
-//     this.unsubscribe = store.subscribe(() => {
-//       this.setState(store.getState());
-//     });
-//   }
+export default class AddItems extends Component {
+  constructor(props) {
+    super(props)
+    userId = store.getState().auth.userId
+    user = store.getState().myAccount
+    this.addMarker = this.addMarker.bind(this)
+    this.clear = this.clear.bind(this)
+    this.addPinToPlaces = this.addPinToPlaces.bind(this)
+    this.updatePinName = this.updatePinName.bind(this)
+    this.updatePinDescription = this.updatePinDescription.bind(this)
+    this.savePlacesToSH = this.savePlacesToSH.bind(this)
+    this.pickImage = this.pickImage.bind(this)
+    this.state = {
+      user: user,
+      places: [],
+      mapName: '',
+      description: '',
+      mapRegion: {
+        latitude: 40.7128,
+        longitude: -74.0059,
+        latitudeDelta:  40,
+        longitudeDelta: 40
+      },
+      lastLat: null,
+      lastLong: null,
+      location: '',
+      userId: userId,
+      selectedPlace: {},
+      selectedImage: pusheenImages[6]
+    }
+  }
 
-//   componentWillUnmount = () => {
-//     this.unsubscribe();
-//   }
+  componentDidMount() {
+  }
 
-//   updateDescription = (text) => {
-//     this.setState({ mapName: text })
-//   }
+  addMarker(evt) {
+    const { coordinate } = evt.nativeEvent
+    this.setState({
+      selectedPlace: {
+          coordinate, title: 'Find Pusheen!', description: 'Pusheen has been dropped at this location.'
+        }
+    })
+  }
 
-//   updateMapName = (text) => {
-//     this.setState({ description: text })
-//   }
+  addPinToPlaces() {
+    let pins = this.state.places.slice()
+    pins.push(this.state.selectedPlace)
+    this.setState({ places: pins, selectedPlace: {} })
+    console.log('addedPins', this.state.places)
+  }
 
+  updatePinDescription(text) {
+    let update = Object.assign({}, this.state.selectedPlace)
+    update.description = text
+    this.setState({ selectedPlace: update })
+  }
 
-//   addMarker = evt => {
-//     const { coordinate } = evt.nativeEvent
-//     this.setState({
-//       places: [
-//         ...this.state.places, {
-//           coordinate, title: 'Find Pusheen!', description: 'Pusheen has been dropped at this location.',
-//         }]
-//     })
-//   }
+  updatePinName(text) {
+    let update = Object.assign({}, this.state.selectedPlace)
+    update.name = text
+    this.setState({ selectedPlace: update })
+  }
 
-//   saveSH = (mapName, description, userId) => {
-//     const city = this.state.city
-//     const places = this.state.places
-//     store.dispatch(newMap(mapName, description, city, places, userId))
-//   }
+  savePlacesToSH(places) {
+    places.map((place) => {
+      return store.dispatch(newItem(place.name, place.description, place.coordinate.latitude, place.coordinate.longitude, place.imagePath, this.state.user.map.key))
+    })
+  }
 
-//   clear = () => {
-//     this.setState({ places: [] })
-//   }
+  clear() {
+    this.setState({ places: [] })
+  }
 
-//   render() {
-//     const userId = (this.state ? this.state.auth.userId : null)
-//     return (
-//       <View style={styles.container}>
-//         <Text>Enter new map name and description.</Text>
-//         <TextInput
-//           style={{ height: 40 }}
-//           placeholder="Map Name"
-//           onChangeText={this.updateMapName}
-//         />
-//         <TextInput
-//           style={{ height: 40 }}
-//           placeholder="Description"
-//           onChangeText={this.updateDescription}
-//         />
-//         <Button onPress={() => {
-//           this.saveSH(this.state.mapName, this.state.description, userId)
-//           this.props.navigation.navigate('SavedConf')
-//         }}
-//           title="Save Scavenger Hunt" />
-//         <Button onPress={this.clear} title="Clear all markers" />
-//         <MapView
-//           provider={PROVIDER_GOOGLE}
-//           onPress={this.addMarker}
-//           style={styles.map}
-//           initialRegion={{
-//             latitude: 40.759025,
-//             longitude: -73.985185,
-//             latitudeDelta: 0.04,
-//             longitudeDelta: 0.04
-//           }}>
-//           {
-//             (this.state.places || []).map(
-//               place =>
-//                 <MapView.Marker
-//                   coordinate={place.coordinate}
-//                   title={place.title}
-//                   description={place.description}
-//                 />
-//             )
-//           }
-//         </MapView>
-//       </View>
-//     )
-//   }
-// }
+  pickImage(imagePath) {
+    switch(imagePath) {
+      case '../../public/djPusheen.png':
+        return (
+          <Image
+            source={require('../../public/djPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/iceCreamPusheen.png':
+        return (
+          <Image
+            source={require('../../public/iceCreamPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/laptopPusheen.png':
+        return (
+          <Image
+            source={require('../../public/laptopPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/mermaidPusheen.png':
+        return (
+          <Image
+            source={require('../../public/mermaidPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/museumPusheen.png':
+        return (
+          <Image
+            source={require('../../public/museumPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/noodlePusheen.png':
+        return (
+          <Image
+            source={require('../../public/noodlePusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/pusheen.png':
+        return (
+          <Image
+            source={require('../../public/pusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/pusheenSunglasses.png':
+        return (
+          <Image
+            source={require('../../public/pusheenSunglasses.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/restaurantPusheen.png':
+        return (
+          <Image
+            source={require('../../public/restaurantPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/scooterPusheen.png':
+        return (
+          <Image
+            source={require('../../public/scooterPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/unicornPusheen.png':
+        return (
+          <Image
+            source={require('../../public/unicornPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+    }
+  }
+
+  render() {
+    console.log('state !!!!@@@@####$$$$', this.state)
+    return (
+      <View style={styles.container}>
+        <ScrollView
+          showsVerticalScrollIndicator={true}
+        >
+          <View>
+          {
+            this.state.selectedPlace.title ?
+                <View>
+                  <Text>Specify a name, description, and Pusheen for your pin!</Text>
+                  <TextInput
+                    style={{ height: 40 }}
+                    placeholder="Pin Name"
+                    onChangeText={this.updatePinName}
+                  />
+                  <TextInput
+                    style={{ height: 40 }}
+                    placeholder="Pin Description"
+                    onChangeText={this.updatePinDescription}
+                  />
+                  { this.state.selectedImage.imagePath ?
+                    <Text>Selected Pusheen: {this.state.selectedImage.name}</Text>
+                  : null }
+                  <Button onPress={() => this.addPinToPlaces(this.state.selectedPlace)} title="Save Pin" />
+                  <Picker
+                    onValueChange={(value, index) => {
+                      this.setState({selectedImage: pusheenImages[index]})
+                      console.log('!!!!!!!!!!!', this.state.selectedImage)
+                      let selectedPlaceholder = Object.assign({}, this.state.selectedPlace)
+                      selectedPlaceholder.imagePath = this.state.selectedImage.imagePath
+                      this.setState({ selectedPlace: selectedPlaceholder})
+                      }
+                    }
+                    >
+                    { pusheenImages.map((image, index) => {
+                      return (
+                        <Picker.Item key={index} label={image.name} value={image.name} />
+                        )
+                    }) }
+                  </Picker>
+                  { this.state.selectedImage.name ? this.pickImage(this.state.selectedImage.imagePath) : null }
+                </View> :
+                <View>
+                  <Text>Click a place on the map to add a pin!:</Text>
+                  <Button onPress={() => {
+                    this.savePlacesToSH(this.state.places)
+                  }}
+                    title="Save Places" />
+                </View>
+          }
+          <MapView
+            provider={PROVIDER_GOOGLE}
+            style={styles.map}
+            region={this.state.mapRegion}
+            onPress={this.addMarker}
+            showsBuildings
+          >
+            {
+              this.state.selectedPlace.title ?
+                <MapView.Marker
+                   coordinate={this.state.selectedPlace.coordinate}
+                   title={this.state.selectedPlace.title}
+                   description={this.state.selectedPlace.description}
+                 />
+              : this.state.places.length > 0 ? this.state.places.map(
+               place =>
+                 <MapView.Marker
+                   coordinate={place.coordinate}
+                   title={place.title}
+                   description={place.description}
+                   onPress={this.markerDescription}
+                 />
+             ) : null
+           }
+          </MapView>
+          </View>
+        </ScrollView>
+      </View>
+    )
+  }
+}

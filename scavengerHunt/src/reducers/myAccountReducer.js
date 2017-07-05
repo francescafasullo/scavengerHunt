@@ -1,8 +1,10 @@
 import store from '../../store'
 const fireBaseFunctions = require('../../database/firebase');
 import firebase from 'firebase';
+const geoFire = require('../../database/firebase.js').geoFire
 import { readUserMaps, readUserInfo, database, associateScavengerItemToMap, associateUserToMap, writeUserScavengerHuntMap, writeUserScavengerHuntItem, readOneMap, readItemInfo } from '../../database/firebase'
 import axios from 'axios'
+
 
 /* ------------------ actions ------------------------ */
 SET_USER_MAPS = 'SET_USER_MAPS'
@@ -124,6 +126,18 @@ export const newMap = (mapName, description, location, userId) => dispatch => {
 		dispatch(setCurMap(map))
 	})
 	associateUserToMap(userId, mapKey)
+}
+
+export const newItem = (name, description, latitude, longitude, imagePath, mapId) => dispatch => {
+	let itemKey = database.ref('scavenger_hunt_items/').push().key
+	writeUserScavengerHuntItem(itemKey, name, description, latitude, longitude, imagePath)
+	geoFire.set({ [itemKey]: [latitude, longitude]})
+	associateScavengerItemToMap(mapId, itemKey)
+
+	let selectedMap = readOneMap(mapId)
+	selectedMap.then((map) => {
+		dispatch(setCurMap(map))
+	})
 }
 
 export const setUserSelectedMap = (map) => dispatch => {
