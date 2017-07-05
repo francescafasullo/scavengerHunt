@@ -66,26 +66,61 @@ function newMap (mapName, description, location, userId) {
     // }
 }
 
-function createItemsToDefaultMap() {
-  let places = [{
-    'coordinate': { 'latitude': 40.7052066, 'longitude': -74.0103288999999 },
-    'title': "Open Market",
-    'description': "A deli",
-    'image': "../public/restaurantPusheen.png"
-  }, {
-    'coordinate': { 'latitude': 40.7039915, 'longitude': -74.0110917 },
-    'title': "La Pen Quotidien",
-    'description': "A restaurant with healthy food",
-    'image': "../public/restaurantPusheen.png"
-  }, {
-    'coordinate': { 'latitude': 40.7065557, 'longitude': -74.0090503 },
-    'title': "Museum of American Finance",
-    'description': "A museum for American finance history",
+function createItemsToDefaultMapDownTown() {
+	let places = [{
+		'coordinate': {'latitude': 40.7052066,'longitude': -74.0103288999999},
+		'title': "Open Market",
+		'description': "A deli",
+		'image': "../public/restaurantPusheen.png"
+	},{
+		'coordinate': {'latitude': 40.7039915,'longitude':-74.0110917},
+		'title': "La Pen Quotidien",
+		'description': "A restaurant with healthy food",
+		'image': "../public/restaurantPusheen.png"
+	},{
+		'coordinate': {'latitude': 40.7065557,'longitude':-74.0090503},
+		'title': "Museum of American Finance",
+		'description': "A museum for American finance history",
+		'image': "../public/museumPusheen.png"
+	},{
+    'coordinate': {'latitude': 40.705076,'longitude':-74.009160},
+    'title': "Grace hopper museum",
+    'description': "A museum for computer science history",
     'image': "../public/museumPusheen.png"
+
   }];
 
-  return places;
+	return places;
 
+}
+
+function createItemsToDefaultMapUpTown() {
+	let places = [{
+		'coordinate': {'latitude': 40.775725,'longitude': -73.950204},
+		'title': "Nica Trattoria",
+		'description': "An italian restaurant",
+		'image': "../public/restaurantPusheen.png"
+	},{
+		'coordinate': {'latitude': 40.775998,'longitude':-73.951918},
+		'title': "Jax Cafe",
+		'description': "An internet cafe",
+		'image': "../public/restaurantPusheen.png"
+	},
+	{
+		'coordinate': {'latitude': 40.774246,'longitude':-73.945809},
+		'title': "Zangi Cafe",
+		'description': "A home coffee",
+		'image': "../public/restaurantPusheen.png"
+
+	},
+  {
+    'coordinate': {'latitude': 40.774441,'longitude':-73.946303},
+    'title': "Yorkville Cafe",
+    'description': "A local coffee",
+    'image': "../public/restaurantPusheen.png"
+  }];
+
+	return places;
 
 }
 //////////////////////////////////////////////////////////////////////////////
@@ -160,6 +195,17 @@ function readMapsItemsInfo(items) {
   })
     .catch((error) => { console.log(error) })
 }
+
+//read one item info
+function readItemInfo(itemKey){
+  return database.ref('/scavenger_hunt_items/' + itemKey).once('value')
+    .then((data) => {
+      return data.val()
+    })
+    .then((data) => {
+      return data
+    })
+  }
 
 // readingdata function
 
@@ -239,46 +285,41 @@ function readUserInfo(userId) {
     })
 }
 
-if (module === require.main) {
-
-  //seeding scavenger hunt items
-
-  //let userKey = createOneUser("jonny", "jjo@gmail.com", "123456");
-  writeUserData("iIAz1Ht7TIO5vK0HPQQRaNjyYPv2", "jonny", "jj@gmail.com", 500, "url");
-  let userKey = "iIAz1Ht7TIO5vK0HPQQRaNjyYPv2";
-  let places = createItemsToDefaultMap();
-  newMap("NYC down town trip", "restaurants and museum downtown", {
-    city: {
-      name: 'nyc',
-      latitude: 40.759025,
-      longitude: -73.985185,
-      latitudeDelta: 0.04,
-      longitudeDelta: 0.04
-    }
-  },
-    places, userKey);
 
 
-  // writeScavengerHuntItem(1,'Open Market', '15 William St, New York, NY 10005, USA', 40.7052066, -74.0103288999999);
-  // writeScavengerHuntItem(2, 'La Pain Quotidien', '85 Broad St, New York, NY 10005, USA', 40.7039915, -74.0110917);
-  // writeScavengerHuntItem(3, 'dig inn', '80 Broad St, New York, NY 10004, USA', 40.7043408, -74.0118572);
-  // writeScavengerHuntItem(4, 'Cipriani Club 55', '55 Wall St, New York, NY 10005, USA', 40.7060794, -74.0093213);
-  // writeScavengerHuntItem(5, 'Haru Sushi', '1 Wall St, New York, NY 10005', 40.7071269, -74.0118077999999);
-  // writeScavengerHuntItem(6, 'Museum of American Finance', '48 Wall St, New York, NY 10005', 40.7065557, -74.0090503);
-  // writeScavengerHuntItem(7, 'Federal Hall', '26 Wall St, New York, NY 10005, USA', 40.707258, -74.0103563999999);
-  // writeScavengerHuntItem(8, 'Keya Gallery', '14 Wall Stt, New York, NY 10005', 40.7076346, -74.0107747)
-  //name, address, latitude, longitude
-  // writeScavengerHuntItem('Nica Trattoria','354 E 84th St, New York, NY 10028',40.775725,-73.950204);
-  // writeScavengerHuntItem('X BAR | BISTRO','316 E 84th St, New York, NY 10028',40.776032,-73.951999);
-  // writeScavengerHuntItem('Italianissimo Ristorante','307 E 84th St, New York, NY 10028',40.776507,73.951963);
-  // writeScavengerHuntItem('Raj Gallery','315 E 84th St, New York, NY 10028',40.776387,-73.951688);
+if(module === require.main){
 
-  // //seeding categories
-  // writeCategory('Restaurant', 'A place to dine');
-  // writeCategory('Cafe', 'A plcae to drink coffee and eat snacks');
-  // writeCategory('Bar', 'A place to go for drinks');
-  // writeCategory('Museum', 'a building in which objects of historical, scientific, artistic, or cultural interest are stored and exhibited');
-  // writeCategory('Gallery', 'a room or building for the display or sale of works of art');
+	//seeding scavenger hunt items
+
+	//let userKey = createOneUser("jonny", "jjo@gmail.com", "123456");
+	// // writeUserData("iIAz1Ht7TIO5vK0HPQQRaNjyYPv2", "jonny", "jjo@gmail.com",500,"url");
+	//  let userKey = "iIAz1Ht7TIO5vK0HPQQRaNjyYPv2";
+	//  let places = createItemsToDefaultMapDownTown();
+	// // //newMap("NYC down town trip", "restaurants and museum downtown", "NYC", places,userKey);
+	//  //places = createItemsToDefaultMapUpTown();
+	//  newMap("NYC up town trip", "cool places wall street area", "NYC", places,userKey);
+
+// writeScavengerHuntItem(1,'Open Market', '15 William St, New York, NY 10005, USA', 40.7052066, -74.0103288999999);
+// writeScavengerHuntItem(2, 'La Pain Quotidien', '85 Broad St, New York, NY 10005, USA', 40.7039915, -74.0110917);
+// writeScavengerHuntItem(3, 'dig inn', '80 Broad St, New York, NY 10004, USA', 40.7043408, -74.0118572);
+// writeScavengerHuntItem(4, 'Cipriani Club 55', '55 Wall St, New York, NY 10005, USA', 40.7060794, -74.0093213);
+// writeScavengerHuntItem(5, 'Haru Sushi', '1 Wall St, New York, NY 10005', 40.7071269, -74.0118077999999);
+// writeScavengerHuntItem(6, 'Museum of American Finance', '48 Wall St, New York, NY 10005', 40.7065557, -74.0090503);
+// writeScavengerHuntItem(7, 'Federal Hall', '26 Wall St, New York, NY 10005, USA', 40.707258, -74.0103563999999);
+// writeScavengerHuntItem(8, 'Keya Gallery', '14 Wall Stt, New York, NY 10005', 40.7076346, -74.0107747)
+//name, address, latitude, longitude
+// writeScavengerHuntItem('Nica Trattoria','354 E 84th St, New York, NY 10028',40.775725,-73.950204);
+// writeScavengerHuntItem('X BAR | BISTRO','316 E 84th St, New York, NY 10028',40.776032,-73.951999);
+// writeScavengerHuntItem('Italianissimo Ristorante','307 E 84th St, New York, NY 10028',40.776507,73.951963);
+// writeScavengerHuntItem('Raj Gallery','315 E 84th St, New York, NY 10028',40.776387,-73.951688);
+
+// //seeding categories
+// writeCategory('Restaurant', 'A place to dine');
+// writeCategory('Cafe', 'A plcae to drink coffee and eat snacks');
+// writeCategory('Bar', 'A place to go for drinks');
+// writeCategory('Museum', 'a building in which objects of historical, scientific, artistic, or cultural interest are stored and exhibited');
+// writeCategory('Gallery', 'a room or building for the display or sale of works of art');
+
 
   // //seeding users in the data base
   // writeUserData(1, "Stella", "stella@stella.stella",0,"https://i.imgur.com/O5wwwaG.jpg");
@@ -294,7 +335,7 @@ if (module === require.main) {
 
 
 
-  // Seeds scavenger hunt list items in geoFire
+  //Seeds scavenger hunt list items in geoFire
   geoFire.set({
     '1': [40.7052066, -74.0103288999999],
     '2': [40.7039915, -74.0110917],
@@ -305,9 +346,15 @@ if (module === require.main) {
     '7': [40.707258, -74.0103563999999],
     '8': [40.7076346, -74.0107747],
     '9': [40.8010717, -73.93807850000002],
-    '10': [40.7761098, -73.951832]
-  }).then(function () {
-  }, function (error) {
+
+    '10': [40.7761098, -73.951832],
+    '-KoIDM9yOe00NT7y5TBx': [40.7052066, -74.0103288999999],
+    '-KoIDMA-5Le9I808SRJg': [40.7039915,-74.0110917],
+    '-KoIDMA0rEiyyOtmE_C9': [40.7065557,-74.0090503],
+    '-KoIDMA1dOlttfWTFPc-': [40.705076, -74.00916]
+  }).then(function() {
+  }, function(error) {
+
     console.log('Error: ' + error)
   })
 
@@ -344,6 +391,8 @@ module.exports = {
   readUserInfo: readUserInfo,
   readOneMap: readOneMap,
   readMapsItemsInfo: readMapsItemsInfo
+  readItemInfo: readItemInfo
+
 }
 
 

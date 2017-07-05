@@ -1,24 +1,7 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, Button, Image } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
-
-const styles = StyleSheet.create({
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  map: {
-    width: 300,
-    height: 300,
-    alignSelf: 'center',
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#BFD8D2'
-  },
-})
+import styles from '../../stylesheet'
 
 const openMarket = {
   latlng: [40.7052066, -74.01032889999999],
@@ -51,7 +34,7 @@ export default class PlayMap extends Component {
   render() {
     console.log('rendering map')
     return (
-      <View style={styles.container}>
+      <View style={styles.pcontainer}>
         {console.log(this.props)}
         <Text style={styles.welcome}>Find 'em all!</Text>
         <MapView

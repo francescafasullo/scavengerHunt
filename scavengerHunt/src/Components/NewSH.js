@@ -3,30 +3,9 @@ import { AppRegistry, StyleSheet, Text, TextInput, View, Button, Image, Picker, 
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import store from '../../store'
 import { newMap, setUserSelectedMap } from '../reducers/myAccountReducer'
+import styles from '../../stylesheet'
 
 const { height, width } = Dimensions.get('window')
-
-const styles = StyleSheet.create({
-	welcome: {
-		fontSize: 20,
-		textAlign: 'center',
-		margin: 10,
-	},
-	picker: {
-		width: 300,
-		alignSelf: 'center'
-	},
-	map: {
-		width: width,
-		height: 500,
-		alignSelf: 'center',
-	},
-	container: {
-		flex: 1,
-		alignItems: 'center',
-		backgroundColor: '#BFD8D2'
-	},
-})
 
 export default class NewSH extends Component {
 	constructor(props) {
@@ -108,7 +87,7 @@ export default class NewSH extends Component {
 
 	render() {
 		return (
-			<View style={styles.container}>
+			<View style={styles.pcontainer}>
 				<Text>Enter a name and description for your new map:</Text>
 				<TextInput
 					style={{ height: 40 }}
