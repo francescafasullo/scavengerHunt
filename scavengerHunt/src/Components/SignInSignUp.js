@@ -6,27 +6,8 @@ import {
   View,
   Navigator,
   Button
-
 } from 'react-native';
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F7CAC9',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+import styles from '../../stylesheet'
 
 export default class SignInSignUp extends Component {
 	constructor(props) {

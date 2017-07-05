@@ -6,109 +6,10 @@ import Camera from 'react-native-camera'
 import CameraScreen from './Camera'
 import store from '../../store'
 const geoFire = require('../../database/firebase.js').geoFire
-
-const mapStyle =
-[
-    {
-        "featureType": "road",
-        "stylers": [
-            {
-                "hue": "#5e00ff"
-            },
-            {
-                "saturation": -79
-            }
-        ]
-    },
-    {
-        "featureType": "poi",
-        "stylers": [
-            {
-                "saturation": -78
-            },
-            {
-                "hue": "#6600ff"
-            },
-            {
-                "lightness": -47
-            },
-            {
-                "visibility": "off"
-            }
-        ]
-    },
-    {
-        "featureType": "road.local",
-        "stylers": [
-            {
-                "lightness": 22
-            }
-        ]
-    },
-    {
-        "featureType": "landscape",
-        "stylers": [
-            {
-                "hue": "#6600ff"
-            },
-            {
-                "saturation": -11
-            }
-        ]
-    },
-    {},
-    {},
-    {
-        "featureType": "water",
-        "stylers": [
-            {
-                "saturation": -65
-            },
-            {
-                "hue": "#1900ff"
-            },
-            {
-                "lightness": 8
-            }
-        ]
-    },
-    {
-        "featureType": "road.local",
-        "stylers": [
-            {
-                "weight": 1.3
-            },
-            {
-                "lightness": 30
-            }
-        ]
-    },
-    {
-        "featureType": "transit",
-        "stylers": [
-            {
-                "visibility": "simplified"
-            },
-            {
-                "hue": "#5e00ff"
-            },
-            {
-                "saturation": -16
-            }
-        ]
-    },
-    {
-        "featureType": "transit.line",
-        "stylers": [
-            {
-                "saturation": -72
-            }
-        ]
-    },
-    {}
-]
+import styles, { mapStyle } from '../../stylesheet'
 
 const {height, width} = Dimensions.get('window')
+
 
 const styles = StyleSheet.create({
   welcome: {
@@ -275,6 +176,7 @@ export default class PlayModeMap extends Component {
     let curmap,keyExist=true
     const itemKey = (this.state.myAccount ? this.state.myAccount.curItem : null)
     return (
+
       <View style={styles.container}>
       {itemKey ?
         <View>

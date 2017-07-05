@@ -3,6 +3,7 @@ import { AppRegistry, StyleSheet, Text, View, Button, Image, Picker,ScrollView }
 import store from '../../store'
 import { logout } from '../reducers/authReducer'
 import {setUserSelectedMap, fetchUserMaps, resetMap, resetItemBank} from '../reducers/myAccountReducer'
+import styles from '../../stylesheet'
 
 
 const styles = StyleSheet.create({
@@ -32,6 +33,7 @@ const styles = StyleSheet.create({
   }
 
 });
+
 
 export default class MyAccount extends Component {
   constructor(props) {
