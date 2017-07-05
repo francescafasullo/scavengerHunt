@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import { AppRegistry, StyleSheet, Text, View, Dimensions, Image, Button} from 'react-native'
 import Camera from 'react-native-camera'
+import styles from '../../stylesheet' 
 import store from '../../store'
 import { setUserCurLocation,takeItemOfMap } from '../reducers/myAccountReducer'
 import * as Animatable from 'react-native-animatable'
@@ -51,6 +52,7 @@ const styles = StyleSheet.create({
     flex: 1
   }
 });
+
 
 export default class CameraScreen extends Component {
   constructor(props) {
@@ -164,4 +166,4 @@ export default class CameraScreen extends Component {
   
 }
 
-//AppRegistry.registerComponent('scavengerHunt', () => CameraScreen);
+

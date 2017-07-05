@@ -3,24 +3,6 @@ import { AppRegistry, StyleSheet, Text, View, Button, Image, Picker } from 'reac
 import MapView from 'react-native-maps'
 import store from '../../store'
 
-const styles = StyleSheet.create({
-	welcome: {
-		fontSize: 20,
-		textAlign: 'center',
-		margin: 10,
-	},
-	map: {
-		width: 300,
-		height: 300,
-		alignSelf: 'center',
-	},
-	container: {
-		flex: 1,
-		alignItems: 'center',
-		backgroundColor: '#BFD8D2'
-	},
-})
-
 export default class Play extends Component {
 	constructor(props) {
 		super(props)
