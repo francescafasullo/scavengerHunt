@@ -1,8 +1,8 @@
 import store from '../../store'
 const fireBaseFunctions = require('../../database/firebase');
 import firebase from 'firebase';
-import { readUserMaps, readUserInfo, database, associateScavengerItemToMap, associateUserToMap, writeUserScavengerHuntMap, writeUserScavengerHuntItem, readOneMap } from '../../database/firebase'
-
+import { readUserMaps, readUserInfo, database, associateScavengerItemToMap, associateUserToMap, writeUserScavengerHuntMap, writeUserScavengerHuntItem, readOneMap, readItemInfo } from '../../database/firebase'
+import axios from 'axios'
 
 /* ------------------ actions ------------------------ */
 SET_USER_MAPS = 'SET_USER_MAPS'
@@ -12,6 +12,8 @@ SET_CUR_ITEM = 'SET_CUR_ITEM'
 ADD_MAP = 'ADD_MAP'
 SET_ITEM_OFF = 'SET_ITEM_OFF'
 RESET_MAP_ITEMS = 'RESET_MAP_ITEMS'
+ADD_ITEM_TO_BANK = 'ADD_ITEM_TO_BANK'
+RESET_BANK = 'RESET_BANK'
 
 
 
@@ -23,6 +25,8 @@ export const setCurItem = (item) => ({ type: SET_CUR_ITEM, item })
 export const addMap = (map) => ({ type: ADD_MAP, map })
 export const takeItemOff = (item) => ({type: SET_ITEM_OFF, item})
 export const turnOnItems = () => ({type: RESET_MAP_ITEMS})
+export const addVisitedItemToBank = (item) => ({type: ADD_ITEM_TO_BANK, item})
+export const resetBank = () => ({type: RESET_BANK})
 
 
 /* ------------------ reducer ------------------------ */
@@ -30,7 +34,8 @@ const initialMyAccountState = {
 	maps: [],
 	map: {},
 	userPersonalInfo: {},
-	curItem: ""
+	curItem: "",
+	itemBank: []
 }
 
 const myAccountReducer = (state = initialMyAccountState, action) => {
@@ -57,6 +62,12 @@ const myAccountReducer = (state = initialMyAccountState, action) => {
 				itemKeys = Object.keys(newState.map.items)
 				itemKeys.map((item) => newState.map.items[item] = true)
 			}
+			return newState
+		case ADD_ITEM_TO_BANK:
+			newState.itemBank.push(action.item)
+			return newState
+		case RESET_BANK:
+			newState.itemBank = []
 			return newState
 		default:
 			return state;
@@ -134,5 +145,35 @@ export const resetMap = () => dispatch => {
 	dispatch(turnOnItems())
 
 }
+
+export const resetItemBank = () => dispatch => {
+	dispatch(resetBank())
+}
+
+export const addItemToBank = (imagePath, key) => dispatch => {
+	let itemPromise = readItemInfo(key)
+	let item = {
+		'image': imagePath,
+		'name': "",
+		'address': "",
+		'date': ""
+	}
+	item.date = new Date()
+	itemPromise.then(data=> {
+		item.name = data.name
+		return axios.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${data.latitude},${data.longitude}&sensor=true`)
+	})
+	.then((data)=>{
+		if(data.data){
+			if(data.data.results){
+				item.address = data.data.results[0].formatted_address
+			}
+		}
+		dispatch(addVisitedItemToBank(item))
+		
+	})
+	
+	
+} 
 
 export default myAccountReducer;
