@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { AppRegistry, StyleSheet, Text, View, Button, Image, Picker } from 'react-native'
 import store from '../../store'
 import { logout } from '../reducers/authReducer'
+import styles from '../../stylesheet'
 import {setUserSelectedMap, fetchUserMaps, resetMap} from '../reducers/myAccountReducer'
 
 
@@ -27,6 +28,7 @@ const styles = StyleSheet.create({
   }
 
 });
+
 
 export default class MyAccount extends Component {
   constructor(props) {
