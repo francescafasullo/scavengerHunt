@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, View, Button, Image, Picker } from 'react-native'
+import { AppRegistry, StyleSheet, Text, View, Button, Image, Picker,ScrollView } from 'react-native'
 import store from '../../store'
 import { logout } from '../reducers/authReducer'
-import {setUserSelectedMap, fetchUserMaps, resetMap} from '../reducers/myAccountReducer'
+import {setUserSelectedMap, fetchUserMaps, resetMap, resetItemBank} from '../reducers/myAccountReducer'
 
 
 const styles = StyleSheet.create({
@@ -24,6 +24,11 @@ const styles = StyleSheet.create({
     color: '#000',
     padding: 10,
     margin: 40
+  },
+  image: {
+    width: 60,
+    height: 60,
+    justifyContent: 'center'
   }
 
 });
@@ -64,6 +69,7 @@ export default class MyAccount extends Component {
 
   resetMapItems() {
     store.dispatch(resetMap())
+    store.dispatch(resetItemBank())
   }
 
   render() {
@@ -72,6 +78,9 @@ export default class MyAccount extends Component {
 
     return (
       <View style={styles.container}>
+        <ScrollView
+        showsVerticalScrollIndicator={true}
+        >
         {userId ?
         <View>
 						<Text style={styles.points}>
@@ -97,7 +106,20 @@ export default class MyAccount extends Component {
             <Button style={styles.button} onPress={this.resetMapItems} title="RESET MAP PINS"/>
             <Button onPress={() => {this.logoutAndNavigate()}} title="Logout"/>
             <Button onPress={() => { this.props.navigation.navigate('NewSH') }} title="Create a new Scavenger Hunt" />
-
+            {(this.state.myAccount.itemBank) ? 
+              this.state.myAccount.itemBank.map((item) => (
+                <View>
+                  <Text style={styles.points}>
+                  {item.name+' '}
+                  {item.address+' '}
+                  {item.date+' '}
+                  </Text>
+                  <Image style={styles.image} source={require('../../public/pusheenMarker.png')}/>
+                </View>
+                )
+              )
+              : null
+            }
 				  </View>
           :
           <View>
@@ -106,6 +128,7 @@ export default class MyAccount extends Component {
 
           </View>
         }
+        </ScrollView>
       </View>
     )
   }

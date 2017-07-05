@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { AppRegistry, StyleSheet, Text, View, Dimensions, Button, Image } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
-import { setUserCurLocation } from '../reducers/myAccountReducer'
+import { setUserCurLocation, addItemToBank } from '../reducers/myAccountReducer'
 import Camera from 'react-native-camera'
 import CameraScreen from './Camera'
 import store from '../../store'
@@ -251,6 +251,7 @@ export default class PlayModeMap extends Component {
         //if exists - set it as the chosen item in the store
         if(itemOnMap){
           store.dispatch(setUserCurLocation(itemOnMap[0]))
+          store.dispatch(addItemToBank('../../public/pusheenMarker.png',itemOnMap[0]))
 
         }
         //if not exists - alert the user that he didn't press on any token

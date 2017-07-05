@@ -53,18 +53,7 @@ function newMap (mapName, description, location, userId) {
     var mapKey = database.ref('scavenger_hunt_map/').push().key
     var date = new Date()
     writeUserScavengerHuntMap(mapKey, mapName, description, location, date)
-
-    // var itemKeys = []
-    // for (i = 0; i < places.length; i++) {
-    //     itemKeys.push(database.ref('scavenger_hunt_items/').push().key)
-    //     writeUserScavengerHuntItem(itemKeys[i], places[i].title, places[i].coordinate.latitude, places[i].coordinate.longitude )
-    // }
-
     associateUserToMap(userId, mapKey)
-
-    // for (i = 0; i < itemKeys.length; i++) {
-    //     associateScavengerItemToMap(mapKey, itemKeys[i])
-    // }
 }
 
 function createItemsToDefaultMapDownTown() {
@@ -108,7 +97,13 @@ function createItemsToDefaultMapUpTown() {
 		'description': "A home coffee",
 		'image': "../public/restaurantPusheen.png"
 
-	}];
+	},
+  {
+    'coordinate': {'latitude': 40.774441,'longitude':-73.946303},
+    'title': "Yorkville Cafe",
+    'description': "A local coffee",
+    'image': "../public/restaurantPusheen.png"
+  }];
 
 	return places;
 
@@ -184,6 +179,17 @@ function readMapsItemsInfo(items){
   })
   .catch((error)=>{console.log(error)})
 }
+
+//read one item info
+function readItemInfo(itemKey){
+  return database.ref('/scavenger_hunt_items/' + itemKey).once('value')
+    .then((data) => {
+      return data.val()
+    })
+    .then((data) => {
+      return data
+    })
+  }
 
 // readingdata function
 
@@ -270,11 +276,11 @@ if(module === require.main){
 
 	//let userKey = createOneUser("jonny", "jjo@gmail.com", "123456");
 	// writeUserData("iIAz1Ht7TIO5vK0HPQQRaNjyYPv2", "jonny", "jjo@gmail.com",500,"url");
-	// let userKey = "iIAz1Ht7TIO5vK0HPQQRaNjyYPv2";
+	 let userKey = "iIAz1Ht7TIO5vK0HPQQRaNjyYPv2";
 	// //let places = createItemsToDefaultMapDownTown();
 	// //newMap("NYC down town trip", "restaurants and museum downtown", "NYC", places,userKey);
-	// places = createItemsToDefaultMapUpTown();
-	// newMap("NYC up town trip", "restaurants and cafe places uptown", "NYC", places,userKey);
+	 places = createItemsToDefaultMapUpTown();
+	 newMap("NYC up town trip", "restaurants and cafe places uptown", "NYC", places,userKey);
 
 
 
@@ -365,7 +371,8 @@ module.exports = {
   geoFire: geoFire,
   readUserMaps: readUserMaps,
   readUserInfo: readUserInfo,
-  readOneMap: readOneMap
+  readOneMap: readOneMap,
+  readItemInfo: readItemInfo
 }
 
 
