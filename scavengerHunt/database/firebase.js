@@ -55,17 +55,8 @@ function newMap (mapName, description, location, userId) {
     var date = new Date()
     writeUserScavengerHuntMap(mapKey, mapName, description, location, date)
 
-    // var itemKeys = []
-    // for (i = 0; i < places.length; i++) {
-    //     itemKeys.push(database.ref('scavenger_hunt_items/').push().key)
-    //     writeUserScavengerHuntItem(itemKeys[i], places[i].title, places[i].coordinate.latitude, places[i].coordinate.longitude )
-    // }
-
     associateUserToMap(userId, mapKey)
 
-    // for (i = 0; i < itemKeys.length; i++) {
-    //     associateScavengerItemToMap(mapKey, itemKeys[i])
-    // }
 }
 
 function createItemsToDefaultMapDownTown() {
@@ -116,7 +107,6 @@ function createItemsToDefaultMapUpTown() {
 }
 //////////////////////////////////////////////////////////////////////////////
 function writeUserScavengerHuntItem(key, name, description, latitude, longitude, imagePath){
-  console.log('writing item @@@@@@@@@ name', name)
 	database.ref('scavenger_hunt_items/' + key).set({
 		name: name,
 		latitude: latitude,
