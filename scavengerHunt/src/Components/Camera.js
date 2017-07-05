@@ -1,57 +1,57 @@
 import React, {Component} from 'react'
 import { AppRegistry, StyleSheet, Text, View, Dimensions, Image, Button} from 'react-native'
 import Camera from 'react-native-camera'
-import styles from '../../stylesheet' 
+import styles from '../../stylesheet'
 import store from '../../store'
 import { setUserCurLocation,takeItemOfMap } from '../reducers/myAccountReducer'
 import * as Animatable from 'react-native-animatable'
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width
-  },
-  capture: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    color: '#000',
-    padding: 10,
-    margin: 40
-  },
-  overlay: {
-    justifyContent: 'center',
-    top: 100,
-    left: 100,
-    width: 200,
-    height: 100
-  },
-  arDisplay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    flex: 1
-  }
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: '#F5FCFF',
+//   },
+//   welcome: {
+//     fontSize: 20,
+//     textAlign: 'center',
+//     margin: 10,
+//   },
+//   instructions: {
+//     textAlign: 'center',
+//     color: '#333333',
+//     marginBottom: 5,
+//   },
+//   preview: {
+//     flex: 1,
+//     justifyContent: 'flex-end',
+//     alignItems: 'center',
+//     height: Dimensions.get('window').height,
+//     width: Dimensions.get('window').width
+//   },
+//   capture: {
+//     flex: 0,
+//     backgroundColor: '#fff',
+//     borderRadius: 5,
+//     color: '#000',
+//     padding: 10,
+//     margin: 40
+//   },
+//   overlay: {
+//     justifyContent: 'center',
+//     top: 100,
+//     left: 100,
+//     width: 200,
+//     height: 100
+//   },
+//   arDisplay: {
+//     position: 'absolute',
+//     top: 0,
+//     left: 0,
+//     flex: 1
+//   }
+// });
 
 
 export default class CameraScreen extends Component {
@@ -89,7 +89,7 @@ export default class CameraScreen extends Component {
     this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState())
     })
-    
+
 
   }
 
@@ -118,12 +118,12 @@ export default class CameraScreen extends Component {
     return d
   }
 
-  
+
 
   TakeOfItemAndNavigateBack(){
     store.dispatch(setUserCurLocation(""))
     store.dispatch(takeItemOfMap(this.state.store.myAccount.curItem))
-    
+
 }
 
 
@@ -147,7 +147,7 @@ export default class CameraScreen extends Component {
                 style={styles.overlay}
                 source={require('../../public/pusheenSunglasses.png')}
                 resizeMode="contain"
-              > 
+              >
               </Animatable.Image>
               <Animatable.Text
               animation="slideInDown"
@@ -163,7 +163,7 @@ export default class CameraScreen extends Component {
       </View>
     );
   }
-  
+
 }
 
 
