@@ -11,28 +11,13 @@ import styles, { mapStyle } from '../../stylesheet'
 const {height, width} = Dimensions.get('window')
 
 
-const styles = StyleSheet.create({
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-     margin: 10,
-  },
-  map: {
-    width: width,
-    height: height,
-    alignSelf: 'center',
-  },
-  container: {
+/*
+container: {
     flex: 1,
     alignItems: 'center',
     backgroundColor: '#BFD8D2'
   },
-  marker: {
-    height: 100,
-    width: 200
-  }
-  
-})
+*/
 
 export default class PlayModeMap extends Component {
   constructor(props) {

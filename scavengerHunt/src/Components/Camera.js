@@ -1,57 +1,12 @@
 import React, {Component} from 'react'
-import { AppRegistry, StyleSheet, Text, View, Dimensions, Image, Button} from 'react-native'
+import { AppRegistry, StyleSheet, Text, View, Dimensions, Image, Button, TouchableHighlight} from 'react-native'
 import Camera from 'react-native-camera'
 import styles from '../../stylesheet' 
 import store from '../../store'
 import { setUserCurLocation,takeItemOfMap } from '../reducers/myAccountReducer'
 import * as Animatable from 'react-native-animatable'
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  preview: {
-    flex: 1,
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width
-  },
-  capture: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    color: '#000',
-    padding: 10,
-    margin: 40
-  },
-  overlay: {
-    justifyContent: 'center',
-    top: 100,
-    left: 100,
-    width: 200,
-    height: 100
-  },
-  arDisplay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    flex: 1
-  }
-});
+
 
 
 export default class CameraScreen extends Component {
@@ -140,6 +95,7 @@ export default class CameraScreen extends Component {
            >
 
           <View style={styles.arDisplay}>
+          <View>
             <Animatable.Image
                 animation="slideInDown"
                 iterationCount={10}
@@ -149,16 +105,26 @@ export default class CameraScreen extends Component {
                 resizeMode="contain"
               > 
               </Animatable.Image>
+              </View>
+              <View style={styles.view_no_background}>
               <Animatable.Text
               animation="slideInDown"
               iterationCount={10}
               direction="alternate"
+              style={styles.arText}
               >
-              You Have Collected a Pusheen
+              You Have Collected {"\n"}a Pusheen
             </Animatable.Text>
+            </View>
           </View>
-          <Button style={styles.capture} onPress={this.takePicture} title="CAPTURE"/>
-          <Button style={styles.capture} onPress={this.TakeOfItemAndNavigateBack} title="MAP"/>
+          <View style={styles.camera_buttons_view}>
+          <View style={styles.capture}>
+          <Button style={styles.camera_button} onPress={this.takePicture} title="CAPTURE" />
+          </View>
+          <View style={styles.capture}>
+          <Button style={styles.camera_button} onPress={this.TakeOfItemAndNavigateBack} title="MAP"/>
+          </View>
+          </View>
         </Camera>
       </View>
     );
@@ -166,4 +132,9 @@ export default class CameraScreen extends Component {
   
 }
 
+
+/*
+<Button style={styles.capture} onPress={this.takePicture} title="CAPTURE"/>
+          <Button style={styles.capture} onPress={this.TakeOfItemAndNavigateBack} title="MAP"/>
+*/
 //AppRegistry.registerComponent('scavengerHunt', () => CameraScreen);

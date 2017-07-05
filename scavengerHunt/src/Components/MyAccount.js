@@ -6,28 +6,7 @@ import styles from '../../stylesheet'
 import {setUserSelectedMap, fetchUserMaps, resetMap} from '../reducers/myAccountReducer'
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F7CAC9'
-  },
-  points: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  button: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    color: '#000',
-    padding: 10,
-    margin: 40
-  }
 
-});
 
 
 export default class MyAccount extends Component {
@@ -73,17 +52,29 @@ export default class MyAccount extends Component {
     let index = 1;
 
     return (
-      <View style={styles.container}>
+      <View style={styles.myAccount_container}>
+      <Text style={styles.myAccount_title}>My Account</Text>
         {userId ?
         <View>
-						<Text style={styles.points}>
-						user name: {this.state.myAccount.userPersonalInfo.username + '\n'}
-            email:     {this.state.myAccount.userPersonalInfo.email + '\n'}
-            score:    {this.state.myAccount.userPersonalInfo.score + '\n'}
+        <View style={{flexDirection: 'row'}}>
+						<Text style={styles.info_label}>
+						user name:
             </Text>
-            
+            <Text style={styles.points}>
+             {' ' + this.state.myAccount.userPersonalInfo.username }
+             </Text>
+            </View>
+            <View style={{flexDirection: 'row'}}>
+             <Text style={styles.info_label}>
+            email: 
+            </Text>
+            <Text style={styles.points}>
+                {' '+ this.state.myAccount.userPersonalInfo.email + '\n'}
+            </Text>
+            </View>
+
             {(this.state.myAccount.map) ?
-              <Text>chosen map: {this.state.myAccount.map.mapname}</Text> : null }
+              <Text style={styles.info_label}>chosen map: {this.state.myAccount.map.mapname}</Text> : null }
             {(this.state.myAccount.maps.length) ?
             <Picker
             selectedValue={this.state.myAccount.maps}
@@ -96,10 +87,11 @@ export default class MyAccount extends Component {
             }
             </Picker>
             : null }
-            <Button style={styles.button} onPress={this.resetMapItems} title="RESET MAP PINS"/>
+            <View style={styles.myAccount_buttons_view }>
+            <Button onPress={this.resetMapItems} title="RESET MAP PINS"/>
             <Button onPress={() => {this.logoutAndNavigate()}} title="Logout"/>
             <Button onPress={() => { this.props.navigation.navigate('NewSH') }} title="Create a new Scavenger Hunt" />
-
+            </View>
 				  </View>
           :
           <View>
