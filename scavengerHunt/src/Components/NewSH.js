@@ -86,8 +86,6 @@ export default class NewSH extends Component {
 
 	saveSH = (mapName, description, location, userId) => {
     store.dispatch(newMap(mapName, description, location, userId))
-		console.log("user state in newMap", this.state.user)
-
 	}
 
 	clear = () => {
@@ -127,16 +125,9 @@ export default class NewSH extends Component {
         />
 				<Button onPress={() => {
 					this.saveSH(this.state.mapName, this.state.description, this.state.location, this.state.userId)
+          this.props.navigation.navigate('AddItems')
 				}}
 					title="Save Map" />
-				<MapView
-          provider={PROVIDER_GOOGLE}
-          style={styles.map}
-          region={this.state.mapRegion}
-          onRegionChange={this.onRegionChange}
-          showsBuildings
-        >
-        </MapView>
 			</View>
 		)
 	}
