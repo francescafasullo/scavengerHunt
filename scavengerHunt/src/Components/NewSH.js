@@ -6,6 +6,107 @@ import { newMap, setUserSelectedMap } from '../reducers/myAccountReducer'
 
 const { height, width } = Dimensions.get('window')
 
+const mapStyle =
+	[
+		{
+			"featureType": "road",
+			"stylers": [
+				{
+					"hue": "#5e00ff"
+				},
+				{
+					"saturation": -79
+				}
+			]
+		},
+		{
+			"featureType": "poi",
+			"stylers": [
+				{
+					"saturation": -78
+				},
+				{
+					"hue": "#6600ff"
+				},
+				{
+					"lightness": -47
+				},
+				{
+					"visibility": "off"
+				}
+			]
+		},
+		{
+			"featureType": "road.local",
+			"stylers": [
+				{
+					"lightness": 22
+				}
+			]
+		},
+		{
+			"featureType": "landscape",
+			"stylers": [
+				{
+					"hue": "#6600ff"
+				},
+				{
+					"saturation": -11
+				}
+			]
+		},
+		{},
+		{},
+		{
+			"featureType": "water",
+			"stylers": [
+				{
+					"saturation": -65
+				},
+				{
+					"hue": "#1900ff"
+				},
+				{
+					"lightness": 8
+				}
+			]
+		},
+		{
+			"featureType": "road.local",
+			"stylers": [
+				{
+					"weight": 1.3
+				},
+				{
+					"lightness": 30
+				}
+			]
+		},
+		{
+			"featureType": "transit",
+			"stylers": [
+				{
+					"visibility": "simplified"
+				},
+				{
+					"hue": "#5e00ff"
+				},
+				{
+					"saturation": -16
+				}
+			]
+		},
+		{
+			"featureType": "transit.line",
+			"stylers": [
+				{
+					"saturation": -72
+				}
+			]
+		},
+		{}
+	]
+
 const styles = StyleSheet.create({
 	welcome: {
 		fontSize: 20,
@@ -84,8 +185,8 @@ export default class NewSH extends Component {
 		})
 	}
 
-	saveSH = (mapName, description, location, places, userId) => {
-		store.dispatch(newMap(mapName, description, location, places, userId))
+	saveSH = (mapName, mapRegion, description, location, places, userId) => {
+		store.dispatch(newMap(mapName, mapRegion, description, location, places, userId))
 		console.log("user state in newMap", this.state.user)
 
 	}
@@ -126,14 +227,15 @@ export default class NewSH extends Component {
 					onChangeText={this.updateLocation}
 				/>
 				<Button onPress={() => {
-					this.saveSH(this.state.mapName, this.state.description, this.state.location, this.state.places, this.state.userId)
+					this.saveSH(this.state.mapName, this.state.mapRegion, this.state.description, this.state.location, this.state.places, this.state.userId)
 					this.props.navigation.navigate('SavedConf')
 				}}
 					title="Save Map" />
-					<Button onPress={this.clear} title="Clear all markers" />
+				<Button onPress={this.clear} title="Clear all markers" />
 				<MapView
 					onPress={this.addMarker}
 					provider={PROVIDER_GOOGLE}
+					customMapStyle={mapStyle}
 					style={styles.map}
 					region={this.state.mapRegion}
 					onRegionChange={this.onRegionChange}
@@ -143,6 +245,7 @@ export default class NewSH extends Component {
 						(this.state.places || []).map(
 							(place, index) =>
 								<MapView.Marker
+									image={require('../../public/pusheenMarker.png')}
 									key={index}
 									coordinate={place.coordinate}
 									title={place.title}

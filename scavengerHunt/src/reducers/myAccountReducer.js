@@ -82,10 +82,10 @@ export const fetchUserPersonalInfo = (userId) => dispatch => {
 
 }
 
-export const newMap = (mapName, description, location, places, userId) => dispatch => {
+export const newMap = (mapName, mapRegion, description, location, places, userId) => dispatch => {
 	var mapKey = database.ref('scavenger_hunt_map/').push().key
 	var date = new Date()
-	writeUserScavengerHuntMap(mapKey, mapName, description, location, date)
+	writeUserScavengerHuntMap(mapKey, mapName, mapRegion, description, location, date)
 	var itemKeys = []
 	for (i = 0; i < places.length; i++) {
 		itemKeys.push(database.ref('scavenger_hunt_items/').push().key)

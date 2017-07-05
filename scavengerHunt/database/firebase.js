@@ -30,9 +30,10 @@ function writeUserData(userId, name, email, score, profile_picURL) {
 }
 
 
-function writeUserScavengerHuntMap(key, name, description, location, date){
+function writeUserScavengerHuntMap(key, name, mapRegion, description, location, date){
   database.ref('scavenger_hunt_map/' + key).set({
     mapname: name,
+    mapRegion: mapRegion,
     description: description,
 	  location: location,
     date: date

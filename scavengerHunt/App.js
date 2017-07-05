@@ -24,6 +24,7 @@ import PlayModeMap from './src/Components/PlayModeMap'
 import NewSH from './src/Components/NewSH'
 import SavedConf from './src/Components/SavedConf'
 import Map from './src/Components/Map'
+import Explore from './src/Components/Explore'
 
 const scavengerHuntRouter = StackNavigator({
   Home: {
@@ -67,7 +68,10 @@ const scavengerHuntRouter = StackNavigator({
   },
   Map: {
     screen: Map
-  }
+  },
+  Explore: {
+    screen: Explore
+  },
 })
 
 const Tabs = TabNavigator({
@@ -75,7 +79,7 @@ const Tabs = TabNavigator({
     screen: scavengerHuntRouter,
     navigationOptions: {
       tabBarLabel: 'Home',
-      tabBarIcon: ({tintColor}) =>  <Icon name="home" size={26} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Icon name="home" size={26} color={tintColor} />
 
     }
 
