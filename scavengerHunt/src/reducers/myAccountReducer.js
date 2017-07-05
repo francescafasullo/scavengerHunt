@@ -160,14 +160,12 @@ export const addItemToBank = (imagePath, key) => dispatch => {
 	}
 	item.date = new Date()
 	itemPromise.then(data=> {
-		console.log('in ad item to bank item', data)
 		item.name = data.name
 		return axios.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${data.latitude},${data.longitude}&sensor=true`)
 	})
 	.then((data)=>{
 		if(data.data){
 			if(data.data.results){
-				console.log('addresses',data.data.results)
 				item.address = data.data.results[0].formatted_address
 			}
 		}
