@@ -15,6 +15,7 @@
     "react-native": "0.44.0",
     "react-native-camera": "git+https://github.com/lwansbrough/react-native-camera.git",
     "react-native-elements": "^0.13.0",
+    "react-native-google-places-autocomplete": "^1.2.12",
     "react-native-maps": ">=0.12.4",
     "react-native-vector-icons": "^4.2.0",
     "react-navigation": "^1.0.0-beta.10",
