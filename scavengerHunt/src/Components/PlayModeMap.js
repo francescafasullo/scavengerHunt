@@ -1,16 +1,46 @@
 import React, {Component} from 'react'
 import { AppRegistry, StyleSheet, Text, View, Dimensions, Button, Image } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
+import { setUserCurLocation } from '../reducers/myAccountReducer'
+import Camera from 'react-native-camera'
+import CameraScreen from './Camera'
+import store from '../../store'
 const geoFire = require('../../database/firebase.js').geoFire
 import styles, { mapStyle } from '../../stylesheet'
 
 const {height, width} = Dimensions.get('window')
+
+
+const styles = StyleSheet.create({
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+     margin: 10,
+  },
+  map: {
+    width: width,
+    height: height,
+    alignSelf: 'center',
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: '#BFD8D2'
+  },
+  marker: {
+    height: 100,
+    width: 200
+  }
+  
+})
 
 export default class PlayModeMap extends Component {
   constructor(props) {
     super(props)
     this.updateKeys = this.updateKeys.bind(this)
     this.onRegionChange = this.onRegionChange.bind(this)
+    this.checkTokenDistance = this.checkTokenDistance.bind(this)
+    this.findItemFromUserCureMap = this.findItemFromUserCureMap.bind(this)
     this.state = {
       latitutde: null,
       longitude: null,
@@ -43,7 +73,6 @@ export default class PlayModeMap extends Component {
             radius: 0.5
           })
           this.geoQuery.on('key_entered', (key, location, distance) => {
-            console.log('these are keys', this.state.keys)
             const keys = {...this.state.keys, [key]: {location}}
             this.setState({keys: withDirectionAndDistance(keys, position.coords)}, console.log)
           })
@@ -63,10 +92,14 @@ export default class PlayModeMap extends Component {
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 500, maximumAge: 1000, distanceFilter: 10 }
     )
+    this.unsubscribe = store.subscribe(() => {
+      this.setState(store.getState())
+    });
   }
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchId)
+    this.unsubscribe()
   }
 
   updateKeys(position) {
@@ -84,9 +117,72 @@ export default class PlayModeMap extends Component {
     });
   }
 
+  findItemFromUserCureMap(key){
+    let itemOnMap = null
+    let itemKeys;
+    //checks if there is a current map on the state
+
+    if(this.state.myAccount.map){
+      //checks there are items on the map
+      if(this.state.myAccount.map.items){
+        itemKeys = Object.keys(this.state.myAccount.map.items)
+        itemOnMap = itemKeys.filter((item) => {
+          return (item === key)
+        })
+      }
+    }
+    return itemOnMap
+
+  }
+
+  checkTokenDistance(evt,key){
+    const coordinate = {
+      'latitude': this.state.keys[key].location[0],
+      'longitude': this.state.keys[key].location[1]
+    }
+    if(!coordinate)
+      alert('coordinates were not captured,please try again');
+    else
+    {
+      let distanceFromUser = getDistance(this.state.latitude,this.state.longitude,coordinate.latitude,coordinate.longitude)
+      if(distanceFromUser <= 0.1)
+      { 
+        //find the item the user pressed on in the user's map
+        let itemOnMap = this.findItemFromUserCureMap(key)
+        //if exists - set it as the chosen item in the store
+        if(itemOnMap){
+          store.dispatch(setUserCurLocation(itemOnMap[0]))
+
+        }
+        //if not exists - alert the user that he didn't press on any token
+        else{
+          alert("there is no such location on your map, please get closer to a location on your map")
+        }
+        
+      }
+      else
+      {
+        alert("you are not close enough to your token...get closer and try again");
+      }
+    }
+    
+
+  }
+
+  
+
   render() {
+    let curmap,keyExist=true
+    const itemKey = (this.state.myAccount ? this.state.myAccount.curItem : null)
     return (
-      <View style={styles.pcontainer}>
+
+      <View style={styles.container}>
+      {itemKey ?
+        <View>
+        <CameraScreen>
+        </CameraScreen>
+        </View>
+        :
         <MapView
           provider={PROVIDER_GOOGLE}
           customMapStyle={mapStyle}
@@ -98,16 +194,36 @@ export default class PlayModeMap extends Component {
           showsBuildings
         >
         { Object.keys(this.state.keys).length > 0 ? Object.keys(this.state.keys).map((key) => {
+          curmap = (this.state.myAccount ? this.state.myAccount.map : null)
+          if(curmap){
+            if(curmap.items){
+              keyExist = curmap.items[key];
+            }
+
+          }
+          if(keyExist){
           return (
-              <MapView.Marker
-                coordinate={{latitude: this.state.keys[key].location[0], longitude: this.state.keys[key].location[1]}}
-                image={require('../../public/pusheenMarker.png')}
-              />
+            
+            <MapView.Marker
+              coordinate={{latitude: this.state.keys[key].location[0], longitude: this.state.keys[key].location[1]}}
+              image={require('../../public/pusheenMarker.png')}
+              onPress = {(e) => this.checkTokenDistance(e,key)}
+            />
+            
+            
             )
+          }
+          else{
+            return null
+
+          } 
           }) : null
         }
         </MapView>
+
+      }
       </View>
+      
     )
   }
 
@@ -154,3 +270,5 @@ function placeWithDirectionAndDistance(place, {latitude, longitude}) {
                           placeLat, placeLng),
   }
 }
+
+
