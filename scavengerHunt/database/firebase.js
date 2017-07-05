@@ -49,18 +49,22 @@ function createOneUser(username, email, password){
 
 
 }
-function newMap (mapName, description, location,places, userId) {
+function newMap (mapName, description, location, userId) {
     var mapKey = database.ref('scavenger_hunt_map/').push().key
     var date = new Date()
-    var itemKey
     writeUserScavengerHuntMap(mapKey, mapName, description, location, date)
-    places.forEach((place)=>{
-        itemKey = database.ref('scavenger_hunt_items/').push().key
-        writeUserScavengerHuntItem(itemKey, place.title, place.coordinate.latitude,place.coordinate.longitude)
-        associateScavengerItemToMap(mapKey,itemKey)
-    })
+
+    // var itemKeys = []
+    // for (i = 0; i < places.length; i++) {
+    //     itemKeys.push(database.ref('scavenger_hunt_items/').push().key)
+    //     writeUserScavengerHuntItem(itemKeys[i], places[i].title, places[i].coordinate.latitude, places[i].coordinate.longitude )
+    // }
 
     associateUserToMap(userId, mapKey)
+
+    // for (i = 0; i < itemKeys.length; i++) {
+    //     associateScavengerItemToMap(mapKey, itemKeys[i])
+    // }
 }
 
 function createItemsToDefaultMapDownTown() {
