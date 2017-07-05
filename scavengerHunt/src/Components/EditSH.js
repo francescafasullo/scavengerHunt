@@ -20,4 +20,3 @@ export default class EditSH extends Component {
     }
 }
 
-//AppRegistry.registerComponent('scavengerHunt', () => EditSHScreen)
