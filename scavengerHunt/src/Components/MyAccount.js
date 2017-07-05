@@ -6,33 +6,33 @@ import {setUserSelectedMap, fetchUserMaps, resetMap, resetItemBank} from '../red
 import styles from '../../stylesheet'
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F7CAC9'
-  },
-  points: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  button: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    color: '#000',
-    padding: 10,
-    margin: 40
-  },
-  image: {
-    width: 60,
-    height: 60,
-    justifyContent: 'center'
-  }
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: '#F7CAC9'
+//   },
+//   points: {
+//     fontSize: 20,
+//     textAlign: 'center',
+//     margin: 10,
+//   },
+//   button: {
+//     flex: 0,
+//     backgroundColor: '#fff',
+//     borderRadius: 5,
+//     color: '#000',
+//     padding: 10,
+//     margin: 40
+//   },
+//   image: {
+//     width: 60,
+//     height: 60,
+//     justifyContent: 'center'
+//   }
 
-});
+// });
 
 
 export default class MyAccount extends Component {
@@ -90,7 +90,7 @@ export default class MyAccount extends Component {
             email:     {this.state.myAccount.userPersonalInfo.email + '\n'}
             score:    {this.state.myAccount.userPersonalInfo.score + '\n'}
             </Text>
-            
+
             {(this.state.myAccount.map) ?
               <Text>chosen map: {this.state.myAccount.map.mapname}</Text> : null }
             {(this.state.myAccount.maps.length) ?
@@ -108,7 +108,7 @@ export default class MyAccount extends Component {
             <Button style={styles.button} onPress={this.resetMapItems} title="RESET MAP PINS"/>
             <Button onPress={() => {this.logoutAndNavigate()}} title="Logout"/>
             <Button onPress={() => { this.props.navigation.navigate('NewSH') }} title="Create a new Scavenger Hunt" />
-            {(this.state.myAccount.itemBank) ? 
+            {(this.state.myAccount.itemBank) ?
               this.state.myAccount.itemBank.map((item) => (
                 <View>
                   <Text style={styles.points}>
