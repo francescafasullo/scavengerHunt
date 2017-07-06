@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { AppRegistry, StyleSheet, Text, TextInput, View, Button, Image, Picker, TouchableOpacity, Dimensions, ScrollView } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import store from '../../store'
-import { newMap, setUserSelectedMap, newItem } from '../reducers/myAccountReducer'
+import { newMap, setUserSelectedMap, newItem, fetchCurrentMapItems } from '../reducers/myAccountReducer'
 
 const {height, width} = Dimensions.get('window')
 
@@ -57,6 +57,7 @@ export default class AddItems extends Component {
     this.updatePinDescription = this.updatePinDescription.bind(this)
     this.savePlacesToSH = this.savePlacesToSH.bind(this)
     this.pickImage = this.pickImage.bind(this)
+    this.getMapItems = this.getMapItems.bind(this)
     this.state = {
       user: user,
       places: [],
@@ -76,8 +77,15 @@ export default class AddItems extends Component {
       selectedImage: pusheenImages[6]
     }
   }
-
   componentDidMount() {
+    this.unsubscribe = store.subscribe(() => {
+      this.setState(store.getState());
+    })
+    this.getMapItems(this.state.user.map.key)
+  }
+
+  getMapItems(mapId) {
+    store.dispatch(fetchCurrentMapItems(mapId))
   }
 
   addMarker(evt) {
@@ -93,7 +101,6 @@ export default class AddItems extends Component {
     let pins = this.state.places.slice()
     pins.push(this.state.selectedPlace)
     this.setState({ places: pins, selectedPlace: {} })
-    console.log('addedPins', this.state.places)
   }
 
   updatePinDescription(text) {
@@ -212,7 +219,6 @@ export default class AddItems extends Component {
   }
 
   render() {
-    console.log('state !!!!@@@@####$$$$', this.state)
     return (
       <View style={styles.container}>
         <ScrollView
@@ -264,6 +270,7 @@ export default class AddItems extends Component {
                 </View>
           }
           <MapView
+            fitToElements
             provider={PROVIDER_GOOGLE}
             style={styles.map}
             region={this.state.mapRegion}
@@ -287,6 +294,18 @@ export default class AddItems extends Component {
                  />
              ) : null
            }
+           {
+              this.state.user.items.length > 0 && !this.state.selectedPlace.title ? this.state.user.items.map((item) => {
+                return (
+                  <MapView.Marker
+                   coordinate={{latitude: item.latitude, longitude: item.longitude}}
+                   title={item.title}
+                   description={item.description}
+                   onPress={this.markerDescription}
+                  />
+                )
+              })
+            : null }
           </MapView>
           </View>
         </ScrollView>
@@ -294,3 +313,99 @@ export default class AddItems extends Component {
     )
   }
 }
+
+export const pickImage = (imagePath) => {
+    switch(imagePath) {
+      case '../../public/djPusheen.png':
+        return (
+          <Image
+            source={require('../../public/djPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/iceCreamPusheen.png':
+        return (
+          <Image
+            source={require('../../public/iceCreamPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/laptopPusheen.png':
+        return (
+          <Image
+            source={require('../../public/laptopPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/mermaidPusheen.png':
+        return (
+          <Image
+            source={require('../../public/mermaidPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/museumPusheen.png':
+        return (
+          <Image
+            source={require('../../public/museumPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/noodlePusheen.png':
+        return (
+          <Image
+            source={require('../../public/noodlePusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/pusheen.png':
+        return (
+          <Image
+            source={require('../../public/pusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/pusheenSunglasses.png':
+        return (
+          <Image
+            source={require('../../public/pusheenSunglasses.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/restaurantPusheen.png':
+        return (
+          <Image
+            source={require('../../public/restaurantPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/scooterPusheen.png':
+        return (
+          <Image
+            source={require('../../public/scooterPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/unicornPusheen.png':
+        return (
+          <Image
+            source={require('../../public/unicornPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+    }
+  }
+
+
+

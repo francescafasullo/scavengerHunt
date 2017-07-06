@@ -180,6 +180,7 @@ function readMapsItemsInfo(items) {
   let keys = Object.keys(items)
   let res = keys.map((key) => {
     return database.ref('/scavenger_hunt_items/' + key).once('value')
+
   });
   return Promise.all(res).then (values => {
     let itemInfoArr = values.map(item => {
