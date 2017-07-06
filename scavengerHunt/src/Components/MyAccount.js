@@ -100,8 +100,8 @@ export default class MyAccount extends Component {
             : null }
             <View style={styles.myAccount_buttons_view }>
             <Button buttonStyle={styles.myAccount_button} onPress={this.resetMapItems} title="RESET MAP PINS" />
-            <Button buttonStyle={styles.myAccount_button} onPress={() => {this.logoutAndNavigate()}} title="Logout"/>
             <Button buttonStyle={styles.myAccount_button} onPress={() => { this.props.navigation.navigate('NewSH') }} title="Create a new Scavenger Hunt" />
+            <Button buttonStyle={styles.myAccount_button} onPress={() => {this.logoutAndNavigate()}} title="Logout"/>
             </View>
             <View style={styles.myAccount_bank_list_view}>
             <Text style={styles.info_label}>Places you have been:</Text>
@@ -126,7 +126,7 @@ export default class MyAccount extends Component {
           :
           <View>
             <Text style={styles.points}>you are not logged in </Text>
-            <Button onPress={() => { this.props.navigation.navigate('SignInSignUp') }} title="Go To Login" />
+            <Button buttonStyle={styles.myAccount_button} onPress={() => { this.props.navigation.navigate('SignInSignUp') }} title="Go To Login" />
 
           </View>
         }
