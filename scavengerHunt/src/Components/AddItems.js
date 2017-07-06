@@ -294,3 +294,99 @@ export default class AddItems extends Component {
     )
   }
 }
+
+export const pickImage = (imagePath) => {
+    switch(imagePath) {
+      case '../../public/djPusheen.png':
+        return (
+          <Image
+            source={require('../../public/djPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/iceCreamPusheen.png':
+        return (
+          <Image
+            source={require('../../public/iceCreamPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/laptopPusheen.png':
+        return (
+          <Image
+            source={require('../../public/laptopPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/mermaidPusheen.png':
+        return (
+          <Image
+            source={require('../../public/mermaidPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/museumPusheen.png':
+        return (
+          <Image
+            source={require('../../public/museumPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/noodlePusheen.png':
+        return (
+          <Image
+            source={require('../../public/noodlePusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/pusheen.png':
+        return (
+          <Image
+            source={require('../../public/pusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/pusheenSunglasses.png':
+        return (
+          <Image
+            source={require('../../public/pusheenSunglasses.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/restaurantPusheen.png':
+        return (
+          <Image
+            source={require('../../public/restaurantPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/scooterPusheen.png':
+        return (
+          <Image
+            source={require('../../public/scooterPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+      case '../../public/unicornPusheen.png':
+        return (
+          <Image
+            source={require('../../public/unicornPusheen.png')}
+            style={styles.image}
+          />
+        )
+        break
+    }
+  }
+
+
+

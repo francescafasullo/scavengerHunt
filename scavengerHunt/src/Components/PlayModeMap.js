@@ -7,6 +7,7 @@ import CameraScreen from './Camera'
 import store from '../../store'
 const geoFire = require('../../database/firebase.js').geoFire
 import styles, { mapStyle } from '../../stylesheet'
+import { readItemInfo } from '../../database/firebase'
 
 const {height, width} = Dimensions.get('window')
 
@@ -20,6 +21,7 @@ export default class PlayModeMap extends Component {
     this.onRegionChange = this.onRegionChange.bind(this)
     this.checkTokenDistance = this.checkTokenDistance.bind(this)
     this.findItemFromUserCureMap = this.findItemFromUserCureMap.bind(this)
+    this.getItemImage = this.getItemImage.bind(this)
     this.state = {
       latitutde: null,
       longitude: null,
@@ -27,7 +29,8 @@ export default class PlayModeMap extends Component {
       keys: {},
       mapRegion: null,
       lastLat: null,
-      lastLong: null
+      lastLong: null,
+      itemImage: ""
     }
   }
 
@@ -131,7 +134,10 @@ export default class PlayModeMap extends Component {
         //if exists - set it as the chosen item in the store
         if(itemOnMap){
           store.dispatch(setUserCurLocation(itemOnMap[0]))
-          store.dispatch(addItemToBank('../../public/pusheenMarker.png',itemOnMap[0]))
+          store.dispatch(addItemToBank(itemOnMap[0])) 
+          let image = this.getItemImage(itemOnMap[0])
+          image.then(data=> {this.setState({itemImage: data})})
+          
 
         }
         //if not exists - alert the user that he didn't press on any token
@@ -149,6 +155,16 @@ export default class PlayModeMap extends Component {
 
   }
 
+  getItemImage(itemKey){
+      console.log('get image',itemKey )
+      let itemPromise = readItemInfo(itemKey)
+       return itemPromise.then(data=> {
+        return data.imagePath
+    
+      })
+    
+
+  }
 
 
   render() {
@@ -159,7 +175,7 @@ export default class PlayModeMap extends Component {
       <View style={styles.container}>
       {itemKey ?
         <View>
-        <CameraScreen>
+        <CameraScreen image={this.state.itemImage}>
         </CameraScreen>
         </View>
         :

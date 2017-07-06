@@ -4,6 +4,7 @@ import store from '../../store'
 import { logout } from '../reducers/authReducer'
 import {setUserSelectedMap, fetchUserMaps, resetMap, resetItemBank} from '../reducers/myAccountReducer'
 import styles from '../../stylesheet'
+import { pickImage } from './AddItems'
 
 
 // const styles = StyleSheet.create({
@@ -124,7 +125,7 @@ export default class MyAccount extends Component {
                   {item.address+' '}
                   {item.date+' '}
                   </Text>
-                  <Image style={styles.image} source={require('../../public/pusheenMarker.png')}/>
+                  {pickImage(item.image)}
                 </View>
                 )
               )

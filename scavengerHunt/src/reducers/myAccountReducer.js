@@ -164,10 +164,9 @@ export const resetItemBank = () => dispatch => {
 	dispatch(resetBank())
 }
 
-export const addItemToBank = (imagePath, key) => dispatch => {
+export const addItemToBank = (key) => dispatch => {
 	let itemPromise = readItemInfo(key)
 	let item = {
-		'image': imagePath,
 		'name': "",
 		'address': "",
 		'date': ""
@@ -175,6 +174,7 @@ export const addItemToBank = (imagePath, key) => dispatch => {
 	item.date = new Date()
 	itemPromise.then(data=> {
 		item.name = data.name
+		item.image = data.imagePath
 		return axios.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${data.latitude},${data.longitude}&sensor=true`)
 	})
 	.then((data)=>{
