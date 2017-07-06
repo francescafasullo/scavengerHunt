@@ -19,6 +19,7 @@
     "react-native-double-click": "^1.0.3",
     "react-native-elements": "^0.13.0",
     "react-native-maps": ">=0.12.4",
+    "react-native-material-design": "^0.3.7",
     "react-native-vector-icons": "^4.2.0",
     "react-navigation": "^1.0.0-beta.10",
     "redux": "^3.7.1",
