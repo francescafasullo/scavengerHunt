@@ -86,7 +86,6 @@ function createItemsToDefaultMapDownTown() {
 
 	return places;
 
-
 }
 
 function createItemsToDefaultMapUpTown() {
@@ -281,6 +280,7 @@ function readUserInfo(userId) {
 }
 
 
+
 if(module === require.main){
 
 	//seeding scavenger hunt items
@@ -339,6 +339,7 @@ if(module === require.main){
     '7': [40.707258, -74.0103563999999],
     '8': [40.7076346, -74.0107747],
     '9': [40.8010717, -73.93807850000002],
+
     '10': [40.7761098, -73.951832],
     '-KoIDM9yOe00NT7y5TBx': [40.7052066, -74.0103288999999],
     '-KoIDMA-5Le9I808SRJg': [40.7039915,-74.0110917],
@@ -346,6 +347,7 @@ if(module === require.main){
     '-KoIDMA1dOlttfWTFPc-': [40.705076, -74.00916]
   }).then(function() {
   }, function(error) {
+
     console.log('Error: ' + error)
   })
 

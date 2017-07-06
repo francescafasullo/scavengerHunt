@@ -97,11 +97,11 @@ export default class MyAccount extends Component {
         showsVerticalScrollIndicator={true}
         >
         {userId ?
-        <View>
-						<Text style={styles.points}>
-						user name: {this.state.myAccount.userPersonalInfo.username + '\n'}
-            email:     {this.state.myAccount.userPersonalInfo.email + '\n'}
-            score:    {this.state.myAccount.userPersonalInfo.score + '\n'}
+          <View>
+            <Text style={styles.points}>
+              user name: {this.state.myAccount.userPersonalInfo.username + '\n'}
+              email:     {this.state.myAccount.userPersonalInfo.email + '\n'}
+              score:    {this.state.myAccount.userPersonalInfo.score + '\n'}
             </Text>
 
 
@@ -145,6 +145,7 @@ export default class MyAccount extends Component {
               : null
             }
 				  </View>
+
           :
           <View>
             <Text style={styles.points}>you are not logged in </Text>
