@@ -9,6 +9,7 @@ import {Button, List, ListItem} from 'react-native-elements'
 
 
 
+
 export default class MyAccount extends Component {
   constructor(props) {
     super(props)
@@ -115,13 +116,8 @@ export default class MyAccount extends Component {
               <List containerStyle={{marginBottom: 20}}>
               {
               this.state.myAccount.itemBank.map((item) => (
-                <ListItem
-      
-                  roundAvatar
-                  title={item.name+' '}
-                  subtitle={item.address+' '+item.date}
-                  avatar={require('../../public/pusheenMarker.png')}
-                  />
+                pickAvatarImage(item.image,item.name,item.address,item.date)
+
                 )
               )
             }
@@ -143,3 +139,119 @@ export default class MyAccount extends Component {
     )
   }
 }
+
+//a function that converts input image path to am AnimatableImage with that path
+export const pickAvatarImage = (imagePath,name,address,date) => {
+    switch(imagePath) {
+      case '../../public/djPusheen.png':
+        return (
+          <ListItem
+            roundAvatar
+            title={name+' '}
+            subtitle={address+' '+date}
+            avatar={require('../../public/djPusheen.png')}
+            />
+        )
+        break
+      case '../../public/iceCreamPusheen.png':
+        return (
+          <ListItem
+            roundAvatar
+            title={name+' '}
+            subtitle={address+' '+date}
+            avatar={require('../../public/iceCreamPusheen.png')}
+            />
+        )
+        break
+      case '../../public/laptopPusheen.png':
+        return (
+          <ListItem
+            roundAvatar
+            title={name+' '}
+            subtitle={address+' '+date}
+            avatar={require('../../public/laptopPusheen.png')}
+            />
+        )
+        break
+      case '../../public/mermaidPusheen.png':
+        return (
+          <ListItem
+            roundAvatar
+            title={name+' '}
+            subtitle={address+' '+date}
+            avatar={require('../../public/mermaidPusheen.png')}
+            />
+        )
+        break
+      case '../../public/museumPusheen.png':
+        return (
+          <ListItem
+            roundAvatar
+            title={name+' '}
+            subtitle={address+' '+date}
+            avatar={require('../../public/museumPusheen.png')}
+            />
+        )
+        break
+      case '../../public/noodlePusheen.png':
+        return (
+          <ListItem
+            roundAvatar
+            title={name+' '}
+            subtitle={address+' '+date}
+            avatar={require('../../public/noodlePusheen.png')}
+            />
+        )
+        break
+      case '../../public/pusheen.png':
+        return (
+          <ListItem
+            roundAvatar
+            title={name+' '}
+            subtitle={address+' '+date}
+            avatar={require('../../public/pusheen.png')}
+            />
+        )
+        break
+      case '../../public/pusheenSunglasses.png':
+        return (
+          <ListItem
+            roundAvatar
+            title={name+' '}
+            subtitle={address+' '+date}
+            avatar={require('../../public/pusheenSunglasses.png')}
+            />
+        )
+        break
+      case '../../public/restaurantPusheen.png':
+        return (
+          <ListItem
+            roundAvatar
+            title={name+' '}
+            subtitle={address+' '+date}
+            avatar={require('../../public/restaurantPusheen.png')}
+            />
+        )
+        break
+      case '../../public/scooterPusheen.png':
+        return (
+          <ListItem
+            roundAvatar
+            title={name+' '}
+            subtitle={address+' '+date}
+            avatar={require('../../public/scooterPusheen.png')}
+            />
+        )
+        break
+      case '../../public/unicornPusheen.png':
+        return (
+          <ListItem
+            roundAvatar
+            title={name+' '}
+            subtitle={address+' '+date}
+            avatar={require('../../public/unicornPusheen.png')}
+            />
+        )
+        break
+    }
+  }

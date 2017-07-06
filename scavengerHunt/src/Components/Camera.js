@@ -20,7 +20,8 @@ export default class CameraScreen extends Component {
       error: null,
       distance: null,
       closestPlaceLat: null,
-      closestPlaceLong: null
+      closestPlaceLong: null,
+      itemImage: ""
     }
     this.state.store = store.getState()
   }
@@ -43,7 +44,6 @@ export default class CameraScreen extends Component {
     this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState())
     })
-
 
   }
 
@@ -80,7 +80,6 @@ export default class CameraScreen extends Component {
 
 }
 
-
   render() {
     return (
       <View style={styles.container}>
@@ -90,31 +89,24 @@ export default class CameraScreen extends Component {
             this.camera = cam
           }}
           style={styles.preview}
-          aspect={Camera.constants.Aspect.fill}
-           >
+          aspect={Camera.constants.Aspect.fill}>
+          
 
           <View style={styles.arDisplay}>
           <View>
-            <Animatable.Image
-                animation="slideInDown"
-                iterationCount={10}
-                direction="alternate"
-                style={styles.overlay}
-                source={require('../../public/pusheenSunglasses.png')}
-                resizeMode="contain"
-              >
-              </Animatable.Image>
-              </View>
-              <View style={styles.view_no_background}>
-              <Animatable.Text
-              animation="slideInDown"
-              iterationCount={10}
-              direction="alternate"
-              style={styles.arText}
-              >
-              You Have Collected {"\n"}a Pusheen
-            </Animatable.Text>
-            </View>
+          {pickAnimatableImage(this.props.image)}
+        
+          </View>
+          <View style={styles.view_no_background}>
+          <Animatable.Text
+          animation="slideInDown"
+          iterationCount={10}
+          direction="alternate"
+          style={styles.arText}
+          >
+          You Have Collected {"\n"}a Pusheen
+          </Animatable.Text>
+          </View>
           </View>
           <View style={styles.camera_buttons_view}>
           <View style={styles.capture}>
@@ -131,4 +123,142 @@ export default class CameraScreen extends Component {
 
 }
 
+//a function that converts input image path to am AnimatableImage with that path
+export const pickAnimatableImage = (imagePath) => {
+    switch(imagePath) {
+      case '../../public/djPusheen.png':
+        return (
+          <Animatable.Image
+                animation="slideInDown"
+                iterationCount={10}
+                direction="alternate"
+                style={styles.overlay}
+                source={require('../../public/djPusheen.png')}
+                resizeMode="contain">
+              </Animatable.Image>
+        )
+        break
+      case '../../public/iceCreamPusheen.png':
+        return (
+          <Animatable.Image
+                animation="slideInDown"
+                iterationCount={10}
+                direction="alternate"
+                style={styles.overlay}
+                source={require('../../public/iceCreamPusheen.png')}
+                resizeMode="contain">
+           </Animatable.Image>
+        )
+        break
+      case '../../public/laptopPusheen.png':
+        return (
+          <Animatable.Image
+                animation="slideInDown"
+                iterationCount={10}
+                direction="alternate"
+                style={styles.overlay}
+                source={require('../../public/laptopPusheen.png')}
+                resizeMode="contain">
+           </Animatable.Image>
+        )
+        break
+      case '../../public/mermaidPusheen.png':
+        return (
+          <Animatable.Image
+                animation="slideInDown"
+                iterationCount={10}
+                direction="alternate"
+                style={styles.overlay}
+                source={require('../../public/mermaidPusheen.png')}
+                resizeMode="contain">
+           </Animatable.Image>
+        )
+        break
+      case '../../public/museumPusheen.png':
+        return (
+          <Animatable.Image
+                animation="slideInDown"
+                iterationCount={10}
+                direction="alternate"
+                style={styles.overlay}
+                source={require('../../public/museumPusheen.png')}
+                resizeMode="contain">
+           </Animatable.Image>
+        )
+        break
+      case '../../public/noodlePusheen.png':
+        return (
+          <Animatable.Image
+                animation="slideInDown"
+                iterationCount={10}
+                direction="alternate"
+                style={styles.overlay}
+                source={require('../../public/noodlePusheen.png')}
+                resizeMode="contain">
+           </Animatable.Image>
+        )
+        break
+      case '../../public/pusheen.png':
+        return (
+          <Animatable.Image
+                animation="slideInDown"
+                iterationCount={10}
+                direction="alternate"
+                style={styles.overlay}
+                source={require('../../public/pusheen.png')}
+                resizeMode="contain">
+           </Animatable.Image>
+        )
+        break
+      case '../../public/pusheenSunglasses.png':
+        return (
+          <Animatable.Image
+                animation="slideInDown"
+                iterationCount={10}
+                direction="alternate"
+                style={styles.overlay}
+                source={require('../../public/pusheenSunglasses.png')}
+                resizeMode="contain">
+           </Animatable.Image>
+        )
+        break
+      case '../../public/restaurantPusheen.png':
+        return (
+          <Animatable.Image
+                animation="slideInDown"
+                iterationCount={10}
+                direction="alternate"
+                style={styles.overlay}
+                source={require('../../public/restaurantPusheen.png')}
+                resizeMode="contain">
+           </Animatable.Image>
+        )
+        break
+      case '../../public/scooterPusheen.png':
+        return (
+          <Animatable.Image
+                animation="slideInDown"
+                iterationCount={10}
+                direction="alternate"
+                style={styles.overlay}
+                source={require('../../public/scooterPusheen.png')}
+                resizeMode="contain">
+           </Animatable.Image>
+        )
+        break
+      case '../../public/unicornPusheen.png':
+        return (
+          <Animatable.Image
+                animation="slideInDown"
+                iterationCount={10}
+                direction="alternate"
+                style={styles.overlay}
+                source={require('../../public/unicornPusheen.png')}
+                resizeMode="contain">
+           </Animatable.Image>
+        )
+        break
+    }
+  }
 
+//{pickAnimatableImage(this.props.image)}
