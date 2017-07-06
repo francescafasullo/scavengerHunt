@@ -18,6 +18,7 @@ ADD_ITEM_TO_BANK = 'ADD_ITEM_TO_BANK'
 RESET_BANK = 'RESET_BANK'
 
 
+SET_VENUE_ID = 'SET_VENUE_ID'
 
 /* ------------------ action creators ---------------- */
 export const setUserMaps = (maps) => ({ type: SET_USER_MAPS, maps });
@@ -29,6 +30,7 @@ export const takeItemOff = (item) => ({type: SET_ITEM_OFF, item})
 export const turnOnItems = () => ({type: RESET_MAP_ITEMS})
 export const addVisitedItemToBank = (item) => ({type: ADD_ITEM_TO_BANK, item})
 export const resetBank = () => ({type: RESET_BANK})
+export const setId = (venueId, latitude, longitude) => ({ type: SET_VENUE_ID, venueId, latitude, longitude })
 
 
 /* ------------------ reducer ------------------------ */
@@ -38,6 +40,9 @@ const initialMyAccountState = {
 	userPersonalInfo: {},
 	curItem: "",
 	itemBank: []
+	venueId: '',
+	latitude: '',
+	longitude: ''
 }
 
 const myAccountReducer = (state = initialMyAccountState, action) => {
@@ -71,6 +76,10 @@ const myAccountReducer = (state = initialMyAccountState, action) => {
 		case RESET_BANK:
 			newState.itemBank = []
 			return newState
+
+		case SET_VENUE_ID:
+			return Object.assign({}, state, { venueId: action.venueId, latitude: action.latitude, longitude: action.longitude })
+
 		default:
 			return state;
 
@@ -203,5 +212,9 @@ export const addItemToBank = (imagePath, key) => dispatch => {
 	
 	
 } 
+
+export const setVenueId = (id, latitude, longitude) => dispatch => {
+	dispatch(setId(id, latitude, longitude))
+}
 
 export default myAccountReducer;
