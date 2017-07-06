@@ -106,6 +106,7 @@ export default class MyAccount extends Component {
             : null }
             <View style={styles.myAccount_buttons_view }>
             <Button buttonStyle={styles.myAccount_button} onPress={this.resetMapItems} title="RESET MAP PINS" />
+             <Button buttonStyle={styles.myAccount_button} onPress={() => { this.props.navigation.navigate('Map') }} title="View chosen map" />
             <Button buttonStyle={styles.myAccount_button} onPress={() => { this.props.navigation.navigate('NewSH') }} title="Create a new Scavenger Hunt" />
             <Button buttonStyle={styles.myAccount_button} onPress={() => {this.logoutAndNavigate()}} title="Logout"/>
             </View>
