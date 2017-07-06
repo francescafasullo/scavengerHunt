@@ -11,7 +11,6 @@ import HomeScreen from './src/Components/Home'
 import CameraScreen from './src/Components/Camera'
 import SignInSignUpScreen from './src/Components/SignInSignUp'
 import PlayMap from './src/Components/PlayMap'
-import Play from './src/Components/Play'
 import database from './database/firebase'
 
 
@@ -34,9 +33,6 @@ const scavengerHuntRouter = StackNavigator({
   },
   Camera: {
     screen: CameraScreen
-  },
-  Play: {
-    screen: Play
   },
   PlayMap: {
     screen: PlayMap,
