@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, View, Button, Image, TextInput } from 'react-native'
+import { AppRegistry, StyleSheet, Text, View, Image, TextInput } from 'react-native'
 import firebase from 'firebase'
 import store from '../../store'
 import {login} from '../reducers/authReducer'
+import {Button} from 'react-native-elements'
+import styles from '../../stylesheet'
 
-const styles = StyleSheet.create({})
+
 
 export default class Login extends Component {
     constructor(props) {
@@ -58,6 +60,7 @@ export default class Login extends Component {
                     onChangeText={this.updatePassword}
                 />
                 <Button
+                    buttonStyle={styles.myAccount_button} 
                     onPress={() => this.loginAndNavigate(this.state.email, this.state.password)}
                     title="Login"
                 />

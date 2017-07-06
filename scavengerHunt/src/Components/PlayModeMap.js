@@ -13,7 +13,6 @@ const {height, width} = Dimensions.get('window')
 
 
 
-
 export default class PlayModeMap extends Component {
   constructor(props) {
     super(props)

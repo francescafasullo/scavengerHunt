@@ -12,12 +12,14 @@ SET_CUR_MAP = 'SET_CUR_MAP'
 SET_USER_INFO = 'SET_USER_INFO'
 SET_CUR_ITEM = 'SET_CUR_ITEM'
 ADD_MAP = 'ADD_MAP'
+SET_VENUE_ID = 'SET_VENUE_ID'
 SET_ITEM_OFF = 'SET_ITEM_OFF'
 RESET_MAP_ITEMS = 'RESET_MAP_ITEMS'
 ADD_ITEM_TO_BANK = 'ADD_ITEM_TO_BANK'
 RESET_BANK = 'RESET_BANK'
 
 
+SET_VENUE_ID = 'SET_VENUE_ID'
 
 /* ------------------ action creators ---------------- */
 export const setUserMaps = (maps) => ({ type: SET_USER_MAPS, maps });
@@ -25,6 +27,7 @@ export const setCurMap = (map) => ({ type: SET_CUR_MAP, map });
 export const setUserPersonalInfo = (userInfo) => ({ type: SET_USER_INFO, userInfo })
 export const setCurItem = (item) => ({ type: SET_CUR_ITEM, item })
 export const addMap = (map) => ({ type: ADD_MAP, map })
+export const setId = (venueId, latitude, longitude) => ({ type: SET_VENUE_ID, venueId, latitude, longitude })
 export const takeItemOff = (item) => ({type: SET_ITEM_OFF, item})
 export const turnOnItems = () => ({type: RESET_MAP_ITEMS})
 export const addVisitedItemToBank = (item) => ({type: ADD_ITEM_TO_BANK, item})
@@ -36,12 +39,13 @@ const initialMyAccountState = {
 	maps: [],
 	map: {},
 	userPersonalInfo: {},
+	venueId: '',
 	curItem: "",
 	itemBank: []
 }
 
 const myAccountReducer = (state = initialMyAccountState, action) => {
-	const newState = Object.assign({},state)
+	const newState = Object.assign({}, state)
 	let itemKeys;
 	switch (action.type) {
 		case SET_USER_MAPS:
@@ -53,14 +57,18 @@ const myAccountReducer = (state = initialMyAccountState, action) => {
 		case SET_USER_INFO:
 			return Object.assign({}, state, { userPersonalInfo: action.userInfo })
 		case SET_CUR_ITEM:
-			return Object.assign({},state, {curItem: action.item})
+			return Object.assign({}, state, { curItem: action.item })
 		case ADD_MAP:
 			return Object.assign({}, state, { maps: state.maps.push(action.map), map: action.map })
+
+		case SET_VENUE_ID:
+			return Object.assign({}, state, { venueId: action.venueId, latitude: action.latitude, longitude: action.longitude })
+
 		case SET_ITEM_OFF:
 			newState.map.items[action.item] = false
 			return newState
 		case RESET_MAP_ITEMS:
-			if(newState.map.items){
+			if (newState.map.items) {
 				itemKeys = Object.keys(newState.map.items)
 				itemKeys.map((item) => newState.map.items[item] = true)
 			}
@@ -71,6 +79,10 @@ const myAccountReducer = (state = initialMyAccountState, action) => {
 		case RESET_BANK:
 			newState.itemBank = []
 			return newState
+
+		case SET_VENUE_ID:
+			return Object.assign({}, state, { venueId: action.venueId, latitude: action.latitude, longitude: action.longitude })
+
 		default:
 			return state;
 
@@ -115,10 +127,24 @@ export const fetchUserPersonalInfo = (userId) => dispatch => {
 
 }
 
-export const newMap = (mapName, description, location, userId) => dispatch => {
+export const newMap = (mapName, mapRegion, description, location, places, userId) => dispatch => {
 	var mapKey = database.ref('scavenger_hunt_map/').push().key
 	var date = new Date()
-	writeUserScavengerHuntMap(mapKey, mapName, description, location, date)
+	writeUserScavengerHuntMap(mapKey, mapName, mapRegion, description, location, date)
+	var itemKeys = []
+	for (i = 0; i < places.length; i++) {
+		itemKeys.push(database.ref('scavenger_hunt_items/').push().key)
+		database.ref('scavenger_hunt_items/' + itemKeys[i]).set({
+			mapName: mapName,
+			category: "Hidden Pusheen",
+			latitude: places[i].coordinate.latitude,
+			longitude: places[i].coordinate.longitude
+		})
+	}
+
+	for (i = 0; i < itemKeys.length; i++) {
+		associateScavengerItemToMap(mapKey, itemKeys[i])
+	}
 
 	let selectedMap = readOneMap(mapKey)
 
@@ -143,6 +169,10 @@ export const newItem = (name, description, latitude, longitude, imagePath, mapId
 export const setUserSelectedMap = (map) => dispatch => {
 	dispatch(setCurMap(map));
 
+}
+
+export const setVenueId = (id, latitude, longitude) => dispatch => {
+	dispatch(setId(id, latitude, longitude))
 }
 
 export const setUserCurLocation = (item) => dispatch => {
@@ -184,10 +214,10 @@ export const addItemToBank = (key) => dispatch => {
 			}
 		}
 		dispatch(addVisitedItemToBank(item))
-		
+
 	})
-	
-	
-} 
+
+
+}
 
 export default myAccountReducer;
