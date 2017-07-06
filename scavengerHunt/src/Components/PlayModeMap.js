@@ -156,7 +156,6 @@ export default class PlayModeMap extends Component {
   }
 
   getItemImage(itemKey){
-      console.log('get image',itemKey )
       let itemPromise = readItemInfo(itemKey)
        return itemPromise.then(data=> {
         return data.imagePath
