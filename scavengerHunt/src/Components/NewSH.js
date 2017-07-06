@@ -108,27 +108,27 @@ const mapStyle =
 		{}
 	]
 
-const styles = StyleSheet.create({
-	welcome: {
-		fontSize: 20,
-		textAlign: 'center',
-		margin: 10,
-	},
-	picker: {
-		width: 300,
-		alignSelf: 'center'
-	},
-	map: {
-		width: width,
-		height: 500,
-		alignSelf: 'center',
-	},
-	container: {
-		flex: 1,
-		alignItems: 'center',
-		backgroundColor: '#BFD8D2'
-	},
-})
+// const styles = StyleSheet.create({
+// 	welcome: {
+// 		fontSize: 20,
+// 		textAlign: 'center',
+// 		margin: 10,
+// 	},
+// 	picker: {
+// 		width: 300,
+// 		alignSelf: 'center'
+// 	},
+// 	map: {
+// 		width: width,
+// 		height: 500,
+// 		alignSelf: 'center',
+// 	},
+// 	container: {
+// 		flex: 1,
+// 		alignItems: 'center',
+// 		backgroundColor: '#BFD8D2'
+// 	},
+// })
 
 export default class NewSH extends Component {
 	constructor(props) {
@@ -228,23 +228,9 @@ export default class NewSH extends Component {
 					onChangeText={this.updateLocation}
 				/>
 				<Button onPress={() => {
-<<<<<<< HEAD
-<<<<<<< HEAD
 					this.saveSH(this.state.mapName, this.state.description, this.state.location, this.state.userId)
 					this.props.navigation.navigate('AddItems')
 				}} title="Save Map" />
-
-=======
-=======
->>>>>>> 432be53d0a49cd0f5a8736df24a8f266d9da930d
-					this.saveSH(this.state.mapName, this.state.mapRegion, this.state.description, this.state.location, this.state.places, this.state.userId)
-					this.props.navigation.navigate('SavedConf')
-				}}
-					title="Save Map" />
-<<<<<<< HEAD
->>>>>>> map component and explore option working
-=======
->>>>>>> 432be53d0a49cd0f5a8736df24a8f266d9da930d
 				<Button onPress={this.clear} title="Clear all markers" />
 				<MapView
 					onPress={this.addMarker}

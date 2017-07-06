@@ -32,7 +32,6 @@ export const takeItemOff = (item) => ({type: SET_ITEM_OFF, item})
 export const turnOnItems = () => ({type: RESET_MAP_ITEMS})
 export const addVisitedItemToBank = (item) => ({type: ADD_ITEM_TO_BANK, item})
 export const resetBank = () => ({type: RESET_BANK})
-export const setId = (venueId, latitude, longitude) => ({ type: SET_VENUE_ID, venueId, latitude, longitude })
 
 
 /* ------------------ reducer ------------------------ */
@@ -43,9 +42,6 @@ const initialMyAccountState = {
 	venueId: '',
 	curItem: "",
 	itemBank: []
-	venueId: '',
-	latitude: '',
-	longitude: ''
 }
 
 const myAccountReducer = (state = initialMyAccountState, action) => {
@@ -222,10 +218,6 @@ export const addItemToBank = (imagePath, key) => dispatch => {
 	})
 
 
-}
-
-export const setVenueId = (id, latitude, longitude) => dispatch => {
-	dispatch(setId(id, latitude, longitude))
 }
 
 export default myAccountReducer;

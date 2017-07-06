@@ -34,19 +34,19 @@ import styles from '../../stylesheet'
 
 // });
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F7CAC9'
-  },
-  points: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  }
-})
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: '#F7CAC9'
+//   },
+//   points: {
+//     fontSize: 20,
+//     textAlign: 'center',
+//     margin: 10,
+//   }
+// })
 
 
 export default class MyAccount extends Component {
