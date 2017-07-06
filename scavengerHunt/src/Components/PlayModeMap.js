@@ -172,7 +172,7 @@ export default class PlayModeMap extends Component {
           onRegionChange={this.onRegionChange}
           showsBuildings
         >
-        { Object.keys(this.state.keys).length > 0 ? Object.keys(this.state.keys).map((key) => {
+        { Object.keys(this.state.keys).length > 0 ? Object.keys(this.state.keys).map((key, index) => {
           curmap = (this.state.myAccount ? this.state.myAccount.map : null)
           if(curmap){
             if(curmap.items){
@@ -184,6 +184,7 @@ export default class PlayModeMap extends Component {
           return (
 
             <MapView.Marker
+              key={index}
               coordinate={{latitude: this.state.keys[key].location[0], longitude: this.state.keys[key].location[1]}}
               image={require('../../public/pusheenMarker.png')}
               onPress = {(e) => this.checkTokenDistance(e,key)}

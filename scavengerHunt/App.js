@@ -22,14 +22,10 @@ import MyAccountScreen from './src/Components/MyAccount'
 import PlayModeMap from './src/Components/PlayModeMap'
 import NewSH from './src/Components/NewSH'
 import SavedConf from './src/Components/SavedConf'
-<<<<<<< HEAD
 import AddItems from './src/Components/AddItems'
 import Map from './src/Components/Map'
 import Explore from './src/Components/Explore'
 import MoreInfo from './src/Components/MoreInfo'
-=======
-import Map from './src/Components/Map'
->>>>>>> 95170c384596de7e1a5b74e91c27d2b8909c6f6a
 
 const scavengerHuntRouter = StackNavigator({
   Home: {
