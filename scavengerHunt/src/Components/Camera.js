@@ -118,10 +118,10 @@ export default class CameraScreen extends Component {
           </View>
           <View style={styles.camera_buttons_view}>
           <View style={styles.capture}>
-          <Button style={styles.camera_button} onPress={this.takePicture} title="CAPTURE" />
+          <Button color={'black'}  style={styles.camera_button} onPress={this.takePicture} title="CAPTURE" />
           </View>
           <View style={styles.capture}>
-          <Button style={styles.camera_button} onPress={this.TakeOfItemAndNavigateBack} title="MAP"/>
+          <Button color={'black'} style={styles.camera_button} onPress={this.TakeOfItemAndNavigateBack} title="MAP"/>
           </View>
           </View>
         </Camera>

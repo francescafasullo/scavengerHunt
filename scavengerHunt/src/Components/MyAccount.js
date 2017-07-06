@@ -113,6 +113,7 @@ export default class MyAccount extends Component {
               {
               this.state.myAccount.itemBank.map((item) => (
                 <ListItem
+      
                   roundAvatar
                   title={item.name+' '}
                   subtitle={item.address+' '+item.date}
@@ -120,7 +121,8 @@ export default class MyAccount extends Component {
                   />
                 )
               )
-              }
+            }
+            {console.log(this.state.itemBank)}
               </List>
               : null
             }
