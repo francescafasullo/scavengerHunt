@@ -8,6 +8,7 @@ import {Button, List, ListItem} from 'react-native-elements'
 
 
 
+
 export default class MyAccount extends Component {
   constructor(props) {
     super(props)
@@ -21,7 +22,7 @@ export default class MyAccount extends Component {
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState());
-      //this.getUserMaps(this.state.auth.userId)
+      // this.getUserMaps(this.state.auth.userId)
     });
   }
 
@@ -34,7 +35,7 @@ export default class MyAccount extends Component {
     this.props.navigation.navigate('SignInSignUp');
   }
 
-  setSelectedMap (mapIndex){
+  setSelectedMap(mapIndex) {
     store.dispatch(setUserSelectedMap(this.state.myAccount.maps[mapIndex]));
   }
 
@@ -51,6 +52,7 @@ export default class MyAccount extends Component {
     const userId = (this.state ? this.state.auth.userId : null)//{auth: {userId}} = this.state || {}
     let index = 1;
     let list
+
 
     return (
       <View style={styles.myAccount_container}>
@@ -123,6 +125,7 @@ export default class MyAccount extends Component {
               : null
             }
 				  </View>
+
           :
           <View>
             <Text style={styles.points}>you are not logged in </Text>
