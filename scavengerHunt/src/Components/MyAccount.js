@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { AppRegistry, StyleSheet, Text, View, Image, Picker,ScrollView } from 'react-native'
 import store from '../../store'
 import { logout } from '../reducers/authReducer'
-import {setUserSelectedMap, fetchUserMaps, resetMap, resetItemBank} from '../reducers/myAccountReducer'
+import {setUserSelectedMap, fetchUserMaps, resetMap, resetItemBank, fetchCurrentMapItems} from '../reducers/myAccountReducer'
 import styles from '../../stylesheet'
 import {Button, List, ListItem} from 'react-native-elements'
 
@@ -37,6 +37,7 @@ export default class MyAccount extends Component {
 
   setSelectedMap(mapIndex) {
     store.dispatch(setUserSelectedMap(this.state.myAccount.maps[mapIndex]));
+    store.dispatch(fetchCurrentMapItems(this.state.myAccount.maps[mapIndex].key))
   }
 
   getUserMaps(userId) {

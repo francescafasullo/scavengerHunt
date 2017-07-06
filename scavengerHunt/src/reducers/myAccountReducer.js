@@ -2,7 +2,7 @@ import store from '../../store'
 const fireBaseFunctions = require('../../database/firebase');
 import firebase from 'firebase';
 const geoFire = require('../../database/firebase.js').geoFire
-import { readUserMaps, readUserInfo, database, associateScavengerItemToMap, associateUserToMap, writeUserScavengerHuntMap, writeUserScavengerHuntItem, readOneMap, readItemInfo } from '../../database/firebase'
+import { readUserMaps, readUserInfo, database, associateScavengerItemToMap, associateUserToMap, writeUserScavengerHuntMap, writeUserScavengerHuntItem, readOneMap, readItemInfo, readMapsItemsInfo } from '../../database/firebase'
 import axios from 'axios'
 
 
@@ -17,7 +17,7 @@ SET_ITEM_OFF = 'SET_ITEM_OFF'
 RESET_MAP_ITEMS = 'RESET_MAP_ITEMS'
 ADD_ITEM_TO_BANK = 'ADD_ITEM_TO_BANK'
 RESET_BANK = 'RESET_BANK'
-
+SET_CUR_MAP_ITEMS = 'SET_CUR_MAP_ITEMS'
 
 SET_VENUE_ID = 'SET_VENUE_ID'
 
@@ -32,6 +32,7 @@ export const takeItemOff = (item) => ({type: SET_ITEM_OFF, item})
 export const turnOnItems = () => ({type: RESET_MAP_ITEMS})
 export const addVisitedItemToBank = (item) => ({type: ADD_ITEM_TO_BANK, item})
 export const resetBank = () => ({type: RESET_BANK})
+export const setCurrentMapItems = (items) => ({type: SET_CUR_MAP_ITEMS, items})
 
 
 /* ------------------ reducer ------------------------ */
@@ -41,7 +42,8 @@ const initialMyAccountState = {
 	userPersonalInfo: {},
 	venueId: '',
 	curItem: "",
-	itemBank: []
+	itemBank: [],
+	items: []
 }
 
 const myAccountReducer = (state = initialMyAccountState, action) => {
@@ -56,33 +58,30 @@ const myAccountReducer = (state = initialMyAccountState, action) => {
 
 		case SET_USER_INFO:
 			return Object.assign({}, state, { userPersonalInfo: action.userInfo })
+
 		case SET_CUR_ITEM:
-			return Object.assign({}, state, { curItem: action.item })
-		case ADD_MAP:
+			return Object.assign({},state, {curItem: action.item})
+    case ADD_MAP:
 			return Object.assign({}, state, { maps: state.maps.push(action.map), map: action.map })
-
-		case SET_VENUE_ID:
+    case SET_VENUE_ID:
 			return Object.assign({}, state, { venueId: action.venueId, latitude: action.latitude, longitude: action.longitude })
-
 		case SET_ITEM_OFF:
 			newState.map.items[action.item] = false
 			return newState
-		case RESET_MAP_ITEMS:
+    case RESET_MAP_ITEMS:
 			if (newState.map.items) {
 				itemKeys = Object.keys(newState.map.items)
 				itemKeys.map((item) => newState.map.items[item] = true)
 			}
 			return newState
-		case ADD_ITEM_TO_BANK:
+    case ADD_ITEM_TO_BANK:
 			newState.itemBank.push(action.item)
 			return newState
-		case RESET_BANK:
+    case RESET_BANK:
 			newState.itemBank = []
 			return newState
-
-		case SET_VENUE_ID:
-			return Object.assign({}, state, { venueId: action.venueId, latitude: action.latitude, longitude: action.longitude })
-
+		case SET_CUR_MAP_ITEMS:
+			return Object.assign({}, state, {items: action.items})
 		default:
 			return state;
 
@@ -105,10 +104,20 @@ export const fetchUserMaps = (userId) => dispatch => {
 			var errorMessage = error.message;
 			// ...
 		});
-
 	}
 
 
+}
+
+export const fetchCurrentMapItems = (mapId) => dispatch => {
+	let res = readOneMap(mapId)
+	res.then(data => {
+		let result = readMapsItemsInfo(data.items)
+		result.then((data) => {
+			console.log('items', data)
+			dispatch(setCurrentMapItems(data))
+		})
+	})
 }
 
 export const fetchUserPersonalInfo = (userId) => dispatch => {
@@ -168,7 +177,6 @@ export const newItem = (name, description, latitude, longitude, imagePath, mapId
 
 export const setUserSelectedMap = (map) => dispatch => {
 	dispatch(setCurMap(map));
-
 }
 
 export const setVenueId = (id, latitude, longitude) => dispatch => {
@@ -182,8 +190,6 @@ export const setUserCurLocation = (item) => dispatch => {
 export const takeItemOfMap = (key) => dispatch => {
 	dispatch(takeItemOff(key))
 }
-
-
 
 export const resetMap = () => dispatch => {
 	dispatch(turnOnItems())
