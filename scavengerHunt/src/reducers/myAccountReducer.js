@@ -220,9 +220,10 @@ export const addItemToBank = (key) => dispatch => {
 				item.address = data.data.results[0].formatted_address
 			}
 			dispatch(addVisitedItemToBank(item))
+		}
 		}).catch(err => console.log(err))
 
-	})
+	}
 
 
 
