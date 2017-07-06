@@ -95,6 +95,13 @@ const Tabs = TabNavigator({
     }
 
   },
+  Explore: {
+    screen: Explore,
+    navigationOptions: {
+      tabBarLabel: 'Explore',
+      tabBarIcon: ({ tintColor }) => <Icon name="explore" size={26} color={tintColor} />
+    }
+  },
   Account: {
     screen: MyAccountScreen,
     navigationOptions: {

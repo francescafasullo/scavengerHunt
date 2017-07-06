@@ -25,7 +25,6 @@ export default class HomeScreen extends Component {
         <Text style={styles.welcome}>
           Welcome to Pusheen Travel!
         </Text>
-        <Button color={'black'} onPress={() => {this.props.navigation.navigate('Explore')}}title="Explore" />
       </View>
 
     );

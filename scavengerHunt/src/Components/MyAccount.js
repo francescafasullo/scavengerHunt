@@ -122,7 +122,7 @@ export default class MyAccount extends Component {
                 )
               )
             }
-            {console.log(this.state.itemBank)}
+            {console.log(this.state.myAccount.itemBank)}
               </List>
               : null
             }
