@@ -178,6 +178,7 @@ function readMapsInfo(maps){
 
 function readMapsItemsInfo(items){
   let res = items.map((item) => {
+    console.log('item', item)
     return database.ref('/scavenger_hunt_items/' + item).once('value')
   });
   return Promise.all(res).then (values => {
@@ -379,7 +380,8 @@ module.exports = {
   readUserMaps: readUserMaps,
   readUserInfo: readUserInfo,
   readOneMap: readOneMap,
-  readItemInfo: readItemInfo
+  readItemInfo: readItemInfo,
+  readMapsItemsInfo: readMapsItemsInfo
 }
 
 

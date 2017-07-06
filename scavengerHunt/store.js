@@ -17,8 +17,8 @@ firebase.auth().onAuthStateChanged(user => {
 		store.dispatch(setLoggedUser(user ? user.uid : null));
 		store.dispatch(fetchUserMaps(user ? user.uid : null));
 		store.dispatch(fetchUserPersonalInfo(user ? user.uid : null));
-		
-		
+
+
 
 });
 
