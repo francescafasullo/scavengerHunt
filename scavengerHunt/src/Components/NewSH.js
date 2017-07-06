@@ -3,131 +3,9 @@ import { AppRegistry, StyleSheet, Text, TextInput, View, Button, Image, Picker, 
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import store from '../../store'
 import { newMap, setUserSelectedMap } from '../reducers/myAccountReducer'
+import styles from '../../stylesheet'
 
 const { height, width } = Dimensions.get('window')
-
-const mapStyle =
-	[
-		{
-			"featureType": "road",
-			"stylers": [
-				{
-					"hue": "#5e00ff"
-				},
-				{
-					"saturation": -79
-				}
-			]
-		},
-		{
-			"featureType": "poi",
-			"stylers": [
-				{
-					"saturation": -78
-				},
-				{
-					"hue": "#6600ff"
-				},
-				{
-					"lightness": -47
-				},
-				{
-					"visibility": "off"
-				}
-			]
-		},
-		{
-			"featureType": "road.local",
-			"stylers": [
-				{
-					"lightness": 22
-				}
-			]
-		},
-		{
-			"featureType": "landscape",
-			"stylers": [
-				{
-					"hue": "#6600ff"
-				},
-				{
-					"saturation": -11
-				}
-			]
-		},
-		{},
-		{},
-		{
-			"featureType": "water",
-			"stylers": [
-				{
-					"saturation": -65
-				},
-				{
-					"hue": "#1900ff"
-				},
-				{
-					"lightness": 8
-				}
-			]
-		},
-		{
-			"featureType": "road.local",
-			"stylers": [
-				{
-					"weight": 1.3
-				},
-				{
-					"lightness": 30
-				}
-			]
-		},
-		{
-			"featureType": "transit",
-			"stylers": [
-				{
-					"visibility": "simplified"
-				},
-				{
-					"hue": "#5e00ff"
-				},
-				{
-					"saturation": -16
-				}
-			]
-		},
-		{
-			"featureType": "transit.line",
-			"stylers": [
-				{
-					"saturation": -72
-				}
-			]
-		},
-		{}
-	]
-
-const styles = StyleSheet.create({
-	welcome: {
-		fontSize: 20,
-		textAlign: 'center',
-		margin: 10,
-	},
-	picker: {
-		width: 300,
-		alignSelf: 'center'
-	},
-	map: {
-		width: width,
-		height: 500,
-		alignSelf: 'center',
-	},
-	container: {
-		flex: 1,
-		alignItems: 'center',
-		backgroundColor: '#BFD8D2'
-	},
-})
 
 export default class NewSH extends Component {
 	constructor(props) {
@@ -209,7 +87,7 @@ export default class NewSH extends Component {
 
 	render() {
 		return (
-			<View style={styles.container}>
+			<View style={styles.pcontainer}>
 				<Text>Enter a name and description for your new map:</Text>
 				<TextInput
 					style={{ height: 40 }}
