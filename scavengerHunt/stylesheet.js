@@ -8,11 +8,70 @@ export default styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F7CAC9'
+    //backgroundColor: '#F5FCFF'
+  },
+  welcome_container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#FCF1E3',
   },
   welcome: {
-    fontSize: 20,
+    fontSize: 40,
     textAlign: 'center',
     margin: 10,
+    color: '#FFB100'
+  },
+  myAccount_container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F0F8FF'
+
+  },
+  myAccount_title: {
+    fontSize: 40,
+    textAlign: 'center',
+    margin: 20,
+    color: '#808080',
+
+
+  },
+  myAccount_buttons_view :{
+
+    flex: 1,
+    alignItems: 'flex-start',
+    top: 5
+
+  },
+  myAccount_bank_list_view:{
+    flex: 1,
+    alignItems: 'flex-start',
+    top: 10,
+    bottom: 5
+  },
+  myAccount_button: {
+    height:40,
+    width: 200,
+    borderRadius:20,
+    backgroundColor: '#538cc6',
+    margin: 10,
+    color: 'black'
+
+
+  },
+  myAccount_image: {
+    width: 60,
+    height: 60,
+    justifyContent: 'center'
+  
+  },
+  myAccount_picker_view: {
+    marginBottom: 5,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+
   },
   //Camera and SignInSignUp
   instructions: {
@@ -28,32 +87,67 @@ export default styles = StyleSheet.create({
     height: Dimensions.get('window').height,
     width: Dimensions.get('window').width
   },
+  camera_buttons_view:{
+    flexDirection: 'row'
+  }, 
   capture: {
     flex: 0,
-    backgroundColor: '#fff',
+    //flexDirection: 'row',
+    backgroundColor: 'rgba(255,255,255,0.5)',
+    color: '#000000',
     borderRadius: 5,
-    color: '#000',
     padding: 10,
-    margin: 40
+    margin: 40,
+    
   },
+  camera_button:{
+    margin: 5,
+    backgroundColor: 'rgba(255,255,255,0.5)',
+    color: '#000000',
+},
+
   overlay: {
-    justifyContent: 'center',
-    top: 100,
-    left: 100,
-    width: 200,
-    height: 100
+     top: 100,
+     left: 50,
+    width: 300,
+    height: 200
   },
   arDisplay: {
     position: 'absolute',
     top: 0,
     left: 0,
-    flex: 1
+    right: 0,
+    flex: 1,
+    
+    //flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  arText: {
+    flex: 1,
+    fontSize: 33,
+    textAlign: 'center',
+    margin: 10,
+    backgroundColor: 'rgba(255,255,255,0.5)'
+
+  },
+  view_no_background: {
+    alignItems: 'center',
+    top: 100,
+    justifyContent: 'center'
   },
     //MyAccount
   points: {
     fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+    textAlign: 'left',
+    
+  },
+  info_label :{
+    fontSize: 20,
+    textAlign: 'left',
+    fontWeight: 'bold',
+    color: '#808080'
+
+
   },
   //PlayModeMap
   marker: {
@@ -74,7 +168,7 @@ export default styles = StyleSheet.create({
   	picker: {
 		width: 300,
 		alignSelf: 'center'
-	},
+	}
 })
 
  export const mapStyle =

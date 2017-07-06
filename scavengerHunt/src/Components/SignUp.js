@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, View, Dimensions, Image, TextInput, TouchableHighlight, Button } from 'react-native'
+import { AppRegistry, StyleSheet, Text, View, Dimensions, Image, TextInput, TouchableHighlight } from 'react-native'
 import firebase from 'firebase'
 import store from '../../store'
 import {signUp} from '../reducers/authReducer'
+import {Button} from 'react-native-elements'
+import styles from '../../stylesheet'
 
-
-const styles = StyleSheet.create({
-
-})
 
 export default class SignUp extends Component {
 	constructor(props) {
@@ -72,6 +70,7 @@ render() {
 				onChangeText={this.updatePassword}
 			/>
 			<Button
+				buttonStyle={styles.myAccount_button}
 				onPress={() => this.signUpAndNavigate(this.state.userName,this.state.email, this.state.password)}
 				title="Sign Up" />
 		</View>
