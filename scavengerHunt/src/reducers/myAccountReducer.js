@@ -9,19 +9,24 @@ SET_USER_MAPS = 'SET_USER_MAPS'
 SET_CUR_MAP = 'SET_CUR_MAP'
 SET_USER_INFO = 'SET_USER_INFO'
 ADD_MAP = 'ADD_MAP'
-
+SET_VENUE_ID = 'SET_VENUE_ID'
 
 /* ------------------ action creators ---------------- */
 export const setUserMaps = (maps) => ({ type: SET_USER_MAPS, maps });
 export const setCurMap = (map) => ({ type: SET_CUR_MAP, map });
 export const setUserPersonalInfo = (userInfo) => ({ type: SET_USER_INFO, userInfo })
 export const addMap = (map) => ({ type: ADD_MAP, map })
+export const setId = (venueId, latitude, longitude) => ({ type: SET_VENUE_ID, venueId, latitude, longitude })
+
 
 /* ------------------ reducer ------------------------ */
 const initialMyAccountState = {
 	maps: [],
 	map: {},
-	userPersonalInfo: {}
+	userPersonalInfo: {},
+	venueId: '',
+	latitude: '',
+	longitude: ''
 }
 
 const myAccountReducer = (state = initialMyAccountState, action) => {
@@ -37,6 +42,9 @@ const myAccountReducer = (state = initialMyAccountState, action) => {
 
 		case ADD_MAP:
 			return Object.assign({}, state, { maps: state.maps.push(action.map), map: action.map })
+
+		case SET_VENUE_ID:
+			return Object.assign({}, state, { venueId: action.venueId, latitude: action.latitude, longitude: action.longitude })
 
 		default:
 			return state;
@@ -112,6 +120,10 @@ export const newMap = (mapName, mapRegion, description, location, places, userId
 export const setUserSelectedMap = (map) => dispatch => {
 	dispatch(setCurMap(map));
 
+}
+
+export const setVenueId = (id, latitude, longitude) => dispatch => {
+	dispatch(setId(id, latitude, longitude))
 }
 
 export default myAccountReducer;

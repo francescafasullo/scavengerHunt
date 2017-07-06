@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { AppRegistry, StyleSheet, Text, View, Button, Image, Picker, Dimensions, ScrollView } from 'react-native'
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { Marker, PROVIDER_GOOGLE, MyCustomCalloutView } from 'react-native-maps'
 import store from '../../store'
 import axios from 'axios'
+import { setVenueId } from '../reducers/myAccountReducer'
 // import styles from '../../stylesheet'
 
 const { height, width } = Dimensions.get('window')
@@ -13,7 +14,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#BFD8D2'
   },
   text: {
-    margin: 20
+    margin: 25
   },
   subtext: {
     margin: 10
@@ -30,10 +31,13 @@ export default class Explore extends Component {
     super(props)
     this.state = {
       restaurants: [],
+      rcategories: [],
+      acategories: [],
       attractions: [],
       latitude: "",
       longitude: "",
-      choice: ""
+      choice: "",
+      venueId: ""
     }
   }
 
@@ -53,10 +57,6 @@ export default class Explore extends Component {
         this.onRegionChange(region, region.latitude, region.longitude)
       }
     )
-
-
-
-
   }
 
   onRegionChange = (region, lastLat, lastLong) => {
@@ -83,13 +83,19 @@ export default class Explore extends Component {
   }
 
   showAttractions = () => {
-    axios.get(`https://api.tripexpert.com/v1/venues?api_key=44871cd75dea94cd486fba9b00171eb6&venue_type_id=3&order_by=distance&latitude=${this.state.latitude}&longitude=${this.state.longitude}`)
+    axios.get(`https://api.tripexpert.com/v1/venues?api_key=44871cd75dea94cd486fba9b00171eb6&venue_type_id=3&category_ids&order_by=distance&latitude=${this.state.latitude}&longitude=${this.state.longitude}`)
       .then(res => {
+        console.log(res.data)
         this.setState({ attractions: res.data.response.venues })
       }).catch(error => {
         console.log(error)
       })
     this.setState({ choice: 'attractions' })
+  }
+
+  infoMarker = (id, latitude, longitude) => {
+    console.log(id)
+    store.dispatch(setVenueId(id, latitude, longitude))
   }
 
   render() {
@@ -113,20 +119,45 @@ export default class Explore extends Component {
                 <MapView.Marker
                   key={index}
                   coordinate={{ latitude: restaurant.latitude, longitude: restaurant.longitude }}
-                  title={restaurant.name}
-                  description={`TripExpert Score: ${restaurant.tripexpert_score ? restaurant.tripexpert_score : 'N/A'} Price: ${restaurant.price_category ? restaurant.price_category : 'N/A'}`}
-                />
+
+                >
+                  <MapView.Callout  onPress={() => {
+                    this.infoMarker(restaurant.id)
+                    this.props.navigation.navigate('MoreInfo')
+                  }}
+                  >
+                    <View>
+                      <Text>
+{`${restaurant.name}
+TripExpert Score: ${restaurant.tripexpert_score ? restaurant.tripexpert_score : 'N/A'} 
+Price: ${restaurant.price_category ? restaurant.price_category : 'N/A'}
+Tap for more info!`}
+                      </Text>
+                    </View>
+                  </MapView.Callout>
+                </MapView.Marker>
             ) : null}
           {this.state.choice === 'attractions' ?
             (this.state.attractions || []).map(
               (attraction, index) =>
-
                 <MapView.Marker
                   key={index}
                   coordinate={{ latitude: attraction.latitude, longitude: attraction.longitude }}
-                  title={attraction.name}
-                  description={`TripExpert Score: ${attraction.tripexpert_score ? attraction.tripexpert_score : 'N/A'}`}
-                />
+                >
+                  <MapView.Callout onPress={() => {
+                    this.infoMarker(attraction.id)
+                    this.props.navigation.navigate('MoreInfo')
+                  }}
+                  >
+                    <View>
+                      <Text>
+{`${attraction.name}
+TripExpert Score: ${attraction.tripexpert_score ? attraction.tripexpert_score : 'N/A'}
+`}
+                      </Text>
+                    </View>
+                  </MapView.Callout>
+                </MapView.Marker>
             )
 
             : null}
