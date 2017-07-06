@@ -10,16 +10,13 @@ SET_CUR_MAP = 'SET_CUR_MAP'
 SET_USER_INFO = 'SET_USER_INFO'
 SET_CUR_ITEM = 'SET_CUR_ITEM'
 ADD_MAP = 'ADD_MAP'
-<<<<<<< HEAD
 SET_VENUE_ID = 'SET_VENUE_ID'
-=======
 SET_ITEM_OFF = 'SET_ITEM_OFF'
 RESET_MAP_ITEMS = 'RESET_MAP_ITEMS'
 ADD_ITEM_TO_BANK = 'ADD_ITEM_TO_BANK'
 RESET_BANK = 'RESET_BANK'
 
 
->>>>>>> ea2fad83e517924bc175d420c337f6f6a5b03057
 
 /* ------------------ action creators ---------------- */
 export const setUserMaps = (maps) => ({ type: SET_USER_MAPS, maps });

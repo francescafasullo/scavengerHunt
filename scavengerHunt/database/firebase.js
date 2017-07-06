@@ -391,7 +391,7 @@ module.exports = {
   readUserMaps: readUserMaps,
   readUserInfo: readUserInfo,
   readOneMap: readOneMap,
-  readMapsItemsInfo: readMapsItemsInfo
+  readMapsItemsInfo: readMapsItemsInfo,
   readItemInfo: readItemInfo
 
 }

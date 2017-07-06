@@ -7,33 +7,33 @@ import styles from '../../stylesheet'
 
 
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F7CAC9'
-  },
-  points: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  button: {
-    flex: 0,
-    backgroundColor: '#fff',
-    borderRadius: 5,
-    color: '#000',
-    padding: 10,
-    margin: 40
-  },
-  image: {
-    width: 60,
-    height: 60,
-    justifyContent: 'center'
-  }
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: '#F7CAC9'
+//   },
+//   points: {
+//     fontSize: 20,
+//     textAlign: 'center',
+//     margin: 10,
+//   },
+//   button: {
+//     flex: 0,
+//     backgroundColor: '#fff',
+//     borderRadius: 5,
+//     color: '#000',
+//     padding: 10,
+//     margin: 40
+//   },
+//   image: {
+//     width: 60,
+//     height: 60,
+//     justifyContent: 'center'
+//   }
 
-});
+// });
 
 
 export default class MyAccount extends Component {
