@@ -223,7 +223,7 @@ export const addItemToBank = (key) => dispatch => {
 		}
 		}).catch(err => console.log(err))
 
-	}
+	
 
 
 
