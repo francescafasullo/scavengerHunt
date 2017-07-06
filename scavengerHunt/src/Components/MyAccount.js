@@ -34,6 +34,20 @@ import styles from '../../stylesheet'
 
 // });
 
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//     backgroundColor: '#F7CAC9'
+//   },
+//   points: {
+//     fontSize: 20,
+//     textAlign: 'center',
+//     margin: 10,
+//   }
+// })
+
 
 export default class MyAccount extends Component {
   constructor(props) {
@@ -48,7 +62,7 @@ export default class MyAccount extends Component {
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState());
-      //this.getUserMaps(this.state.auth.userId)
+      // this.getUserMaps(this.state.auth.userId)
     });
   }
 
@@ -61,7 +75,7 @@ export default class MyAccount extends Component {
     this.props.navigation.navigate('SignInSignUp');
   }
 
-  setSelectedMap (mapIndex){
+  setSelectedMap(mapIndex) {
     store.dispatch(setUserSelectedMap(this.state.myAccount.maps[mapIndex]));
   }
 
@@ -77,18 +91,17 @@ export default class MyAccount extends Component {
   render() {
     const userId = (this.state ? this.state.auth.userId : null)//{auth: {userId}} = this.state || {}
     let index = 1;
-
     return (
       <View style={styles.container}>
         <ScrollView
         showsVerticalScrollIndicator={true}
         >
         {userId ?
-        <View>
-						<Text style={styles.points}>
-						user name: {this.state.myAccount.userPersonalInfo.username + '\n'}
-            email:     {this.state.myAccount.userPersonalInfo.email + '\n'}
-            score:    {this.state.myAccount.userPersonalInfo.score + '\n'}
+          <View>
+            <Text style={styles.points}>
+              user name: {this.state.myAccount.userPersonalInfo.username + '\n'}
+              email:     {this.state.myAccount.userPersonalInfo.email + '\n'}
+              score:    {this.state.myAccount.userPersonalInfo.score + '\n'}
             </Text>
 
 
@@ -116,6 +129,7 @@ export default class MyAccount extends Component {
             <Button style={styles.button} onPress={this.resetMapItems} title="RESET MAP PINS"/>
             <Button onPress={() => {this.logoutAndNavigate()}} title="Logout"/>
             <Button onPress={() => { this.props.navigation.navigate('NewSH') }} title="Create a new Scavenger Hunt" />
+            <Button onPress={() => { this.props.navigation.navigate('Map') }} title="Go to chosen map" />
             {(this.state.myAccount.itemBank) ?
               this.state.myAccount.itemBank.map((item) => (
                 <View>
@@ -131,6 +145,7 @@ export default class MyAccount extends Component {
               : null
             }
 				  </View>
+
           :
           <View>
             <Text style={styles.points}>you are not logged in </Text>

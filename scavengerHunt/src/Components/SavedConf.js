@@ -5,6 +5,7 @@ import styles from '../../stylesheet'
 
 
 
+
 export default class SavedConf extends Component {
   constructor(props) {
     super(props)
@@ -13,6 +14,7 @@ export default class SavedConf extends Component {
   render() {
     return (
       <View style={styles.container}>
+			<Image source={require('../../public/mapsaved.png')}/>
       <Text style={styles.welcome}>
       Map saved!
       </Text>
