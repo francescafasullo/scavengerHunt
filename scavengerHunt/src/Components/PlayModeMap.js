@@ -126,7 +126,7 @@ export default class PlayModeMap extends Component {
     else
     {
       let distanceFromUser = getDistance(this.state.latitude,this.state.longitude,coordinate.latitude,coordinate.longitude)
-      if(distanceFromUser <= 0.1)
+      if(distanceFromUser <= 1)
       {
         //find the item the user pressed on in the user's map
         let itemOnMap = this.findItemFromUserCureMap(key)

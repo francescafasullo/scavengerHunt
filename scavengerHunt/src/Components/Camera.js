@@ -90,29 +90,23 @@ export default class CameraScreen extends Component {
           }}
           style={styles.preview}
           aspect={Camera.constants.Aspect.fill}>
-          {pickAnimatableImage(this.props.image)}
+          
 
           <View style={styles.arDisplay}>
-            <Animatable.Image
-                animation="slideInDown"
-                iterationCount={10}
-                direction="alternate"
-                style={styles.overlay}
-                source={require('../../public/pusheenSunglasses.png')}
-                resizeMode="contain"
-              >
-              </Animatable.Image>
-              </View>
-              <View style={styles.view_no_background}>
-              <Animatable.Text
-              animation="slideInDown"
-              iterationCount={10}
-              direction="alternate"
-              style={styles.arText}
-              >
-              You Have Collected {"\n"}a Pusheen
-            </Animatable.Text>
-            </View>
+          <View>
+          {pickAnimatableImage(this.props.image)}
+        
+          </View>
+          <View style={styles.view_no_background}>
+          <Animatable.Text
+          animation="slideInDown"
+          iterationCount={10}
+          direction="alternate"
+          style={styles.arText}
+          >
+          You Have Collected {"\n"}a Pusheen
+          </Animatable.Text>
+          </View>
           </View>
           <View style={styles.camera_buttons_view}>
           <View style={styles.capture}>
@@ -267,4 +261,4 @@ export const pickAnimatableImage = (imagePath) => {
     }
   }
 
-
+//{pickAnimatableImage(this.props.image)}
