@@ -27,22 +27,17 @@ export default styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F0F8FF'
-
   },
   myAccount_title: {
     fontSize: 40,
     textAlign: 'center',
     margin: 20,
     color: '#808080',
-
-
   },
   myAccount_buttons_view :{
-
     flex: 1,
     alignItems: 'flex-start',
     top: 5
-
   },
   myAccount_bank_list_view:{
     flex: 1,
@@ -56,22 +51,17 @@ export default styles = StyleSheet.create({
     borderRadius:20,
     backgroundColor: '#538cc6',
     margin: 10,
-    color: 'black'
-
-
   },
   myAccount_image: {
     width: 60,
     height: 60,
     justifyContent: 'center'
-  
   },
   myAccount_picker_view: {
     marginBottom: 5,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center'
-
   },
   //Camera and SignInSignUp
   instructions: {
@@ -94,7 +84,6 @@ export default styles = StyleSheet.create({
     flex: 0,
     //flexDirection: 'row',
     backgroundColor: 'rgba(255,255,255,0.5)',
-    color: '#000000',
     borderRadius: 5,
     padding: 10,
     margin: 40,
@@ -105,7 +94,6 @@ export default styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.5)',
     color: '#000000',
 },
-
   overlay: {
      top: 100,
      left: 50,
@@ -118,7 +106,6 @@ export default styles = StyleSheet.create({
     left: 0,
     right: 0,
     flex: 1,
-    
     //flexDirection: 'column',
     justifyContent: 'space-between',
   },
