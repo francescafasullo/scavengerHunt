@@ -32,21 +32,45 @@ export default styles = StyleSheet.create({
   myAccount_title: {
     fontSize: 40,
     textAlign: 'center',
-    margin: 10,
-    color: '#808080'
+    margin: 20,
+    color: '#808080',
+
 
   },
   myAccount_buttons_view :{
 
     flex: 1,
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    top: 5
 
   },
+  myAccount_bank_list_view:{
+    flex: 1,
+    alignItems: 'flex-start',
+    top: 10,
+    bottom: 5
+  },
   myAccount_button: {
-    height:45,
-    borderRadius:4,
-    backgroundColor: '#808080'
+    height:40,
+    width: 200,
+    borderRadius:20,
+    backgroundColor: '#538cc6',
+    margin: 10,
+    color: 'black'
 
+
+  },
+  myAccount_image: {
+    width: 60,
+    height: 60,
+    justifyContent: 'center'
+  
+  },
+  myAccount_picker_view: {
+    marginBottom: 5,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
 
   },
   //Camera and SignInSignUp

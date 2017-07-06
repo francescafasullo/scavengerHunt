@@ -11,17 +11,6 @@ import styles, { mapStyle } from '../../stylesheet'
 const {height, width} = Dimensions.get('window')
 
 
-<<<<<<< HEAD
-/*
-container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#BFD8D2'
-  },
-*/
-=======
-
->>>>>>> master
 
 export default class PlayModeMap extends Component {
   constructor(props) {
