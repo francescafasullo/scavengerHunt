@@ -35,6 +35,7 @@ export const resetBank = () => ({type: RESET_BANK})
 export const setCurrentMapItems = (items) => ({type: SET_CUR_MAP_ITEMS, items})
 
 
+
 /* ------------------ reducer ------------------------ */
 const initialMyAccountState = {
 	maps: [],
@@ -152,7 +153,7 @@ export const newMap = (mapName, description, location, userId) => dispatch => {
 export const newItem = (name, description, latitude, longitude, imagePath, mapId) => dispatch => {
 	let itemKey = database.ref('scavenger_hunt_items/').push().key
 	writeUserScavengerHuntItem(itemKey, name, description, latitude, longitude, imagePath)
-	geoFire.set({ [itemKey]: [latitude, longitude]})
+	geoFire.set({ [itemKey]: [latitude, longitude] })
 	associateScavengerItemToMap(mapId, itemKey)
 
 	let selectedMap = readOneMap(mapId)
@@ -194,20 +195,22 @@ export const addItemToBank = (key) => dispatch => {
 		'date': ""
 	}
 	item.date = new Date()
-	itemPromise.then(data=> {
+	itemPromise.then(data => {
 		item.name = data.name
 		item.image = data.imagePath
-		return axios.get(`http://maps.googleapis.com/maps/api/geocode/json?latlng=${data.latitude},${data.longitude}&sensor=true`)
+		return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${data.latitude},${data.longitude}&sensor=true`)
 	})
 	.then((data)=>{
 		if(data.data){
 			if(data.data.results){
 				item.address = data.data.results[0].formatted_address
 			}
+			dispatch(addVisitedItemToBank(item))
 		}
-		dispatch(addVisitedItemToBank(item))
+		}).catch(err => console.log(err))
 
-	})
+	
+
 
 
 }
