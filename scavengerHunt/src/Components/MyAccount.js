@@ -74,7 +74,7 @@ export default class MyAccount extends Component {
             </View>
             <View style={{flexDirection: 'row'}}>
              <Text style={styles.info_label}>
-            email: 
+            email:
             </Text>
             <Text style={styles.points}>
                 {' '+ this.state.myAccount.userPersonalInfo.email + '\n'}
@@ -89,16 +89,17 @@ export default class MyAccount extends Component {
                 }} title="Edit map items" />
               </View>
               : null }
-            
+
             {(this.state.myAccount.maps.length) ?
             <Picker name="Your maps:"
             selectedValue={this.state.myAccount.maps}
-            onValueChange={(itemValue, itemIndex) => this.setSelectedMap(itemIndex)}>
+            onValueChange={(itemValue, itemIndex) => this.setSelectedMap(itemIndex - 1)}>
+              <Picker.Item label="Select a map to play!" />
             {
                 this.state.myAccount.maps.map((map, index) => (
                   <Picker.Item key ={index} label={map.mapname} value={map.mapname} />
-                  
-                  
+
+
                 )
               )
             }

@@ -90,22 +90,19 @@ export default class CameraScreen extends Component {
           }}
           style={styles.preview}
           aspect={Camera.constants.Aspect.fill}>
-          
+
 
           <View style={styles.arDisplay}>
           <View>
           {pickAnimatableImage(this.props.image)}
-        
+
           </View>
           <View style={styles.view_no_background}>
-          <Animatable.Text
-          animation="slideInDown"
-          iterationCount={10}
-          direction="alternate"
+          <Text
           style={styles.arText}
           >
           You Have Collected {"\n"}a Pusheen
-          </Animatable.Text>
+          </Text>
           </View>
           </View>
           <View style={styles.camera_buttons_view}>
@@ -130,7 +127,7 @@ export const pickAnimatableImage = (imagePath) => {
         return (
           <Animatable.Image
                 animation="slideInDown"
-                iterationCount={10}
+                iterationCount={30}
                 direction="alternate"
                 style={styles.overlay}
                 source={require('../../public/djPusheen.png')}
@@ -142,7 +139,7 @@ export const pickAnimatableImage = (imagePath) => {
         return (
           <Animatable.Image
                 animation="slideInDown"
-                iterationCount={10}
+                iterationCount={30}
                 direction="alternate"
                 style={styles.overlay}
                 source={require('../../public/iceCreamPusheen.png')}
@@ -154,7 +151,7 @@ export const pickAnimatableImage = (imagePath) => {
         return (
           <Animatable.Image
                 animation="slideInDown"
-                iterationCount={10}
+                iterationCount={30}
                 direction="alternate"
                 style={styles.overlay}
                 source={require('../../public/laptopPusheen.png')}
@@ -166,7 +163,7 @@ export const pickAnimatableImage = (imagePath) => {
         return (
           <Animatable.Image
                 animation="slideInDown"
-                iterationCount={10}
+                iterationCount={30}
                 direction="alternate"
                 style={styles.overlay}
                 source={require('../../public/mermaidPusheen.png')}
@@ -178,7 +175,7 @@ export const pickAnimatableImage = (imagePath) => {
         return (
           <Animatable.Image
                 animation="slideInDown"
-                iterationCount={10}
+                iterationCount={30}
                 direction="alternate"
                 style={styles.overlay}
                 source={require('../../public/museumPusheen.png')}
@@ -190,7 +187,7 @@ export const pickAnimatableImage = (imagePath) => {
         return (
           <Animatable.Image
                 animation="slideInDown"
-                iterationCount={10}
+                iterationCount={30}
                 direction="alternate"
                 style={styles.overlay}
                 source={require('../../public/noodlePusheen.png')}
@@ -202,7 +199,7 @@ export const pickAnimatableImage = (imagePath) => {
         return (
           <Animatable.Image
                 animation="slideInDown"
-                iterationCount={10}
+                iterationCount={30}
                 direction="alternate"
                 style={styles.overlay}
                 source={require('../../public/pusheen.png')}
@@ -214,7 +211,7 @@ export const pickAnimatableImage = (imagePath) => {
         return (
           <Animatable.Image
                 animation="slideInDown"
-                iterationCount={10}
+                iterationCount={30}
                 direction="alternate"
                 style={styles.overlay}
                 source={require('../../public/pusheenSunglasses.png')}
@@ -226,7 +223,7 @@ export const pickAnimatableImage = (imagePath) => {
         return (
           <Animatable.Image
                 animation="slideInDown"
-                iterationCount={10}
+                iterationCount={30}
                 direction="alternate"
                 style={styles.overlay}
                 source={require('../../public/restaurantPusheen.png')}
@@ -238,7 +235,7 @@ export const pickAnimatableImage = (imagePath) => {
         return (
           <Animatable.Image
                 animation="slideInDown"
-                iterationCount={10}
+                iterationCount={30}
                 direction="alternate"
                 style={styles.overlay}
                 source={require('../../public/scooterPusheen.png')}
@@ -250,7 +247,7 @@ export const pickAnimatableImage = (imagePath) => {
         return (
           <Animatable.Image
                 animation="slideInDown"
-                iterationCount={10}
+                iterationCount={30}
                 direction="alternate"
                 style={styles.overlay}
                 source={require('../../public/unicornPusheen.png')}
@@ -261,4 +258,3 @@ export const pickAnimatableImage = (imagePath) => {
     }
   }
 
-//{pickAnimatableImage(this.props.image)}

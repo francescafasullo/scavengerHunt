@@ -27,6 +27,8 @@ import Map from './src/Components/Map'
 import Explore from './src/Components/Explore'
 import MoreInfo from './src/Components/MoreInfo'
 
+console.disableYellowBox = true
+
 const scavengerHuntRouter = StackNavigator({
   Home: {
     screen: HomeScreen,
@@ -70,7 +72,7 @@ const scavengerHuntRouter = StackNavigator({
   Explore: {
     screen: Explore
   },
-  MoreInfo: 
+  MoreInfo:
   {
     screen: MoreInfo
   }

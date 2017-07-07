@@ -186,10 +186,8 @@ export default class NewSH extends Component {
 		})
 	}
 
-	saveSH = (mapName, mapRegion, description, location, places, userId) => {
-		store.dispatch(newMap(mapName, mapRegion, description, location, places, userId))
-		console.log("user state in newMap", this.state.user)
-
+	saveSH = (mapName, description, location, userId) => {
+		store.dispatch(newMap(mapName, description, location, userId))
 	}
 
 	clear = () => {
@@ -209,6 +207,7 @@ export default class NewSH extends Component {
 	}
 
 	render() {
+		console.log('state ~~~~~', this.state)
 		return (
 			<View style={styles.pcontainer}>
 				<Text style={styles.info_label}>Enter a name and description for your new map:</Text>
@@ -231,29 +230,6 @@ export default class NewSH extends Component {
 					this.saveSH(this.state.mapName, this.state.description, this.state.location, this.state.userId)
 					this.props.navigation.navigate('AddItems')
 				}} title="Save Map" />
-				<Button onPress={this.clear} title="Clear all markers" />
-				<MapView
-					onPress={this.addMarker}
-					provider={PROVIDER_GOOGLE}
-					customMapStyle={mapStyle}
-					style={styles.map}
-					region={this.state.mapRegion}
-					onRegionChange={this.onRegionChange}
-					showsBuildings
-				>
-					{
-						(this.state.places || []).map(
-							(place, index) =>
-								<MapView.Marker
-									image={require('../../public/pusheenMarker.png')}
-									key={index}
-									coordinate={place.coordinate}
-									title={place.title}
-									description={place.description}
-								/>
-						)
-					}
-				</MapView>
 			</View>
 		)
 	}

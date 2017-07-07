@@ -66,8 +66,8 @@ export default class AddItems extends Component {
       mapRegion: {
         latitude: 40.7128,
         longitude: -74.0059,
-        latitudeDelta:  40,
-        longitudeDelta: 40
+        latitudeDelta:  2,
+        longitudeDelta: 2
       },
       lastLat: null,
       lastLong: null,
@@ -219,6 +219,7 @@ export default class AddItems extends Component {
   }
 
   render() {
+    console.log('state ^^^^^^', this.state)
     return (
       <View style={styles.container}>
         <ScrollView
@@ -246,7 +247,6 @@ export default class AddItems extends Component {
                   <Picker
                     onValueChange={(value, index) => {
                       this.setState({selectedImage: pusheenImages[index]})
-                      console.log('!!!!!!!!!!!', this.state.selectedImage)
                       let selectedPlaceholder = Object.assign({}, this.state.selectedPlace)
                       selectedPlaceholder.imagePath = this.state.selectedImage.imagePath
                       this.setState({ selectedPlace: selectedPlaceholder})
@@ -265,6 +265,7 @@ export default class AddItems extends Component {
                   <Text>Click a place on the map to add a pin!:</Text>
                   <Button onPress={() => {
                     this.savePlacesToSH(this.state.places)
+                    this.props.navigation.navigate('PlayModeMap')
                   }}
                     title="Save Places" />
                 </View>
