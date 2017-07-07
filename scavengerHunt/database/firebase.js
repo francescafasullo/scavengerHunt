@@ -30,11 +30,10 @@ function writeUserData(userId, name, email, score, profile_picURL) {
 }
 
 
-function writeUserScavengerHuntMap(key, name, mapRegion, description, location, date){
+function writeUserScavengerHuntMap(key, name, description, location, date){
   database.ref('scavenger_hunt_map/' + key).set({
     key: key,
     mapname: name,
-    mapRegion: mapRegion,
     description: description,
 	  location: location,
     date: date
@@ -246,28 +245,6 @@ function readUserInfo(userId) {
 	})
 }
 
-
-
-// function readMapsItemsInfo(items) {
-
-//   let res = items.map((item) => {
-//     return database.ref('/scavenger_hunt_items/' + item).once('value')
-//   });
-//   return Promise.all(res).then(values => {
-
-//     let itemInfoArr = values.map(item => {
-//       return item.val();
-//     })
-//     return itemInfoArr;
-
-//   })
-//     .catch((error) => { console.log(error) })
-
-// }
-
-
-
-
 function readUserInfo(userId) {
   let user = {};
   return database.ref('/users/' + userId).once('value')
@@ -280,55 +257,7 @@ function readUserInfo(userId) {
     })
 }
 
-
-
-if(module === require.main){
-
-	//seeding scavenger hunt items
-
-	//let userKey = createOneUser("jonny", "jjo@gmail.com", "123456");
-	// // writeUserData("iIAz1Ht7TIO5vK0HPQQRaNjyYPv2", "jonny", "jjo@gmail.com",500,"url");
-	//  let userKey = "iIAz1Ht7TIO5vK0HPQQRaNjyYPv2";
-	//  let places = createItemsToDefaultMapDownTown();
-	// // //newMap("NYC down town trip", "restaurants and museum downtown", "NYC", places,userKey);
-	//  //places = createItemsToDefaultMapUpTown();
-	//  newMap("NYC up town trip", "cool places wall street area", "NYC", places,userKey);
-
-// writeScavengerHuntItem(1,'Open Market', '15 William St, New York, NY 10005, USA', 40.7052066, -74.0103288999999);
-// writeScavengerHuntItem(2, 'La Pain Quotidien', '85 Broad St, New York, NY 10005, USA', 40.7039915, -74.0110917);
-// writeScavengerHuntItem(3, 'dig inn', '80 Broad St, New York, NY 10004, USA', 40.7043408, -74.0118572);
-// writeScavengerHuntItem(4, 'Cipriani Club 55', '55 Wall St, New York, NY 10005, USA', 40.7060794, -74.0093213);
-// writeScavengerHuntItem(5, 'Haru Sushi', '1 Wall St, New York, NY 10005', 40.7071269, -74.0118077999999);
-// writeScavengerHuntItem(6, 'Museum of American Finance', '48 Wall St, New York, NY 10005', 40.7065557, -74.0090503);
-// writeScavengerHuntItem(7, 'Federal Hall', '26 Wall St, New York, NY 10005, USA', 40.707258, -74.0103563999999);
-// writeScavengerHuntItem(8, 'Keya Gallery', '14 Wall Stt, New York, NY 10005', 40.7076346, -74.0107747)
-//name, address, latitude, longitude
-// writeScavengerHuntItem('Nica Trattoria','354 E 84th St, New York, NY 10028',40.775725,-73.950204);
-// writeScavengerHuntItem('X BAR | BISTRO','316 E 84th St, New York, NY 10028',40.776032,-73.951999);
-// writeScavengerHuntItem('Italianissimo Ristorante','307 E 84th St, New York, NY 10028',40.776507,73.951963);
-// writeScavengerHuntItem('Raj Gallery','315 E 84th St, New York, NY 10028',40.776387,-73.951688);
-
-// //seeding categories
-// writeCategory('Restaurant', 'A place to dine');
-// writeCategory('Cafe', 'A plcae to drink coffee and eat snacks');
-// writeCategory('Bar', 'A place to go for drinks');
-// writeCategory('Museum', 'a building in which objects of historical, scientific, artistic, or cultural interest are stored and exhibited');
-// writeCategory('Gallery', 'a room or building for the display or sale of works of art');
-
-  // //seeding users in the data base
-  // writeUserData(1, "Stella", "stella@stella.stella",0,"https://i.imgur.com/O5wwwaG.jpg");
-  // writeUserData(2,"Emma","emma@yahoo.com",0,"https://i.imgur.com/akaLrwh.jpg");
-  // writeUserData(3,"John", "john@gmail.com",0,"http://i.imgur.com/xoH7gvu.jpg");
-
-  // //seeding scavenger hunt maps
-  // writeScavengerHuntMap("NYC john map",3, "john's trip to nyc may 2017","05052017");
-  // writeScavengerHuntMap("NYC wall street",3, "nice places to visit in wall street area","20062017");
-  // writeScavengerHuntMap("wall street dining",2, "great eating spots in wall street area","04032017");
-  // writeScavengerHuntMap("wall street tour",1, "a one day tour in wall street area NYC","10202016");
-
-
-
-
+if(module === require.main) {
   //Seeds scavenger hunt list items in geoFire
   geoFire.set({
     '1': [40.7052066, -74.0103288999999],
@@ -351,25 +280,7 @@ if(module === require.main){
 
     console.log('Error: ' + error)
   })
-
-
-
-  // // seeding categories
-  // writeCategory('Restaurant', 'A place to dine');
-  // writeCategory('Cafe', 'A plcae to drink coffee and eat snacks');
-  // writeCategory('Bar', 'A place to go for drinks');
-  // writeCategory('Museum', 'a building in which objects of historical, scientific, artistic, or cultural interest are stored and exhibited');
-  // writeCategory('Gallery', 'a room or building for the display or sale of works of art');
-
-
-
-
-
 }
-
-
-
-
 
 module.exports = {
   database: database,
@@ -387,11 +298,3 @@ module.exports = {
   readItemInfo: readItemInfo,
   readMapsItemsInfo: readMapsItemsInfo
 }
-
-
-
-
-
-
-
-
