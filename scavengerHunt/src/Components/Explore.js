@@ -153,7 +153,7 @@ Tap for more info!`}
                       <Text>
 {`${attraction.name}
 TripExpert Score: ${attraction.tripexpert_score ? attraction.tripexpert_score : 'N/A'}
-`}
+Tap for more info!`}
                       </Text>
                     </View>
                   </MapView.Callout>
