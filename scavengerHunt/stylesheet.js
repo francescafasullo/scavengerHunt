@@ -149,6 +149,21 @@ export default styles = StyleSheet.create({
 
 
   },
+  new_sh_instructions: {
+    fontSize: 15,
+    textAlign: 'left',
+    fontWeight: 'bold',
+    color: '#808080'
+  },
+  new_sh_button: {
+    height:40,
+    width: 130,
+    borderRadius:20,
+    backgroundColor: '#D8BFD8',
+    margin: 10,
+    color: 'black'
+
+  },
   //PlayModeMap
   marker: {
     height: 100,
@@ -162,7 +177,7 @@ export default styles = StyleSheet.create({
     pcontainer: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#BFD8D2'
+    backgroundColor: '#F0F8FF'
   },
   //NewSH
   	picker: {

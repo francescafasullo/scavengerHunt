@@ -37,6 +37,7 @@ export default class MyAccount extends Component {
   }
 
   setSelectedMap(mapIndex) {
+    console.log('@@@@@ map Index', mapIndex)
     store.dispatch(setUserSelectedMap(this.state.myAccount.maps[mapIndex]));
     store.dispatch(fetchCurrentMapItems(this.state.myAccount.maps[mapIndex].key))
   }
@@ -93,7 +94,8 @@ export default class MyAccount extends Component {
             {(this.state.myAccount.maps.length) ?
             <Picker name="Your maps:"
             selectedValue={this.state.myAccount.maps}
-            onValueChange={(itemValue, itemIndex) => this.setSelectedMap(itemIndex)}>
+            onValueChange={(itemValue, itemIndex) => this.setSelectedMap(itemIndex-1)}>
+            <Picker.Item label={"select a map"} />
             {
                 this.state.myAccount.maps.map((map, index) => (
                   <Picker.Item key ={index} label={map.mapname} value={map.mapname} />
@@ -105,7 +107,7 @@ export default class MyAccount extends Component {
             </Picker>
             : null }
             <View style={styles.myAccount_buttons_view }>
-            <Button buttonStyle={styles.myAccount_button} onPress={this.resetMapItems} title="RESET MAP PINS" />
+            <Button buttonStyle={styles.myAccount_button} onPress={this.resetMapItems} title="Reeset map pins" />
             <Button buttonStyle={styles.myAccount_button} onPress={() => { this.props.navigation.navigate('NewSH') }} title="Create a new Scavenger Hunt" />
             <Button buttonStyle={styles.myAccount_button} onPress={() => {this.logoutAndNavigate()}} title="Logout"/>
             </View>

@@ -136,29 +136,15 @@ export const fetchUserPersonalInfo = (userId) => dispatch => {
 
 }
 
-export const newMap = (mapName, mapRegion, description, location, places, userId) => dispatch => {
+export const newMap = (mapName, description, location, userId) => dispatch => {
 	var mapKey = database.ref('scavenger_hunt_map/').push().key
 	var date = new Date()
-	writeUserScavengerHuntMap(mapKey, mapName, mapRegion, description, location, date)
-	var itemKeys = []
-	for (i = 0; i < places.length; i++) {
-		itemKeys.push(database.ref('scavenger_hunt_items/').push().key)
-		database.ref('scavenger_hunt_items/' + itemKeys[i]).set({
-			mapName: mapName,
-			category: "Hidden Pusheen",
-			latitude: places[i].coordinate.latitude,
-			longitude: places[i].coordinate.longitude
-		})
-	}
-
-	for (i = 0; i < itemKeys.length; i++) {
-		associateScavengerItemToMap(mapKey, itemKeys[i])
-	}
+	writeUserScavengerHuntMap(mapKey, mapName, description, location, date)
 
 	let selectedMap = readOneMap(mapKey)
 
 	selectedMap.then((map) => {
-		dispatch(setCurMap(map))
+		dispatch(addMap(map))
 	})
 	associateUserToMap(userId, mapKey)
 }

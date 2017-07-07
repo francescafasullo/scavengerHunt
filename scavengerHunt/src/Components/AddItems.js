@@ -66,8 +66,8 @@ export default class AddItems extends Component {
       mapRegion: {
         latitude: 40.7128,
         longitude: -74.0059,
-        latitudeDelta:  40,
-        longitudeDelta: 40
+        latitudeDelta:  0.3,
+        longitudeDelta: 0.3
       },
       lastLat: null,
       lastLong: null,
@@ -117,6 +117,7 @@ export default class AddItems extends Component {
 
   savePlacesToSH(places) {
     places.map((place) => {
+      console.log('in save places user', this.state.user)
       return store.dispatch(newItem(place.name, place.description, place.coordinate.latitude, place.coordinate.longitude, place.imagePath, this.state.user.map.key))
     })
   }

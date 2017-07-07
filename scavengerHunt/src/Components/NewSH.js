@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, TextInput, View, Button, Image, Picker, TouchableOpacity, Dimensions } from 'react-native'
+import { AppRegistry, StyleSheet, Text, TextInput, View, Image, Picker, TouchableOpacity, Dimensions } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import store from '../../store'
 import { newMap, setUserSelectedMap } from '../reducers/myAccountReducer'
 import styles, { mapStyle } from '../../stylesheet'
+import {Button} from 'react-native-elements'
 
 const { height, width } = Dimensions.get('window')
 
@@ -186,10 +187,8 @@ export default class NewSH extends Component {
 		})
 	}
 
-	saveSH = (mapName, mapRegion, description, location, places, userId) => {
-		store.dispatch(newMap(mapName, mapRegion, description, location, places, userId))
-		console.log("user state in newMap", this.state.user)
-
+	saveSH = (mapName, description, location, userId) => {
+    store.dispatch(newMap(mapName, description, location, userId))
 	}
 
 	clear = () => {
@@ -210,8 +209,8 @@ export default class NewSH extends Component {
 
 	render() {
 		return (
-			<View style={styles.pcontainer}>
-				<Text style={styles.info_label}>Enter a name and description for your new map:</Text>
+			<View style={styles.new_sh_instructions}>
+				<Text style={styles.info_label}>Enter a map name and description:</Text>
 				<TextInput
 					style={{ height: 40 }}
 					placeholder="Map Name"
@@ -227,33 +226,13 @@ export default class NewSH extends Component {
 					placeholder="Location"
 					onChangeText={this.updateLocation}
 				/>
-				<Button onPress={() => {
+				<View style={{flexDirection: 'row'}}>
+				<Button buttonStyle={styles.new_sh_button} onPress={() => {
 					this.saveSH(this.state.mapName, this.state.description, this.state.location, this.state.userId)
 					this.props.navigation.navigate('AddItems')
 				}} title="Save Map" />
-				<Button onPress={this.clear} title="Clear all markers" />
-				<MapView
-					onPress={this.addMarker}
-					provider={PROVIDER_GOOGLE}
-					customMapStyle={mapStyle}
-					style={styles.map}
-					region={this.state.mapRegion}
-					onRegionChange={this.onRegionChange}
-					showsBuildings
-				>
-					{
-						(this.state.places || []).map(
-							(place, index) =>
-								<MapView.Marker
-									image={require('../../public/pusheenMarker.png')}
-									key={index}
-									coordinate={place.coordinate}
-									title={place.title}
-									description={place.description}
-								/>
-						)
-					}
-				</MapView>
+				</View>
+				
 			</View>
 		)
 	}
