@@ -6,10 +6,6 @@ import {setUserSelectedMap, fetchUserMaps, resetMap, resetItemBank, fetchCurrent
 import styles from '../../stylesheet'
 import {Button, List, ListItem} from 'react-native-elements'
 
-
-
-
-
 export default class MyAccount extends Component {
   constructor(props) {
     super(props)
@@ -98,20 +94,23 @@ export default class MyAccount extends Component {
             {
                 this.state.myAccount.maps.map((map, index) => (
                   <Picker.Item key ={index} label={map.mapname} value={map.mapname} />
-
-
                 )
               )
             }
             </Picker>
             : null }
             <View style={styles.myAccount_buttons_view }>
-            <Button buttonStyle={styles.myAccount_button} onPress={this.resetMapItems} title="RESET MAP PINS" />
-            <Button buttonStyle={styles.myAccount_button} onPress={() => { this.props.navigation.navigate('NewSH') }} title="Create a new Scavenger Hunt" />
-            <Button buttonStyle={styles.myAccount_button} onPress={() => {this.logoutAndNavigate()}} title="Logout"/>
+              { this.state.myAccount.map.mapname ? <Button buttonStyle={styles.myAccount_button} onPress={this.resetMapItems} title="Reset Map Pins" /> : null }
+              { this.state.myAccount.map.mapname ? <Button buttonStyle={styles.myAccount_button} onPress={() => this.props.navigation.navigate('Map')} title="View Chosen Map" /> : null }
+              <Button buttonStyle={styles.myAccount_button} onPress={() => {
+                this.setState({items: []})
+                store.dispatch(setUserSelectedMap({}))
+                this.props.navigation.navigate('NewSH')
+              }} title="New Scavenger Hunt" />
+              <Button buttonStyle={styles.myAccount_button} onPress={() => {this.logoutAndNavigate()}} title="Logout"/>
             </View>
             <View style={styles.myAccount_bank_list_view}>
-            <Text style={styles.info_label}>Places you have been:</Text>
+              <Text style={styles.info_label}>Places you've visited:</Text>
             </View>
             {(this.state.myAccount.itemBank) ?
               <List containerStyle={{marginBottom: 20}}>
@@ -142,7 +141,7 @@ export default class MyAccount extends Component {
 }
 
 //a function that converts input image path to am AnimatableImage with that path
-export const pickAvatarImage = (imagePath,name,address,date) => {
+export const pickAvatarImage = (imagePath, name, address, date) => {
     switch(imagePath) {
       case '../../public/djPusheen.png':
         return (
