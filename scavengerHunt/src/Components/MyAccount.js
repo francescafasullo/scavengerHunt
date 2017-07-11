@@ -49,6 +49,7 @@ export default class MyAccount extends Component {
   resetMapItems() {
     store.dispatch(resetMap())
     store.dispatch(resetItemBank())
+    this.props.navigation.navigate('PlayModeMap')
   }
 
   render() {
@@ -107,7 +108,7 @@ export default class MyAccount extends Component {
             </Picker>
             : null }
             <View style={styles.myAccount_buttons_view }>
-            <Button buttonStyle={styles.myAccount_button} onPress={this.resetMapItems} title="Reeset map pins" />
+            <Button buttonStyle={styles.myAccount_button} onPress={this.resetMapItems} title="Reset map pins" />
             <Button buttonStyle={styles.myAccount_button} onPress={() => { this.props.navigation.navigate('NewSH') }} title="Create a new Scavenger Hunt" />
             <Button buttonStyle={styles.myAccount_button} onPress={() => {this.logoutAndNavigate()}} title="Logout"/>
             </View>
