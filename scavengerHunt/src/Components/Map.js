@@ -8,6 +8,7 @@ import {mapStyle} from '../../stylesheet'
 
 const { height, width } = Dimensions.get('window')
 
+
 export default class Map extends Component {
 	constructor(props) {
 		super(props)

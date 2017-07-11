@@ -100,6 +100,7 @@ export default class MyAccount extends Component {
             </Picker>
             : null }
             <View style={styles.myAccount_buttons_view }>
+
               { this.state.myAccount.map.mapname ? <Button buttonStyle={styles.myAccount_button} onPress={this.resetMapItems} title="Reset Map Pins" /> : null }
               { this.state.myAccount.map.mapname ? <Button buttonStyle={styles.myAccount_button} onPress={() => this.props.navigation.navigate('Map')} title="View Chosen Map" /> : null }
               <Button buttonStyle={styles.myAccount_button} onPress={() => {
@@ -108,6 +109,7 @@ export default class MyAccount extends Component {
                 this.props.navigation.navigate('NewSH')
               }} title="New Scavenger Hunt" />
               <Button buttonStyle={styles.myAccount_button} onPress={() => {this.logoutAndNavigate()}} title="Logout"/>
+
             </View>
             <View style={styles.myAccount_bank_list_view}>
               <Text style={styles.info_label}>Places you've visited:</Text>
