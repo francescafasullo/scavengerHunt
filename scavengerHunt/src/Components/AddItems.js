@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, TextInput, View, Button, Image, Picker, TouchableOpacity, Dimensions, ScrollView } from 'react-native'
+import { AppRegistry, StyleSheet, Text, TextInput, View, Image, Picker, TouchableOpacity, Dimensions, ScrollView } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
 import store from '../../store'
 import { newMap, setUserSelectedMap, newItem, fetchCurrentMapItems } from '../reducers/myAccountReducer'
+import { Button } from 'react-native-elements'
+import styles from '../../stylesheet'
 
 const {height, width} = Dimensions.get('window')
 
@@ -19,31 +21,6 @@ const pusheenImages = [
 {name: 'Scooter Pusheen', imagePath: '../../public/scooterPusheen.png'},
 {name: 'Unicorn Pusheen', imagePath: '../../public/unicornPusheen.png'}
 ]
-
-const styles = StyleSheet.create({
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  picker: {
-    width: 300,
-    alignSelf: 'center'
-  },
-  map: {
-    width: width,
-    height: 500,
-    alignSelf: 'center',
-  },
-  image: {
-    width: 200
-  },
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#BFD8D2'
-  },
-})
 
 export default class AddItems extends Component {
   constructor(props) {
@@ -66,8 +43,8 @@ export default class AddItems extends Component {
       mapRegion: {
         latitude: 40.7128,
         longitude: -74.0059,
-        latitudeDelta:  2,
-        longitudeDelta: 2
+        latitudeDelta:  1,
+        longitudeDelta: 1
       },
       lastLat: null,
       lastLong: null,
@@ -219,9 +196,8 @@ export default class AddItems extends Component {
   }
 
   render() {
-    console.log('state ^^^^^^', this.state)
     return (
-      <View style={styles.container}>
+      <View style={styles.myAccount_container}>
         <ScrollView
           showsVerticalScrollIndicator={true}
         >
@@ -229,7 +205,7 @@ export default class AddItems extends Component {
           {
             this.state.selectedPlace.title ?
                 <View>
-                  <Text>Specify a name, description, and Pusheen for your pin!</Text>
+                  <Text style={styles.info_label}>Specify a name, description, and Pusheen for your pin!</Text>
                   <TextInput
                     style={{ height: 40 }}
                     placeholder="Pin Name"
@@ -241,9 +217,9 @@ export default class AddItems extends Component {
                     onChangeText={this.updatePinDescription}
                   />
                   { this.state.selectedImage.imagePath ?
-                    <Text>Selected Pusheen: {this.state.selectedImage.name}</Text>
+                    <Text style={styles.info_label}>Selected Pusheen: {this.state.selectedImage.name}</Text>
                   : null }
-                  <Button onPress={() => this.addPinToPlaces(this.state.selectedPlace)} title="Save Pin" />
+                  <Button buttonStyle={styles.addItems_button} onPress={() => this.addPinToPlaces(this.state.selectedPlace)} title="Save Pin" />
                   <Picker
                     onValueChange={(value, index) => {
                       this.setState({selectedImage: pusheenImages[index]})
@@ -259,11 +235,13 @@ export default class AddItems extends Component {
                         )
                     }) }
                   </Picker>
-                  { this.state.selectedImage.name ? this.pickImage(this.state.selectedImage.imagePath) : null }
+                    <View style={styles.pusheen_view}>
+                      { this.state.selectedImage.name ? this.pickImage(this.state.selectedImage.imagePath) : null }
+                    </View>
                 </View> :
                 <View>
-                  <Text>Click a place on the map to add a pin!:</Text>
-                  <Button onPress={() => {
+                  <Text style={styles.info_label}>Click a place on the map to add a pin!:</Text>
+                  <Button buttonStyle={styles.addItems_button} onPress={() => {
                     this.savePlacesToSH(this.state.places)
                     this.props.navigation.navigate('PlayModeMap')
                   }}
@@ -314,99 +292,3 @@ export default class AddItems extends Component {
     )
   }
 }
-
-export const pickImage = (imagePath) => {
-    switch(imagePath) {
-      case '../../public/djPusheen.png':
-        return (
-          <Image
-            source={require('../../public/djPusheen.png')}
-            style={styles.image}
-          />
-        )
-        break
-      case '../../public/iceCreamPusheen.png':
-        return (
-          <Image
-            source={require('../../public/iceCreamPusheen.png')}
-            style={styles.image}
-          />
-        )
-        break
-      case '../../public/laptopPusheen.png':
-        return (
-          <Image
-            source={require('../../public/laptopPusheen.png')}
-            style={styles.image}
-          />
-        )
-        break
-      case '../../public/mermaidPusheen.png':
-        return (
-          <Image
-            source={require('../../public/mermaidPusheen.png')}
-            style={styles.image}
-          />
-        )
-        break
-      case '../../public/museumPusheen.png':
-        return (
-          <Image
-            source={require('../../public/museumPusheen.png')}
-            style={styles.image}
-          />
-        )
-        break
-      case '../../public/noodlePusheen.png':
-        return (
-          <Image
-            source={require('../../public/noodlePusheen.png')}
-            style={styles.image}
-          />
-        )
-        break
-      case '../../public/pusheen.png':
-        return (
-          <Image
-            source={require('../../public/pusheen.png')}
-            style={styles.image}
-          />
-        )
-        break
-      case '../../public/pusheenSunglasses.png':
-        return (
-          <Image
-            source={require('../../public/pusheenSunglasses.png')}
-            style={styles.image}
-          />
-        )
-        break
-      case '../../public/restaurantPusheen.png':
-        return (
-          <Image
-            source={require('../../public/restaurantPusheen.png')}
-            style={styles.image}
-          />
-        )
-        break
-      case '../../public/scooterPusheen.png':
-        return (
-          <Image
-            source={require('../../public/scooterPusheen.png')}
-            style={styles.image}
-          />
-        )
-        break
-      case '../../public/unicornPusheen.png':
-        return (
-          <Image
-            source={require('../../public/unicornPusheen.png')}
-            style={styles.image}
-          />
-        )
-        break
-    }
-  }
-
-
-

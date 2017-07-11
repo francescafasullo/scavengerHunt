@@ -64,7 +64,7 @@ export default styles = StyleSheet.create({
     width: 60,
     height: 60,
     justifyContent: 'center'
-  
+
   },
   myAccount_picker_view: {
     marginBottom: 5,
@@ -89,7 +89,7 @@ export default styles = StyleSheet.create({
   },
   camera_buttons_view:{
     flexDirection: 'row'
-  }, 
+  },
   capture: {
     flex: 0,
     //flexDirection: 'row',
@@ -98,7 +98,7 @@ export default styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     margin: 40,
-    
+
   },
   camera_button:{
     margin: 5,
@@ -118,7 +118,7 @@ export default styles = StyleSheet.create({
     left: 0,
     right: 0,
     flex: 1,
-    
+
     //flexDirection: 'column',
     justifyContent: 'space-between',
   },
@@ -139,7 +139,7 @@ export default styles = StyleSheet.create({
   points: {
     fontSize: 20,
     textAlign: 'left',
-    
+
   },
   info_label :{
     fontSize: 20,
@@ -147,6 +147,21 @@ export default styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#808080'
 
+
+  },
+  new_sh_instructions: {
+    fontSize: 15,
+    textAlign: 'left',
+    fontWeight: 'bold',
+    color: '#808080'
+  },
+  new_sh_button: {
+    height:40,
+    width: 130,
+    borderRadius:20,
+    backgroundColor: '#D8BFD8',
+    margin: 10,
+    color: 'black'
 
   },
   //PlayModeMap
@@ -162,13 +177,25 @@ export default styles = StyleSheet.create({
     pcontainer: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: '#BFD8D2'
+    backgroundColor: '#F0F8FF'
   },
   //NewSH
-  	picker: {
-		width: 300,
-		alignSelf: 'center'
-	}
+    picker: {
+    width: 300,
+    alignSelf: 'center'
+  },
+  addItems_button: {
+    height:40,
+    width: 150,
+    borderRadius:20,
+    backgroundColor: '#538cc6',
+    margin: 10,
+    color: 'black'
+  },
+  pusheen_view: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
 })
 
  export const mapStyle =

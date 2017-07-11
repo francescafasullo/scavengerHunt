@@ -129,7 +129,7 @@ export default class Explore extends Component {
                     <View>
                       <Text>
 {`${restaurant.name}
-TripExpert Score: ${restaurant.tripexpert_score ? restaurant.tripexpert_score : 'N/A'} 
+TripExpert Score: ${restaurant.tripexpert_score ? restaurant.tripexpert_score : 'N/A'}
 Price: ${restaurant.price_category ? restaurant.price_category : 'N/A'}
 Tap for more info!`}
                       </Text>
