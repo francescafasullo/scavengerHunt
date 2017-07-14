@@ -6,8 +6,15 @@ import { newMap, setUserSelectedMap, newItem, fetchCurrentMapItems } from '../re
 import { Button } from 'react-native-elements'
 import styles from '../../stylesheet'
 
+
+/*
+AddItems component represents the page of adding token-imsges
+to places the user wants to visit as a part of their scavenger hunt
+*/
+
 const {height, width} = Dimensions.get('window')
 
+//creating an array that  holds all possible token-images
 const pusheenImages = [
 {name: 'DJ Pusheen', imagePath: '../../public/djPusheen.png'},
 {name: 'Ice Cream Pusheen', imagePath: '../../public/iceCreamPusheen.png'},
@@ -27,6 +34,8 @@ export default class AddItems extends Component {
     super(props)
     userId = store.getState().auth.userId
     user = store.getState().myAccount
+
+    //binding all class functions
     this.addMarker = this.addMarker.bind(this)
     this.clear = this.clear.bind(this)
     this.addPinToPlaces = this.addPinToPlaces.bind(this)
@@ -35,6 +44,8 @@ export default class AddItems extends Component {
     this.savePlacesToSH = this.savePlacesToSH.bind(this)
     this.pickImage = this.pickImage.bind(this)
     this.getMapItems = this.getMapItems.bind(this)
+    
+    //intializing local state
     this.state = {
       user: user,
       places: [],
@@ -46,6 +57,7 @@ export default class AddItems extends Component {
         latitudeDelta:  1,
         longitudeDelta: 1
       },
+      //latitude and longitude to calculate distance
       lastLat: null,
       lastLong: null,
       location: '',
@@ -54,6 +66,8 @@ export default class AddItems extends Component {
       selectedImage: pusheenImages[6]
     }
   }
+
+  //when rendering subscribe to the redux store
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState());
@@ -61,10 +75,12 @@ export default class AddItems extends Component {
     this.getMapItems(this.state.user.map.key)
   }
 
+  //fetching all pre added places to the map
   getMapItems(mapId) {
     store.dispatch(fetchCurrentMapItems(mapId))
   }
 
+  //adding a place to the scavenger hunt
   addMarker(evt) {
     const { coordinate } = evt.nativeEvent
     this.setState({
@@ -74,24 +90,28 @@ export default class AddItems extends Component {
     })
   }
 
+  //add a pin to the pins array
   addPinToPlaces() {
     let pins = this.state.places.slice()
     pins.push(this.state.selectedPlace)
     this.setState({ places: pins, selectedPlace: {} })
   }
 
+  //add a descriptuion to the pin
   updatePinDescription(text) {
     let update = Object.assign({}, this.state.selectedPlace)
     update.description = text
     this.setState({ selectedPlace: update })
   }
 
+  //add a name the user gives to the pin/place that was added to the scavenger hunt map
   updatePinName(text) {
     let update = Object.assign({}, this.state.selectedPlace)
     update.name = text
     this.setState({ selectedPlace: update })
   }
 
+  //save the new place in the store and data base
   savePlacesToSH(places) {
     places.map((place) => {
       return store.dispatch(newItem(place.name, place.description, place.coordinate.latitude, place.coordinate.longitude, place.imagePath, this.state.user.map.key))
@@ -102,6 +122,7 @@ export default class AddItems extends Component {
     this.setState({ places: [] })
   }
 
+  //a function that gets an token-image path and returns an image tag with that path
   pickImage(imagePath) {
     switch(imagePath) {
       case '../../public/djPusheen.png':
@@ -195,6 +216,7 @@ export default class AddItems extends Component {
     }
   }
 
+  //add place page view
   render() {
     return (
       <View style={styles.myAccount_container}>

@@ -1,30 +1,17 @@
 import React, { Component } from 'react'
-import { AppRegistry, StyleSheet, Text, View, Button, Image, Picker, Dimensions, ScrollView } from 'react-native'
+import { AppRegistry, StyleSheet, Text, View, Image, Picker, Dimensions, ScrollView } from 'react-native'
 import MapView, { Marker, PROVIDER_GOOGLE, MyCustomCalloutView } from 'react-native-maps'
 import store from '../../store'
 import axios from 'axios'
 import { setVenueId } from '../reducers/myAccountReducer'
-// import styles from '../../stylesheet'
+import styles from '../../stylesheet'
+import { Button } from 'react-native-elements'
 
-const { height, width } = Dimensions.get('window')
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#BFD8D2'
-  },
-  text: {
-    margin: 25
-  },
-  subtext: {
-    margin: 10
-  },
-  map: {
-    width: width,
-    height: 500,
-    alignSelf: 'center',
-  },
-});
+/*
+Explore class represents exlore page
+this the page where the user can see pins of recommended places to visit
+on the map
+*/
 
 export default class Explore extends Component {
   constructor(props) {
@@ -41,6 +28,8 @@ export default class Explore extends Component {
     }
   }
 
+  //when component is rendered, subscribe to the store
+  //and set watchId
   componentDidMount = () => {
     this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState());
@@ -59,6 +48,7 @@ export default class Explore extends Component {
     )
   }
 
+  //when a map rigon changes, needs to update the state
   onRegionChange = (region, lastLat, lastLong) => {
     this.setState({
       mapRegion: region,
@@ -68,10 +58,12 @@ export default class Explore extends Component {
     });
   }
 
+  //prior rendering, unsubscrib from the store
   componentWillUnmount = () => {
     this.unsubscribe();
   }
 
+  //fetching restaurants information from tripexpert
   showRestaurants = () => {
     axios.get(`https://api.tripexpert.com/v1/venues?api_key=44871cd75dea94cd486fba9b00171eb6&venue_type_id=2&order_by=distance&latitude=${this.state.latitude}&longitude=${this.state.longitude}`)
       .then(res => {
@@ -82,6 +74,7 @@ export default class Explore extends Component {
     this.setState({ choice: 'restaurants' })
   }
 
+  //fetching attractions other than restaurants from tripexpert
   showAttractions = () => {
     axios.get(`https://api.tripexpert.com/v1/venues?api_key=44871cd75dea94cd486fba9b00171eb6&venue_type_id=3&category_ids&order_by=distance&latitude=${this.state.latitude}&longitude=${this.state.longitude}`)
       .then(res => {
@@ -93,21 +86,19 @@ export default class Explore extends Component {
     this.setState({ choice: 'attractions' })
   }
 
+  //update the store with the chosen place the user fetched info
   infoMarker = (id, latitude, longitude) => {
-    console.log(id)
     store.dispatch(setVenueId(id, latitude, longitude))
   }
 
   render() {
     return (
-      <View style={styles.pcontainer}>
-        <Button onPress={this.showRestaurants}
-          title="Show Restaurants" />
-        <Button onPress={this.showAttractions}
+      <View style={styles.myAccount_container}>
+        <Button buttonStyle={styles.addItems_button} onPress={this.showAttractions}
           title="Show Attractions" />
         <MapView
           provider={PROVIDER_GOOGLE}
-          style={styles.map}
+          style={styles.explore_map}
           region={this.state.mapRegion}
           onRegionChange={this.onRegionChange}
           showsBuildings

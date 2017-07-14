@@ -6,7 +6,10 @@ import {login} from '../reducers/authReducer'
 import {Button} from 'react-native-elements'
 import styles from '../../stylesheet'
 
-
+/*
+Login component represents the login page where the user enters
+their email and passowrd
+*/
 
 export default class Login extends Component {
     constructor(props) {
@@ -16,6 +19,7 @@ export default class Login extends Component {
             password: ""
         }
 
+        //binding class methods
         this.loginAndNavigate = this.loginAndNavigate.bind(this)
         this.updateEmail = this.updateEmail.bind(this)
         this.updatePassword = this.updatePassword.bind(this)
@@ -34,12 +38,14 @@ export default class Login extends Component {
         this.setState({password: text});
     }
 
+    //when redering, subscribe to the store
     componentDidMount () {
       this.unsubscribe = store.subscribe(() => {
         this.setState(store.getState());
       });
     }
 
+    //prior rendering unsubscribe from the store
     componentWillUnmount () {
       this.unsubscribe();
     }

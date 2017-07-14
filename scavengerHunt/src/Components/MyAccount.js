@@ -6,6 +6,12 @@ import {setUserSelectedMap, fetchUserMaps, resetMap, resetItemBank, fetchCurrent
 import styles from '../../stylesheet'
 import {Button, List, ListItem} from 'react-native-elements'
 
+/*
+MyAccount component represents the user account page
+the page will display the user's name, email, scavendger hunt maps
+navigation buttons and "visited places" list
+*/
+
 export default class MyAccount extends Component {
   constructor(props) {
     super(props)
@@ -16,31 +22,38 @@ export default class MyAccount extends Component {
     this.resetMapItems = this.resetMapItems.bind(this)
   }
 
+  //when rendering, subscribe to the store
   componentDidMount() {
     this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState());
-      // this.getUserMaps(this.state.auth.userId)
+      
     });
   }
 
+  //prior rendering unsubscribe from the store
   componentWillUnmount() {
     this.unsubscribe();
   }
 
+  //when user clicks logout button, this function is triggered
   logoutAndNavigate() {
     store.dispatch(logout());
     this.props.navigation.navigate('SignInSignUp');
   }
 
+  //when a user selects a scavenger hunt map, this ffunction updates the store with the selected map
   setSelectedMap(mapIndex) {
     store.dispatch(setUserSelectedMap(this.state.myAccount.maps[mapIndex]));
     store.dispatch(fetchCurrentMapItems(this.state.myAccount.maps[mapIndex].key))
   }
 
+  //fetching all user's maps from data base
   getUserMaps(userId) {
     store.dispatch(fetchUserMaps(userId))
   }
 
+  //when the user wants to play the scavenger hunt with the same map again
+  //this function resets allplay mode status in the store and data base
   resetMapItems() {
     store.dispatch(resetMap())
     store.dispatch(resetItemBank())

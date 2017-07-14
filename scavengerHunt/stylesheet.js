@@ -174,6 +174,11 @@ export default styles = StyleSheet.create({
     height: height,
     alignSelf: 'center',
   },
+  explore_map: {
+    width: width,
+    height: 500,
+    alignSelf: 'center',
+  },
     pcontainer: {
     flex: 1,
     alignItems: 'center',
@@ -196,6 +201,11 @@ export default styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center'
   },
+  //more info styles
+  more_info_text: {
+    alignSelf: 'auto', 
+    fontSize: 20
+  }
 })
 
  export const mapStyle =

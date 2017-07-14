@@ -7,6 +7,10 @@ import {Button} from 'react-native-elements'
 import styles from '../../stylesheet'
 
 
+/*
+signup component represents the sign up page
+where the user sets an email and password
+*/
 export default class SignUp extends Component {
 	constructor(props) {
 		super(props)

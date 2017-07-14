@@ -2,15 +2,13 @@ import React, { Component } from 'react'
 import { AppRegistry, StyleSheet, Text, View, Button, Image, Picker, Dimensions, ScrollView } from 'react-native'
 import store from '../../store'
 import axios from 'axios'
-// import styles from '../../stylesheet'
+import styles from '../../stylesheet'
 
-const styles = StyleSheet.create({
-  text: {
-    alignSelf: 'auto', 
-    fontSize: 15
-  }, 
-
-})
+/*
+MoreInfo component represent the information 
+of a chosen recommended place on the map
+The information displayed is taken from tripexpert API
+*/
 
 export default class MoreInfo extends Component {
   constructor(props) {
@@ -27,18 +25,21 @@ export default class MoreInfo extends Component {
 
   }
 
+  //when the component is rendered , subscribe to the store
   componentDidMount = () => {
     this.unsubscribe = store.subscribe(() => {
       this.setState(store.getState());
     });
+    //fetch place info from tripexpert API
     this.getInfo()
   }
 
+  //before rendering, unsubscribe 
   componentWillUnmount = () => {
     this.unsubscribe();
   }
 
-
+  //fetch information about the place from tripexpert
   getInfo = () => {
     axios.get(`https://api.tripexpert.com/v1/venues/${this.venueId}?api_key=44871cd75dea94cd486fba9b00171eb6`)
       .then(res => {
@@ -59,8 +60,8 @@ export default class MoreInfo extends Component {
   render() {
     return (
       <ScrollView>
-      <View>
-        <Text style={styles.text}>
+      <View style={styles.myAccount_container}>
+        <Text style={styles.more_info_text}>
           {`${this.state.name}
 ${this.state.website}
 ${this.state.address}

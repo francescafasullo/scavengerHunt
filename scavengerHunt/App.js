@@ -29,6 +29,11 @@ import MoreInfo from './src/Components/MoreInfo'
 
 console.disableYellowBox = true
 
+/*
+The entry point to the app. this is where we configure the stack navigator
+and the tab navigator
+*/
+
 const scavengerHuntRouter = StackNavigator({
   Home: {
     screen: HomeScreen,
