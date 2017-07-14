@@ -8,6 +8,10 @@ import { Button } from 'react-native-elements'
 
 const { height, width } = Dimensions.get('window')
 
+/*
+NewSH component represents the page of creating a new scavenger hunt map
+*/
+
 export default class NewSH extends Component {
 	constructor(props) {
 		super(props)

@@ -7,10 +7,16 @@ import { setUserCurLocation,takeItemOfMap } from '../reducers/myAccountReducer'
 import * as Animatable from 'react-native-animatable'
 
 
-
+/*
+camera class handles the camera page. this page is loaded to the app
+when the user reaches a place on their scavenger hunt and clicks the image-token
+If the user is close enough to the place the camera will open and the user can take a picture of the place
+*/
 export default class CameraScreen extends Component {
   constructor(props) {
     super(props)
+
+    //binding class methods 
     this.takePicture = this.takePicture.bind(this)
     this.getDistance = this.getDistance.bind(this)
     this.TakeOfItemAndNavigateBack=this.TakeOfItemAndNavigateBack.bind(this)
@@ -26,6 +32,8 @@ export default class CameraScreen extends Component {
     this.state.store = store.getState()
   }
 
+  //when component is redered initializes the watchId 
+  //also subscribes to the redux store 
   componentDidMount() {
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
@@ -47,17 +55,20 @@ export default class CameraScreen extends Component {
 
   }
 
+  //prior rendering, clear watchId and unsubscribe to the store
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchId)
     this.unsubscribe()
   }
 
+  //taking a picture functionality
   takePicture() {
     this.camera.capture()
       .then(data => console.log(data))
       .catch(err => console.trace(err))
   }
 
+  //calculating the distance between 2 coordinates
   getDistance(lat1, lon1, lat2, lon2) {
     const deg2rad = function(deg) {
       return deg * (Math.PI / 180)
@@ -73,7 +84,9 @@ export default class CameraScreen extends Component {
   }
 
 
-
+  //when the use is done taking a picture and wantes to go back to the 
+  //scavenger hunt map, they click on "map" button that triggers this function
+  //that takes the token-image off the map
   TakeOfItemAndNavigateBack(){
     store.dispatch(setUserCurLocation(""))
     store.dispatch(takeItemOfMap(this.state.store.myAccount.curItem))

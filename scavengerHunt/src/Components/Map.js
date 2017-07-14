@@ -8,6 +8,12 @@ import {mapStyle} from '../../stylesheet'
 
 const { height, width } = Dimensions.get('window')
 
+/*
+map component represents the scavenger hunt map
+when the user loads this page ("play mode")
+the map they chose will open and all places will be 
+represented with image-token the user has set when created the map
+*/
 
 export default class Map extends Component {
 	constructor(props) {
@@ -20,6 +26,7 @@ export default class Map extends Component {
 
 	}
 
+	//when rendering subscribe to the store
 	componentDidMount = () => {
 		this.unsubscribe = store.subscribe(() => {
 			this.setState(store.getState());
@@ -29,6 +36,7 @@ export default class Map extends Component {
 		})
 	}
 
+	//prior rendering, unsubscribe to from the store
 	componentWillUnmount = () => {
 		this.unsubscribe();
 	}

@@ -13,9 +13,15 @@ const {height, width} = Dimensions.get('window')
 
 
 
+/*
+PlayModeMap represents a scevenger hunt map
+*/
+
 export default class PlayModeMap extends Component {
   constructor(props) {
     super(props)
+
+    //bind class methods
     this.updateKeys = this.updateKeys.bind(this)
     this.onRegionChange = this.onRegionChange.bind(this)
     this.checkTokenDistance = this.checkTokenDistance.bind(this)
@@ -33,6 +39,8 @@ export default class PlayModeMap extends Component {
     }
   }
 
+//when rendering, get geo information and show only near by scavenger hunt places
+//if the user has places far away, they will not be shown
   componentDidMount() {
     this.watchId = navigator.geolocation.watchPosition(
       (position) => {
@@ -78,6 +86,7 @@ export default class PlayModeMap extends Component {
     });
   }
 
+  //pior renering clearing the geo watch and unsubscribe from the store
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchId)
     this.unsubscribe()
@@ -225,6 +234,7 @@ export default class PlayModeMap extends Component {
 
 }
 
+//a function that calculates distance between 2 coordinates
 function getDistance(lat1, lon1, lat2, lon2) {
   const deg2rad = function(deg) {
     return deg * (Math.PI / 180)

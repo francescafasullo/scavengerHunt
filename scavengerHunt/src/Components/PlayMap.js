@@ -3,6 +3,12 @@ import { StyleSheet, Text, View, Button, Image } from 'react-native'
 import MapView, { Marker } from 'react-native-maps'
 import styles from '../../stylesheet'
 
+/*
+PlayMap component represents a demo scavenger hunt page
+where the user sees the map with all the tcavenger hunt image-tokens
+*/
+
+//for demo, setting default token-images in Grace hopper academy area
 const openMarket = {
   latlng: [40.7052066, -74.01032889999999],
   title: 'Open Market',

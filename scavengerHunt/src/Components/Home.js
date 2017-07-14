@@ -3,6 +3,10 @@ import { Navigator, AppRegistry, StyleSheet, Text, View, Button, Image } from 'r
 import firebase from 'firebase'
 import styles from '../../stylesheet'
 
+/*
+Home component represents the first page that is loaded
+when a user opens the app. it displays a picture and a name
+*/
 
 export default class HomeScreen extends Component {
   constructor(props) {
